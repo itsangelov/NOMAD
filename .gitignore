@@ -1,0 +1,19 @@
+# Local Claude Code settings (machine-specific permissions)
+.claude/settings.local.json
+
+# Secrets
+.env
+*.env
+*.key
+*.pem
+credentials*.json
+
+# OS / editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+
+# Slicer / print scratch
+*.gcode
+*.bgcode
