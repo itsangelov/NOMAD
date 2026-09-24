@@ -1,0 +1,62 @@
+# NOMAD mechanical parameters: machine-readable source of truth (D-002).
+# docs/mechanical-spec.md is the human-readable spec and must agree with this file.
+# FeatureScript values are derived from this file and never edited as the master.
+#
+# Units: mm unless `unit` says otherwise. `value: null` means TBD.
+# status: verified | derived | provisional | TBD
+
+meta:
+  revision: P0.1
+  locked: false
+
+body:
+  BODY_WIDTH:              { value: null, status: TBD, source: "Keyboard width + walls; trackpad layout (D-003)" }
+  BODY_DEPTH:              { value: null, status: TBD, source: "Keyboard + trackpad + hinge + port zones" }
+  BODY_HEIGHT:             { value: null, status: TBD, source: "Pi + HAT stack, cooling, battery reserve" }
+  WALL_THICKNESS:          { value: null, status: TBD, source: "PETG FDM; set during P0.1" }
+  SERVICE_PANEL_THICKNESS: { value: null, status: TBD, source: "" }
+
+display:
+  DISPLAY_DIAGONAL:        { value: 256.5, unit: mm, status: provisional, source: "Spec target 10.1 in" }
+  DISPLAY_ACTIVE_WIDTH:    { value: 217.5, status: derived, source: "256.5 * 16/sqrt(16^2+10^2)" }
+  DISPLAY_ACTIVE_HEIGHT:   { value: 136.0, status: derived, source: "256.5 * 10/sqrt(16^2+10^2)" }
+  DISPLAY_WIDTH:           { value: null, status: TBD, source: "Module outline; SKU not locked" }
+  DISPLAY_HEIGHT:          { value: null, status: TBD, source: "Module outline; SKU not locked" }
+  DISPLAY_THICKNESS:       { value: null, status: TBD, source: "Module + controller; SKU not locked" }
+
+controls:
+  KEYBOARD_WIDTH:          { value: 280, status: provisional, source: "Spec target; SKU not locked" }
+  KEYBOARD_DEPTH:          { value: 105, status: provisional, source: "Spec target" }
+  KEYBOARD_THICKNESS:      { value: 8, status: provisional, limit: max, source: "Spec target (preferred maximum)" }
+  TRACKPAD_WIDTH:          { value: 86, status: provisional, source: "Perixx PERIPAD-501 II (candidate), approximate" }
+  TRACKPAD_DEPTH:          { value: 75, status: provisional, source: "Perixx PERIPAD-501 II (candidate), approximate" }
+  TRACKPAD_THICKNESS:      { value: 13, status: provisional, source: "Perixx PERIPAD-501 II (candidate), approximate" }
+
+computer:
+  PI_WIDTH:                { value: 85, status: provisional, source: "Raspberry Pi 5 board outline, approximate" }
+  PI_DEPTH:                { value: 56, status: provisional, source: "Raspberry Pi 5 board outline, approximate" }
+  PI_STACK_HEIGHT:         { value: null, status: TBD, source: "Pi + M.2 HAT+ + GNSS pHAT + cooler" }
+  NVME_FORMAT:             { value: "2230", unit: none, status: provisional, source: "Preferred; SSD not locked" }
+  GNSS_ANTENNA_KEEPOUT:    { value: null, status: TBD, source: "Away from major noise sources" }
+
+clearances:
+  CLEARANCE:               { value: null, status: TBD, source: "FDM test coupons" }
+  MIN_GAP:                 { value: null, status: TBD, source: "" }
+  MIN_WALL:                { value: null, status: TBD, source: "" }
+  CABLE_CLEARANCE:         { value: null, status: TBD, source: "Per cable, from bend radius" }
+  OVERHANG_LIMIT:          { value: null, unit: deg, status: TBD, source: "Print-dependent" }
+
+fasteners:
+  FASTENER_SIZE:           { value: ["M3", "M2.5"], unit: none, status: provisional, source: "Standard family" }
+  INSERT_SIZE:             { value: null, status: TBD, source: "Heat-set inserts; depends on supplier" }
+
+solar:
+  SOLAR_CASSETTE_WIDTH:     { value: null, status: TBD, source: "Bounded by lid width (two side by side)" }
+  SOLAR_CASSETTE_HEIGHT:    { value: null, status: TBD, source: "Bounded by lid height" }
+  SOLAR_CASSETTE_THICKNESS: { value: null, status: TBD, source: "Panel + frame; panel not selected" }
+  SOLAR_ROTATION_LIMIT:     { value: { min: 60, max: 75 }, unit: deg, status: provisional, source: "Spec range, +/- about axis; axis open (D-004)" }
+
+battery:
+  BATTERY_BAY_WIDTH:       { value: null, status: TBD, source: "Reserve only; sized from measured consumption" }
+  BATTERY_BAY_DEPTH:       { value: null, status: TBD, source: "" }
+  BATTERY_BAY_HEIGHT:      { value: null, status: TBD, source: "" }

@@ -23,13 +23,15 @@ Do not silently change: overall architecture, the solar concept, display orienta
 - Phase: V1 mechanical architecture. Prototype: **P0.1** (mechanical proof of concept).
 - Phase 0 (workspace setup) is done. No Onshape document or geometry exists yet.
 - D-001 accepted: P0.1 geometry is generated with FeatureScript. This covers P0.1 only, not the long-term CAD architecture.
+- D-002 accepted: `CAD/parameters/nomad.yaml` holds the authoritative parameter values (the file is not yet created).
 - Open decisions are listed in `docs/decisions.md`.
 
 ## Sources of truth
 
 | What | Where |
 |---|---|
-| Parametric CAD | Onshape (master) |
+| Mechanical parameter values | `CAD/parameters/nomad.yaml` (machine-readable master, D-002) |
+| Parametric CAD | Onshape (master for geometry) |
 | FeatureScript snapshots | `CAD/featurescript/` (copies of the Onshape Feature Studios; Onshape wins on conflict) |
 | Exports (STEP/STL/3MF/drawings) | `CAD/exports/`, `CAD/drawings/`, or releases: derived, never authoritative |
 | Specifications | `docs/` |
@@ -55,7 +57,7 @@ It **cannot** list or create documents, Part Studios, Variable Studios or Assemb
 ## CAD conventions
 
 - Model in three levels: **envelope**, then **interface** (holes, bosses, connectors, clearances), then **detail**. Add detail only where it affects fit, motion, strength, assembly, manufacturing, cable routing or cooling.
-- Every uncertain dimension is a named parameter (UPPER_SNAKE_CASE, mm), never a hidden constant. Record each one in `docs/mechanical-spec.md` with its status (verified / provisional / TBD) and source.
+- Every uncertain dimension is a named parameter (UPPER_SNAKE_CASE, mm), never a hidden constant. Define it in `CAD/parameters/nomad.yaml` first, with its status (verified / derived / provisional / TBD) and source, then reflect it in `docs/mechanical-spec.md`. FeatureScript parameter values are derived from the YAML and never edited as the master.
 - Use clear feature and part names. Name keep-out volumes `KEEPOUT_*` and envelopes `ENV_*`.
 - Avoid giant monolithic feature histories. Split them into logical modules.
 - Target FDM PETG. Watch wall thickness, overhangs, print orientation, supports, heat-set inserts and tolerances for repeated disassembly. Use metal for structural shafts and pins.

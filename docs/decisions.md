@@ -17,9 +17,13 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
 
 ## D-002 — Location of the master parameter table
 
-- **Status:** proposed
-- **Proposal:** The parameters live as constants in the Feature Studio and are published as Part Studio `#variables`. The copy in `CAD/featurescript/` is a snapshot. `docs/mechanical-spec.md` records the status and source of each parameter.
-- **Alternative:** An Onshape Variable Studio, which would have to be entered by hand because the MCP cannot write it.
+- **Status:** accepted (2026-09-25)
+- **Decision:** `CAD/parameters/nomad.yaml` is the **machine-readable source of truth** for NOMAD mechanical parameters. `docs/mechanical-spec.md` remains the **human-readable engineering specification**. FeatureScript consumes, or is generated from, the YAML values but does not own the authoritative values.
+- **Consequences:**
+  - A parameter changes in `nomad.yaml` first. `mechanical-spec.md` and the FeatureScript constants are then brought into line with it.
+  - Parameter values in a Feature Studio are derived copies. If they differ from `nomad.yaml`, the YAML is correct and the Feature Studio must be regenerated or updated.
+  - Values stay version-controlled and diffable in Git, and do not depend on Onshape API access.
+- **Rejected alternatives:** Feature Studio constants as the master (this couples the authoritative values to one CAD tool); an Onshape Variable Studio (the MCP cannot write it).
 
 ## D-003 — Trackpad position
 

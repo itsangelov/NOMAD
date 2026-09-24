@@ -2,6 +2,8 @@
 
 Revision: P0.1 (draft). No values below are locked.
 
+> **Source of truth (D-002):** `CAD/parameters/nomad.yaml` holds the authoritative machine-readable parameter values. This document is the human-readable specification and must agree with it. If they differ, the YAML is correct and this document must be updated.
+
 ## Parameter status legend
 
 | Status | Meaning |
