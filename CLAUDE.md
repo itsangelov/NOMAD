@@ -22,6 +22,7 @@ Do not silently change: overall architecture, the solar concept, display orienta
 
 - Phase: V1 mechanical architecture. Prototype: **P0.1** (mechanical proof of concept).
 - Phase 0 (workspace setup) is done. No Onshape document or geometry exists yet.
+- D-001 accepted: P0.1 geometry is generated with FeatureScript. This covers P0.1 only, not the long-term CAD architecture.
 - Open decisions are listed in `docs/decisions.md`.
 
 ## Sources of truth

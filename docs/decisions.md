@@ -8,7 +8,8 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
 
 ## D-001 — FeatureScript-driven CAD for P0.1
 
-- **Status:** proposed
+- **Status:** accepted (2026-09-25), limited in scope
+- **Scope limitation:** FeatureScript is the geometry-generation and prototyping layer for **P0.1 only**. This decision does not commit the rest of NOMAD's CAD architecture to FeatureScript. The approach for P0.2 onward (native Onshape modeling, Assemblies, or a mix) will be a separate decision.
 - **Context:** The only Onshape integration available is a FeatureScript-only MCP. It cannot create documents, Part Studios, Variable Studios or Assemblies, and it cannot insert features into a user Part Studio.
 - **Proposal:** Build P0.1 as custom features in a `NOMAD_P01` Feature Studio: master parameters, layout skeleton, envelopes, solar mechanism and a clearance check. The project owner inserts the features into a single multi-part Part Studio. Motion states (slide extension, rotation angle, lid angle) are parameters, and the clearance check evaluates them.
 - **Alternatives:** The project owner models natively in Onshape, with Claude writing specs only.
