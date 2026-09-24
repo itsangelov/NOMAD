@@ -8,6 +8,9 @@
 *.pem
 credentials*.json
 
+# Python
+__pycache__/
+
 # OS / editor
 Thumbs.db
 desktop.ini

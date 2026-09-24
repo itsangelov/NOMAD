@@ -5,7 +5,8 @@
 | Folder | Contents |
 |---|---|
 | `parameters/` | `nomad.yaml`: the authoritative machine-readable mechanical parameters (D-002). FeatureScript values are derived from it. |
-| `featurescript/` | Snapshots of the NOMAD Feature Studio source, copied from Onshape at each commit. If a snapshot differs from Onshape, Onshape is correct. |
+| `featurescript/` | `NOMAD_P01.fs`: the P0.1 FeatureScript source (D-001), whose parameter block is generated from `nomad.yaml`. Once a Feature Studio exists in Onshape, this is its snapshot, and Onshape is correct for everything outside the generated parameter block. `NOMAD_P01.test.fs` is the scratch test harness and is never written to Onshape. |
+| `tools/` | `yaml_to_featurescript.py` (YAML → FeatureScript parameter block, with `--check`); `build_test_payload.py` (assembles the single-feature test payload). |
 | `exports/` | Derived STEP / STL / 3MF files. Name them `<revision>_<part>.<ext>`, e.g. `P0.1_solar_rail.stl`. |
 | `drawings/` | Derived drawings and dimensioned sketches. |
 

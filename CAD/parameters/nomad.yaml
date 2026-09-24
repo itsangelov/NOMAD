@@ -2,40 +2,68 @@
 # docs/mechanical-spec.md is the human-readable spec and must agree with this file.
 # FeatureScript values are derived from this file and never edited as the master.
 #
-# Units: mm unless `unit` says otherwise. `value: null` means TBD.
-# status: verified | derived | provisional | TBD
+# SCHEMA (per parameter)
+#   AUTHORITATIVE fields: the only engineering values in this file.
+#     value    Authoritative value. null = TBD (no engineering value exists yet).
+#     status   Status of `value`: verified | derived | provisional | TBD.
+#              status TBD  <=>  value null.
+#     source   What `value` comes from, or what will drive it.
+#     unit     mm (default) | deg | none.
+#   WORKING fields: P0.1 working inputs, NOT engineering values.
+#     working  Provisional placeholder number, used only to build P0.1 envelope geometry
+#              while `value` is null. Never a decision or a verified dimension.
+#     formula  Provisional expression over other parameters (+ - * / and parentheses).
+#              Its result has exactly the same standing as `working`.
+#   INFORMATIONAL fields (never used for geometry): reference, intent, limit, note.
+#
+# RESOLUTION for geometry (CAD/tools/yaml_to_featurescript.py):
+#   value (if not null)  ->  formula  ->  working  ->  unresolved (no geometry may use it).
+#   The generator labels every emitted constant with the field it came from.
+#
+# FORMAT: restricted YAML subset (comments, two-level block mappings, inline flow maps/lists,
+#   double-quoted strings, numbers, null/true/false, bare words). The generator rejects anything else.
 
 meta:
   revision: P0.1
   locked: false
 
 body:
-  BODY_WIDTH:              { value: null, status: TBD, source: "Keyboard width + walls; trackpad layout (D-003)" }
-  BODY_DEPTH:              { value: null, status: TBD, source: "Keyboard + trackpad + hinge + port zones" }
-  BODY_HEIGHT:             { value: null, status: TBD, source: "Pi + HAT stack, cooling, battery reserve" }
-  WALL_THICKNESS:          { value: null, status: TBD, source: "PETG FDM; set during P0.1" }
+  BODY_WIDTH:              { value: null, status: TBD, source: "Keyboard width + walls; trackpad layout (D-003)", formula: "KEYBOARD_WIDTH + 2 * (BASE_SIDE_MARGIN + WALL_THICKNESS)" }
+  BODY_DEPTH:              { value: null, status: TBD, source: "Keyboard + trackpad + hinge + port zones", formula: "BASE_FRONT_MARGIN + TRACKPAD_DEPTH + TRACKPAD_KEYBOARD_GAP + KEYBOARD_DEPTH + BASE_REAR_ZONE_DEPTH" }
+  BODY_HEIGHT:             { value: null, status: TBD, source: "Pi + HAT stack, cooling, battery reserve", working: 40, note: "Placeholder until Pi stack and battery are enveloped" }
+  WALL_THICKNESS:          { value: null, status: TBD, source: "PETG FDM; set during P0.1", working: 2.5, note: "~6 perimeters at 0.4 mm" }
   SERVICE_PANEL_THICKNESS: { value: null, status: TBD, source: "" }
+  BASE_SIDE_MARGIN:        { value: null, status: TBD, source: "Keyboard edge to inner side wall", working: 8 }
+  BASE_FRONT_MARGIN:       { value: null, status: TBD, source: "Base front face to trackpad front edge (includes wall)", working: 15 }
+  BASE_REAR_ZONE_DEPTH:    { value: null, status: TBD, source: "Keyboard rear edge to base rear face: hinge + rear port zone", working: 30 }
+  HINGE_AXIS_OFFSET:       { value: null, status: TBD, source: "Hinge axis inset from base rear face, at base top-surface height", working: 8 }
+
+lid:
+  LID_THICKNESS:           { value: null, status: TBD, source: "Display + controller + solar bay + walls", working: 25, note: "Placeholder: display 5 + cassette 8 + walls 2x2.5 + ~7 rail/structure allowance" }
+  LID_ANGLE_NOMINAL:       { value: null, unit: deg, status: TBD, source: "Nominal open pose for checks", working: 105 }
+  LID_ANGLE_MAX:           { value: null, unit: deg, status: TBD, source: "Maximum open pose for checks", working: 135 }
 
 display:
   DISPLAY_DIAGONAL:        { value: 256.5, unit: mm, status: provisional, source: "Spec target 10.1 in" }
   DISPLAY_ACTIVE_WIDTH:    { value: 217.5, status: derived, source: "256.5 * 16/sqrt(16^2+10^2)" }
   DISPLAY_ACTIVE_HEIGHT:   { value: 136.0, status: derived, source: "256.5 * 10/sqrt(16^2+10^2)" }
-  DISPLAY_WIDTH:           { value: null, status: TBD, source: "Module outline; SKU not locked" }
-  DISPLAY_HEIGHT:          { value: null, status: TBD, source: "Module outline; SKU not locked" }
-  DISPLAY_THICKNESS:       { value: null, status: TBD, source: "Module + controller; SKU not locked" }
+  DISPLAY_WIDTH:           { value: null, status: TBD, source: "Module outline; SKU not locked", working: 235, note: "Active area + ~9 mm border; not from a datasheet" }
+  DISPLAY_HEIGHT:          { value: null, status: TBD, source: "Module outline; SKU not locked", working: 150, note: "Active area + ~7 mm border; not from a datasheet" }
+  DISPLAY_THICKNESS:       { value: null, status: TBD, source: "Module + controller; SKU not locked", working: 5, note: "Panel only; controller not yet placed" }
+  DISPLAY_VERTICAL_OFFSET: { value: null, status: TBD, source: "Display centre offset from lid centre, positive toward the lid free edge", working: 0, intent: "0 = centred in the lid" }
 
 controls:
   KEYBOARD_WIDTH:          { value: 280, status: provisional, source: "Spec target; SKU not locked" }
   KEYBOARD_DEPTH:          { value: 105, status: provisional, source: "Spec target" }
   KEYBOARD_THICKNESS:      { value: 8, status: provisional, limit: max, source: "Spec target (preferred maximum)" }
-  TRACKPAD_WIDTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~86 mm" }
-  TRACKPAD_DEPTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~75 mm" }
-  TRACKPAD_THICKNESS:      { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~13 mm" }
+  TRACKPAD_WIDTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~86 mm", working: 86 }
+  TRACKPAD_DEPTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~75 mm", working: 75 }
+  TRACKPAD_THICKNESS:      { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~13 mm", working: 13 }
 
 layout:
-  KEYBOARD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline" }
-  TRACKPAD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline" }
-  TRACKPAD_KEYBOARD_GAP:   { value: null, status: TBD, source: "D-003; trackpad sits below keyboard" }
+  KEYBOARD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline", working: 0 }
+  TRACKPAD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline", working: 0 }
+  TRACKPAD_KEYBOARD_GAP:   { value: null, status: TBD, source: "D-003; trackpad sits below keyboard", working: 10 }
 
 computer:
   PI_WIDTH:                { value: 85, status: provisional, source: "Raspberry Pi 5 board outline, approximate" }
@@ -45,8 +73,8 @@ computer:
   GNSS_ANTENNA_KEEPOUT:    { value: null, status: TBD, source: "Away from major noise sources" }
 
 clearances:
-  CLEARANCE:               { value: null, status: TBD, source: "FDM test coupons" }
-  MIN_GAP:                 { value: null, status: TBD, source: "" }
+  CLEARANCE:               { value: null, status: TBD, source: "FDM test coupons", working: 0.3 }
+  MIN_GAP:                 { value: null, status: TBD, source: "", working: 1.0 }
   MIN_WALL:                { value: null, status: TBD, source: "" }
   CABLE_CLEARANCE:         { value: null, status: TBD, source: "Per cable, from bend radius" }
   OVERHANG_LIMIT:          { value: null, unit: deg, status: TBD, source: "Print-dependent" }
@@ -56,14 +84,18 @@ fasteners:
   INSERT_SIZE:             { value: null, status: TBD, source: "Heat-set inserts; depends on supplier" }
 
 solar:
-  SOLAR_CASSETTE_WIDTH:     { value: null, status: TBD, source: "Bounded by lid width (two side by side)" }
-  SOLAR_CASSETTE_HEIGHT:    { value: null, status: TBD, source: "Bounded by lid height" }
-  SOLAR_CASSETTE_THICKNESS: { value: null, status: TBD, source: "Panel + frame; panel not selected" }
+  SOLAR_CASSETTE_WIDTH:     { value: null, status: TBD, source: "Bounded by lid width (two side by side)", formula: "(BODY_WIDTH - 2 * WALL_THICKNESS - MIN_GAP) / 2" }
+  SOLAR_CASSETTE_HEIGHT:    { value: null, status: TBD, source: "Bounded by lid height", working: 200 }
+  SOLAR_CASSETTE_THICKNESS: { value: null, status: TBD, source: "Panel + frame; panel not selected", working: 8 }
   SOLAR_ROTATION_LIMIT:     { value: { min: 60, max: 75 }, unit: deg, status: provisional, source: "D-004 target range, +/- about the rotation axis" }
   SOLAR_ROTATION_AXIS:      { value: slide_direction, unit: none, status: provisional, source: "D-004: approximately along the slide/deployment direction; exact axis geometry subject to P0.1 validation" }
-  SOLAR_SLIDE_TRAVEL:       { value: null, status: TBD, source: "D-004: lateral outward deployment from the lid" }
-  SOLAR_INDEX_STEP:         { value: null, unit: deg, status: TBD, source: "D-004: discrete indexed positions with a positive lock" }
-  SOLAR_HUB_PIN_DIAMETER:   { value: null, status: TBD, source: "D-004: dedicated hub/pin carries the rotational load (metal pin)" }
+  SOLAR_DEPLOY_CLEARANCE:   { value: null, status: TBD, source: "Cassette inboard edge to lid side wall when fully deployed", working: 5 }
+  SOLAR_SLIDE_TRAVEL:       { value: null, status: TBD, source: "D-004: lateral outward deployment from the lid", formula: "SOLAR_CASSETTE_WIDTH + WALL_THICKNESS + SOLAR_DEPLOY_CLEARANCE" }
+  SOLAR_RAIL_ENGAGEMENT:    { value: null, status: TBD, source: "Carriage length retained in the rail at full deployment", working: 40 }
+  SOLAR_HUB_AXIS_OFFSET_Y:  { value: null, status: TBD, source: "Hub axis position across the cassette height (not a decision; D-004)", formula: "SOLAR_CASSETTE_HEIGHT / 2" }
+  SOLAR_HUB_AXIS_OFFSET_Z:  { value: null, status: TBD, source: "Hub axis position through the cassette thickness (not a decision; D-004)", formula: "SOLAR_CASSETTE_THICKNESS / 2" }
+  SOLAR_INDEX_STEP:         { value: null, unit: deg, status: TBD, source: "D-004: discrete indexed positions with a positive lock", working: 15 }
+  SOLAR_HUB_PIN_DIAMETER:   { value: null, status: TBD, source: "D-004: dedicated hub/pin carries the rotational load (metal pin)", working: 5 }
 
 battery:
   BATTERY_BAY_WIDTH:       { value: null, status: TBD, source: "Reserve only; sized from measured consumption" }

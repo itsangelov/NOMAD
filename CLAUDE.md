@@ -21,7 +21,8 @@ Do not silently change: overall architecture, the solar concept, display orienta
 ## Current status
 
 - Phase: V1 mechanical architecture. Prototype: **P0.1** (mechanical proof of concept).
-- Phase 0 (workspace setup) is done. No Onshape document or geometry exists yet.
+- Phase 0 (workspace setup) is done. The NOMAD Onshape document exists (link in `CAD/README.md`). It has no Feature Studio or geometry yet.
+- Phase 1 Round A (skeleton + keyboard/trackpad/display envelopes) has been modeled and tested in the scratch context only; results are in `docs/build-log.md`.
 - D-001 accepted: P0.1 geometry is generated with FeatureScript. This covers P0.1 only, not the long-term CAD architecture.
 - D-002 accepted: `CAD/parameters/nomad.yaml` holds the authoritative parameter values.
 - D-003 accepted: the trackpad is centred below the keyboard, and both sit on the chassis centreline. Positions are parameterized; trackpad dimensions are TBD until the modules are selected.
@@ -54,6 +55,14 @@ It **cannot** list or create documents, Part Studios, Variable Studios or Assemb
 - The project owner supplies document URLs, inserts custom features, and does exports.
 - Every tool call spends the owner's Onshape API allocation: 2,500 requests per annual cycle. Test before writing, batch work, and check `get_api_usage` periodically.
 - `put_featurescript` overwrites the entire Feature Studio: always `get_featurescript` first.
+- `test_feature` costs about 9 requests and returns notices only (no console output). Messages are truncated after roughly 330 characters. The test harness therefore returns a compact report through a deliberate `regenError`.
+
+## Parameter pipeline
+
+- Edit `CAD/parameters/nomad.yaml`, then run `py CAD/tools/yaml_to_featurescript.py` to regenerate the `GENERATED PARAMS` block in `CAD/featurescript/NOMAD_P01.fs`. Never edit that block by hand.
+- Run `py CAD/tools/yaml_to_featurescript.py --check` to verify the block is current.
+- Test payload: `py CAD/tools/build_test_payload.py <out>` builds `NOMAD_P01.fs` without its production features, plus `NOMAD_P01.test.fs`.
+- Python is `py` (3.14, standard library only). Bare `python` is the Microsoft Store alias.
 - Before any CAD change: inspect, understand dependencies and downstream effects, and never destroy working geometry for convenience.
 
 ## CAD conventions
