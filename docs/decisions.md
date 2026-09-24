@@ -37,10 +37,22 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
 - **Reason:** Placing the trackpad beside a ~280 mm keyboard makes the base about 380 mm wide, which is much wider than a 10.1" display lid.
 - **Tradeoff:** The base gets deeper (keyboard depth + trackpad depth + margins) in exchange for a narrower base that matches the lid.
 
-## D-004 — Solar cassette rotation axis
+## D-004 — Solar cassette kinematic architecture
 
-- **Status:** open (approval required)
-- **Proposal:** Each cassette tilts about its own lateral slide axis, with the hub at the inboard carriage, over approximately ±60° to ±75°.
+- **Status:** accepted (2026-09-25) as the P0.1 solar kinematic architecture
+- **Decision:**
+  - Each cassette slides laterally outward from its stored position in the display lid.
+  - After deployment, each cassette rotates/tilts toward the sun independently of the other.
+  - The primary rotation axis runs approximately along the cassette's slide/deployment direction.
+  - The target V1 rotation range is approximately ±60° to ±75°.
+  - Rotation uses discrete indexed positions with a positive mechanical lock. V1 has no motors and no continuous 360° rotation.
+- **Load paths:**
+  - The sliding rail carries deployment and structural loads.
+  - A dedicated rotation hub/pin carries the cassette's rotational load.
+  - Printed gears are for positioning and actuation only, never the primary structural load path.
+- **Wiring:** A controlled, protected cable path runs through the slide/rotation mechanism. No slip ring in V1.
+- **Scope:** This decision defines the intended kinematics only. The exact rail, hub, lock and axis geometry is subject to P0.1 mechanical validation. Nothing here claims the final geometry is validated.
+- **Tradeoff:** Tilting about the slide axis keeps the rotation hub on the load path the rail already provides, and gives a simple one-axis sun adjustment. Only one tilt axis is adjustable, so orienting toward the sun also depends on how the machine itself is placed.
 
 ## D-005 — Default branch `main`
 

@@ -88,7 +88,13 @@ The keyboard and trackpad are centred on the chassis longitudinal centreline, wi
 | SOLAR_CASSETTE_WIDTH | TBD | TBD | Bounded by the lid width (two cassettes side by side) |
 | SOLAR_CASSETTE_HEIGHT | TBD | TBD | Bounded by the lid height |
 | SOLAR_CASSETTE_THICKNESS | TBD | TBD | Panel + frame; depends on the panel selection |
-| SOLAR_ROTATION_LIMIT | ±60° to ±75° | provisional | Spec range; the rotation axis is open (D-004) |
+| SOLAR_ROTATION_LIMIT | ±60° to ±75° | provisional | D-004 target range, ± about the rotation axis |
+| SOLAR_ROTATION_AXIS | slide direction | provisional | D-004: approximately along the slide/deployment direction; exact geometry subject to P0.1 validation |
+| SOLAR_SLIDE_TRAVEL | TBD | TBD | D-004: lateral outward deployment from the lid |
+| SOLAR_INDEX_STEP | TBD (deg) | TBD | D-004: discrete indexed positions with a positive lock |
+| SOLAR_HUB_PIN_DIAMETER | TBD | TBD | D-004: dedicated metal hub/pin carries the rotational load |
+
+Solar kinematics (D-004): each cassette slides laterally out of the lid, then tilts independently about an axis approximately along its slide direction. The rail carries deployment and structural loads, and the hub/pin carries rotational load. Printed gears position and actuate only. Rotation is locked at discrete indexed positions, with no motors, no continuous rotation and no slip ring.
 
 ### Battery
 

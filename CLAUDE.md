@@ -23,8 +23,10 @@ Do not silently change: overall architecture, the solar concept, display orienta
 - Phase: V1 mechanical architecture. Prototype: **P0.1** (mechanical proof of concept).
 - Phase 0 (workspace setup) is done. No Onshape document or geometry exists yet.
 - D-001 accepted: P0.1 geometry is generated with FeatureScript. This covers P0.1 only, not the long-term CAD architecture.
-- D-002 accepted: `CAD/parameters/nomad.yaml` holds the authoritative parameter values (the file is not yet created).
-- Open decisions are listed in `docs/decisions.md`.
+- D-002 accepted: `CAD/parameters/nomad.yaml` holds the authoritative parameter values.
+- D-003 accepted: the trackpad is centred below the keyboard, and both sit on the chassis centreline. Positions are parameterized; trackpad dimensions are TBD until the modules are selected.
+- D-004 accepted: each solar cassette slides laterally out of the lid, then tilts independently about an axis approximately along its slide direction (±60–75°). Rotation locks at indexed positions. The rail carries structural load and a dedicated hub/pin carries rotational load; gears only position. No motors, no slip ring. Rail, hub, lock and axis geometry, including hub location, are left to P0.1 validation.
+- No decisions are currently open. See `docs/decisions.md`.
 
 ## Sources of truth
 

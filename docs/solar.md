@@ -11,7 +11,7 @@ The cassette itself is the structural solar wing. It carries the panel, frame, r
 | Area | Requirement |
 |---|---|
 | Rail | Constrained lateral slide, low play, resists twisting, positive retention, hard end stop, self-aligning, serviceable, printable. Candidates: dovetail, captured box rail, guide blocks, metal rod, replaceable wear surfaces. |
-| Rotation | Structural hub/ring, metal pin/shaft, angular indexing. Printed gear teeth must not be the only load path. Approximate range ±60° to ±75°; no continuous rotation. Axis: open (D-004). |
+| Rotation | A dedicated structural hub/pin (metal) carries the rotational load; the rail carries deployment and structural loads. Printed gears are for positioning and actuation only, never the primary structural load path. Approximate range ±60° to ±75°; no continuous rotation. Axis: approximately along the slide/deployment direction (D-004). Discrete indexed positions. |
 | Lock | Positive manual lock with an obvious locked/unlocked state. Durable, serviceable, manually releasable. Candidates: spring pin, detent, indexed holes, toothed ring, lever. |
 | Wind | Extended panels act as sails. Account for bending, twist, rail and chassis loads, and lock strength. Define a safe stowage procedure. |
 | Wiring | Panel → internal wiring → serviceable connector → protected flex cable → rotation interface → chassis. Stranded wire, strain relief, controlled bend radius. Never route through exposed gears. No slip rings. |

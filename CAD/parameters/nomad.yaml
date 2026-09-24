@@ -59,7 +59,11 @@ solar:
   SOLAR_CASSETTE_WIDTH:     { value: null, status: TBD, source: "Bounded by lid width (two side by side)" }
   SOLAR_CASSETTE_HEIGHT:    { value: null, status: TBD, source: "Bounded by lid height" }
   SOLAR_CASSETTE_THICKNESS: { value: null, status: TBD, source: "Panel + frame; panel not selected" }
-  SOLAR_ROTATION_LIMIT:     { value: { min: 60, max: 75 }, unit: deg, status: provisional, source: "Spec range, +/- about axis; axis open (D-004)" }
+  SOLAR_ROTATION_LIMIT:     { value: { min: 60, max: 75 }, unit: deg, status: provisional, source: "D-004 target range, +/- about the rotation axis" }
+  SOLAR_ROTATION_AXIS:      { value: slide_direction, unit: none, status: provisional, source: "D-004: approximately along the slide/deployment direction; exact axis geometry subject to P0.1 validation" }
+  SOLAR_SLIDE_TRAVEL:       { value: null, status: TBD, source: "D-004: lateral outward deployment from the lid" }
+  SOLAR_INDEX_STEP:         { value: null, unit: deg, status: TBD, source: "D-004: discrete indexed positions with a positive lock" }
+  SOLAR_HUB_PIN_DIAMETER:   { value: null, status: TBD, source: "D-004: dedicated hub/pin carries the rotational load (metal pin)" }
 
 battery:
   BATTERY_BAY_WIDTH:       { value: null, status: TBD, source: "Reserve only; sized from measured consumption" }
