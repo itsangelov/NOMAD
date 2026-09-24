@@ -28,9 +28,14 @@ controls:
   KEYBOARD_WIDTH:          { value: 280, status: provisional, source: "Spec target; SKU not locked" }
   KEYBOARD_DEPTH:          { value: 105, status: provisional, source: "Spec target" }
   KEYBOARD_THICKNESS:      { value: 8, status: provisional, limit: max, source: "Spec target (preferred maximum)" }
-  TRACKPAD_WIDTH:          { value: 86, status: provisional, source: "Perixx PERIPAD-501 II (candidate), approximate" }
-  TRACKPAD_DEPTH:          { value: 75, status: provisional, source: "Perixx PERIPAD-501 II (candidate), approximate" }
-  TRACKPAD_THICKNESS:      { value: 13, status: provisional, source: "Perixx PERIPAD-501 II (candidate), approximate" }
+  TRACKPAD_WIDTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~86 mm" }
+  TRACKPAD_DEPTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~75 mm" }
+  TRACKPAD_THICKNESS:      { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~13 mm" }
+
+layout:
+  KEYBOARD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline" }
+  TRACKPAD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline" }
+  TRACKPAD_KEYBOARD_GAP:   { value: null, status: TBD, source: "D-003; trackpad sits below keyboard" }
 
 computer:
   PI_WIDTH:                { value: 85, status: provisional, source: "Raspberry Pi 5 board outline, approximate" }

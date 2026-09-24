@@ -45,9 +45,19 @@ All dimensions are in mm unless noted.
 | KEYBOARD_WIDTH | 280 | provisional | Spec target (SKU not locked) |
 | KEYBOARD_DEPTH | 105 | provisional | Spec target |
 | KEYBOARD_THICKNESS | ≤ 8 | provisional | Spec target (preferred maximum) |
-| TRACKPAD_WIDTH | 86 | provisional | Perixx PERIPAD-501 II (candidate), approximate |
-| TRACKPAD_DEPTH | 75 | provisional | Same |
-| TRACKPAD_THICKNESS | 13 | provisional | Same |
+| TRACKPAD_WIDTH | TBD | TBD | TBD until module selected (D-003). Reference: Perixx PERIPAD-501 II candidate ~86 |
+| TRACKPAD_DEPTH | TBD | TBD | Same; reference ~75 |
+| TRACKPAD_THICKNESS | TBD | TBD | Same; reference ~13 |
+
+### Layout (D-003)
+
+The keyboard and trackpad are centred on the chassis longitudinal centreline, with the trackpad below the keyboard. Their positions are parameters, so they can move without restructuring the chassis.
+
+| Parameter | Value | Status | Source / notes |
+|---|---|---|---|
+| KEYBOARD_LATERAL_OFFSET | TBD | TBD | Design intent: 0 = centred on the chassis centreline |
+| TRACKPAD_LATERAL_OFFSET | TBD | TBD | Design intent: 0 = centred on the chassis centreline |
+| TRACKPAD_KEYBOARD_GAP | TBD | TBD | Gap between the keyboard and the trackpad below it |
 
 ### Computer, storage and GNSS
 

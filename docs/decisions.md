@@ -27,9 +27,15 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
 
 ## D-003 — Trackpad position
 
-- **Status:** open (approval required)
-- **Proposal:** Trackpad centred below the keyboard, with the position kept as a parameter.
+- **Status:** accepted (2026-09-25), with constraints
+- **Decision:** The V1 baseline places the trackpad centred below the keyboard.
+- **Constraints:**
+  - The keyboard and trackpad are both centred on the chassis longitudinal centreline.
+  - The trackpad position stays parameterized, so it can move later without restructuring the chassis.
+  - The trackpad dimensions stay TBD until the actual keyboard and trackpad modules are selected.
+  - Current target dimensions must not be hard-coded as verified geometry.
 - **Reason:** Placing the trackpad beside a ~280 mm keyboard makes the base about 380 mm wide, which is much wider than a 10.1" display lid.
+- **Tradeoff:** The base gets deeper (keyboard depth + trackpad depth + margins) in exchange for a narrower base that matches the lid.
 
 ## D-004 — Solar cassette rotation axis
 
