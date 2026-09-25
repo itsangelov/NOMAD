@@ -118,6 +118,9 @@ Working inputs are recorded for Round B; Round A does not use them.
 | SOLAR_DEPLOY_CLEARANCE | TBD | TBD | 5 | Cassette inboard edge to lid side wall when fully deployed |
 | SOLAR_SLIDE_TRAVEL | TBD | TBD | = SOLAR_CASSETTE_WIDTH + WALL_THICKNESS + SOLAR_DEPLOY_CLEARANCE → 155 | D-004: lateral outward deployment from the lid |
 | SOLAR_RAIL_ENGAGEMENT | TBD | TBD | 40 | Carriage length retained in the rail at full deployment |
+| SOLAR_CARRIAGE_WIDTH | TBD | TBD | 12 | Carriage cross-section across the lid depth (Y); the rail envelope adds WALL_THICKNESS each side |
+| SOLAR_CARRIAGE_HEIGHT | TBD | TBD | 8 | Carriage cross-section through the lid thickness (Z); the rail envelope adds WALL_THICKNESS each side |
+| SOLAR_HUB_LINK_LENGTH | TBD | TBD | = WALL_THICKNESS + SOLAR_DEPLOY_CLEARANCE + MIN_GAP → 8.5 | Carriage outboard end to cassette inboard edge, so the carriage stays MIN_GAP inside the lid wall at full deployment |
 | SOLAR_HUB_AXIS_OFFSET_Y | TBD | TBD | = SOLAR_CASSETTE_HEIGHT / 2 → 100 | Hub axis position across the cassette height (not a decision; D-004) |
 | SOLAR_HUB_AXIS_OFFSET_Z | TBD | TBD | = SOLAR_CASSETTE_THICKNESS / 2 → 4 | Hub axis position through the cassette thickness (not a decision; D-004) |
 | SOLAR_INDEX_STEP | TBD (deg) | TBD | 15° | D-004: discrete indexed positions with a positive lock |
