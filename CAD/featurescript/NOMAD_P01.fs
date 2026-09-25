@@ -375,6 +375,67 @@ export function nomadJson(v) returns string
     return "\"" ~ toString(v) ~ "\"";
 }
 
+// ================= Solar skeleton (Round B, D-004 kinematics) =================
+// Kinematic envelopes only: cassette body, hub pin, carriage, fixed rail keep-out. No hardware.
+// Built in closed-lid world coordinates, tilted about the hub axis (parallel to X), then moved
+// with the lid. Slide is along X; the carriage stays SOLAR_HUB_LINK_LENGTH inboard of the cassette.
+
+// Current working layout (V0): cassette against the lid back plate with MIN_GAP, centred in Y,
+// hub axis at SOLAR_HUB_AXIS_OFFSET_Y/Z inside the cassette, rail coaxial with the hub.
+export function nomadSolarLayout() returns map
+{
+    const back = BODY_HEIGHT + LID_CLOSED_GAP + LID_THICKNESS - WALL_THICKNESS;
+    const cz0 = back - MIN_GAP - SOLAR_CASSETTE_THICKNESS;
+    const cy0 = (BODY_DEPTH - SOLAR_CASSETTE_HEIGHT) / 2;
+    const hub = [cy0 + SOLAR_HUB_AXIS_OFFSET_Y, cz0 + SOLAR_HUB_AXIS_OFFSET_Z];
+    return { "cy0" : cy0, "cz0" : cz0, "hubR" : hub, "hubL" : hub };
+}
+
+function nomadSolarColor() returns Color
+{
+    return color(0.95, 0.65, 0.15, 1);
+}
+
+// Axis-aligned box on one side: x range a..b for the right side (side = 1), mirrored for the left.
+function nomadSideBox(context is Context, id is Id, side is number, a is ValueWithUnits, b is ValueWithUnits,
+    y0 is ValueWithUnits, y1 is ValueWithUnits, z0 is ValueWithUnits, z1 is ValueWithUnits) returns Query
+{
+    const x0 = side > 0 ? a : -b;
+    const x1 = side > 0 ? b : -a;
+    return nomadBox(context, id, vector(x0, y0, z0), vector(x1, y1, z1));
+}
+
+// One cassette assembly at slide extension 0 (stowed) .. 1 (deployed) and tilt, in the given lid pose.
+export function nomadBuildSolarSide(context is Context, id is Id, side is number, extension is number, tilt is ValueWithUnits,
+    lidAngle is ValueWithUnits, hinge is map, lay is map) returns map
+{
+    const tag = side > 0 ? "R" : "L";
+    const hub = side > 0 ? lay.hubR : lay.hubL;
+    const xi = MIN_GAP / 2 + extension * SOLAR_SLIDE_TRAVEL;
+    const kx1 = xi - SOLAR_HUB_LINK_LENGTH;
+    const railHalfW = SOLAR_CARRIAGE_WIDTH / 2 + WALL_THICKNESS;
+    const railHalfH = SOLAR_CARRIAGE_HEIGHT / 2 + WALL_THICKNESS;
+    const pinHalf = SOLAR_HUB_PIN_DIAMETER / 2;
+    const cassette = nomadSideBox(context, id + "cassette", side, xi, xi + SOLAR_CASSETTE_WIDTH,
+            lay.cy0, lay.cy0 + SOLAR_CASSETTE_HEIGHT, lay.cz0, lay.cz0 + SOLAR_CASSETTE_THICKNESS);
+    const pin = nomadSideBox(context, id + "pin", side, kx1, xi,
+            hub[0] - pinHalf, hub[0] + pinHalf, hub[1] - pinHalf, hub[1] + pinHalf);
+    const carriage = nomadSideBox(context, id + "carriage", side, kx1 - SOLAR_RAIL_ENGAGEMENT, kx1,
+            hub[0] - SOLAR_CARRIAGE_WIDTH / 2, hub[0] + SOLAR_CARRIAGE_WIDTH / 2, hub[1] - SOLAR_CARRIAGE_HEIGHT / 2, hub[1] + SOLAR_CARRIAGE_HEIGHT / 2);
+    const rail = nomadSideBox(context, id + "rail", side,
+            MIN_GAP / 2 - SOLAR_HUB_LINK_LENGTH - SOLAR_RAIL_ENGAGEMENT, MIN_GAP / 2 + SOLAR_SLIDE_TRAVEL - SOLAR_HUB_LINK_LENGTH,
+            hub[0] - railHalfW, hub[0] + railHalfW, hub[1] - railHalfH, hub[1] + railHalfH);
+    if (abs(tilt) > 1e-9 * degree)
+        opTransform(context, id + "tilt", { "bodies" : cassette,
+                    "transform" : rotationAround(line(vector(0 * millimeter, hub[0], hub[1]), vector(-1, 0, 0)), tilt) });
+    opTransform(context, id + "pose", { "bodies" : qUnion([cassette, pin, carriage, rail]), "transform" : nomadLidTransform(lidAngle, hinge) });
+    nomadTag(context, cassette, "SOLAR_CASSETTE_" ~ tag, nomadSolarColor());
+    nomadTag(context, pin, "SOLAR_HUB_PIN_" ~ tag, nomadEnvColor());
+    nomadTag(context, carriage, "SOLAR_CARRIAGE_" ~ tag, nomadEnvColor());
+    nomadTag(context, rail, "KEEPOUT_SOLAR_RAIL_" ~ tag, nomadSkelColor());
+    return { ("C" ~ tag) : cassette, ("P" ~ tag) : pin, ("K" ~ tag) : carriage, ("R" ~ tag) : rail };
+}
+
 // BEGIN PRODUCTION FEATURES
 annotation { "Feature Type Name" : "NOMAD Skeleton" }
 export const nomadSkeleton = defineFeature(function(context is Context, id is Id, definition is map)

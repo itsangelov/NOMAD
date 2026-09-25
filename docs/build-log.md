@@ -127,3 +127,56 @@ API requests used by Round A.2b: 0. Cycle total: 57 / 2,500.
 - Rear-face hinge direction. Working `HINGE_AXIS_OFFSET` changed from 8 to 0; `HINGE_AXIS_HEIGHT` kept at 0 and still TBD.
 - `LID_CLOSED_GAP` working value 2.0 mm, no longer tied to `MIN_GAP`. `MIN_GAP` stays 1.0.
 - Exact axis position and hinge hardware remain TBD until the mechanism prototype.
+- Committed as `0fdc92e`.
+
+## 2026-09-25 — P0.1 Round B: solar kinematic skeleton, initial analysis (modeled; no rail architecture chosen)
+
+- **New working inputs (TBD):** `SOLAR_CARRIAGE_WIDTH` 12, `SOLAR_CARRIAGE_HEIGHT` 8, and `SOLAR_HUB_LINK_LENGTH` = WALL + deploy clearance + MIN_GAP = 8.5.
+- **New code:**
+  - production builder `nomadBuildSolarSide` and layout `nomadSolarLayout` in `NOMAD_P01.fs`
+  - model `CAD/tools/solar_skeleton_model.py`
+  - Onshape harness `NOMAD_P01.solar.test.fs`
+- **Onshape cross-check (V0, 6 states):** matched the model exactly.
+- **Results** (details in `prototypes/P0.1/solar_round_b.md`):
+  - Travel: 155 mm required. Only 106.5 mm is available if each rail stays in its own half, so rails must cross the centreline by 48 mm.
+  - The current working layout (hub and rail at the cassette mid-plane) is impossible: rails run through the stowed cassettes and through each other.
+  - D-004 kinematics are feasible with the rail outside the cassette layer: V1 (stacked rail layer, lid +6.5 mm) or V2 (edge rails, cassettes −6 mm, tilt restricted).
+  - Tilt reaches the full ±75° at lid 105° and 135°. With the lid closed, the table limits it to ±30°.
+  - Deployed span is 606 mm.
+
+API requests used by Round B: 9. Cycle total: 66 / 2,500.
+
+## 2026-09-25 — P0.1 Round B.1: V1 feasibility pass (modeled; V1 not chosen)
+
+- **Model:** `CAD/tools/solar_v1_feasibility.py`, adding the bezel, per-side wall openings, hub bracket, provisional cable envelope, service loops, cable routing and hinge check. The Onshape cross-check of the V1 core skeleton matched exactly.
+- **V1 as specified fails on four specific points:**
+  1. pin and cable don't fit together in the 12 mm carriage
+  2. 0.7 mm carriage retaining lip
+  3. the cable's zone at the tilt joint hits the side wall (5 mm deploy clearance, about 8 mm needed)
+  4. one cassette's cable is blocked from the hinge by the staggered rails
+- **Minimal fixes** (lid stays 31.5 mm): 17 mm bracket and 22.6 mm carriage, an 8 mm cable corridor between the rails, deploy clearance 8 mm. These clear every modeled collision and routing problem.
+- **Remaining structural concerns:**
+  - The back plate spans 202 mm over the cassette bay (rough estimate: touches the cassettes at about 4.5 N).
+  - The side walls are reduced to end posts and a lower strip.
+  - The lid is likely only printable as two pieces. *(inferred)*
+- **Details:** `prototypes/P0.1/solar_v1_feasibility.md`.
+
+API requests used by Round B.1: 9. Cycle total: 75 / 2,500.
+
+**Correction (2026-09-25):** the V1 tool printed the fixed-configuration rail Y ranges centred on the hub pin instead of the rail. The geometry and every check were correct. The actual rails are R y 121.5–149.1 and L y 85.9–113.5, with the 8 mm corridor between them. The print and `solar_v1_feasibility.md` have been corrected.
+
+## 2026-09-25 — P0.1 Round B.2: lid structure / printability screening (screening estimates, not FEA; nothing chosen)
+
+- **Tool:** `CAD/tools/lid_structure_screening.py`. Details in `prototypes/P0.1/lid_structure_screening.md`.
+- **Concepts compared (V1 + fixes throughout):**
+  - A: one-piece lid with a ribbed back plate
+  - B: one-piece lid with a perimeter frame and thin panel
+  - C: two-piece lid, front frame + ribbed rear shell, joined with M3 heat-set inserts and screws
+- **Back plate** (202 mm one-way span):
+  - Needs ~11 mm external ribs to stay within half the 1 mm cassette clearance under a conservative 20 N press, which makes the lid 42.5 mm (closed stack 84.5).
+  - A printed sandwich plate is optimistic at 38.5 mm.
+  - B's thin panel deflects ~50 mm: it cannot work as a load-bearing back.
+- **Printing and assembly:** one-piece A and B have no practical print orientation (closed cassette-bay tunnel) and cannot take the display (rails 1 mm above it). C prints as flat parts and assembles in a clear order.
+- **Rail cantilever over the display** (all concepts): 0.67 mm static and 2.0 mm at 3 g, against 1.0 mm clearance. This is a new risk; a metal stiffener in each rail is the likely mitigation.
+- **No new collisions**; the hinge clearance stays ≥ 1.41 mm.
+- **No Onshape run.** API total 75 / 2,500.
