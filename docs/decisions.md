@@ -54,6 +54,31 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
 - **Scope:** This decision defines the intended kinematics only. The exact rail, hub, lock and axis geometry is subject to P0.1 mechanical validation. Nothing here claims the final geometry is validated.
 - **Tradeoff:** Tilting about the slide axis keeps the rotation hub on the load path the rail already provides, and gives a simple one-axis sun adjustment. Only one tilt axis is adjustable, so orienting toward the sun also depends on how the machine itself is placed.
 
+## D-006 — Provisional hinge direction and closed-lid gap (P0.1)
+
+- **Status:** accepted (2026-09-25) as a **provisional P0.1 working direction**. It is not a final hinge design.
+- **Context:** Rounds A.1, A.2 and A.2b (`prototypes/P0.1/hinge_feasibility_map.md`, `closed_gap_sweep.md`).
+  - An inset hinge (axis 8 mm inside the rear face) collides with the base unless the axis is very high or the base carries a large relief (44 cm³).
+  - A hinge axis on or behind the rear face clears in every tested position.
+  - With the closed-lid gap equal to MIN_GAP, the closed pose meets the requirement with zero margin.
+- **Decision, kept at four distinct levels:**
+
+  | Level | Status |
+  |---|---|
+  | **Architectural direction** | Provisional: **hinge axis at or very near the base rear face.** Not an internally inset hinge, not the large base-relief solution, and no forward/inset hinge chosen merely to reduce rear overhang. |
+  | **Exact axis position** (`HINGE_AXIS_OFFSET`, `HINGE_AXIS_HEIGHT`) | **TBD.** Working inputs are inset 0 and height 0, but the height stays a parameter. To be resolved in the physical mechanism prototype. |
+  | **Hinge hardware** (type, shaft diameter, mounting geometry) | **TBD.** To be resolved in the physical mechanism prototype. |
+  | **Closed-lid gap** (`LID_CLOSED_GAP`) | **Working value 2.0 mm; authoritative value TBD.** Chosen to give about 1.0 mm of modeled margin over MIN_GAP. |
+
+- **`LID_CLOSED_GAP` vs `MIN_GAP`:**
+  - `LID_CLOSED_GAP` is the *geometric* standoff between base and lid when closed.
+  - `MIN_GAP` (1.0 mm) remains the general *minimum modeled clearance requirement*.
+  - They are separate parameters and are no longer linked.
+- **Tradeoffs:**
+  - A rear-face hinge increases rear overhang when open. With a 2.0 gap at 105°: 61.8–90.8 mm at inset 0 (depending on axis height) and up to 98.3 mm at inset −6, versus 54.2–76.7 mm for the feasible inset hinges.
+  - It may place hinge hardware at or proud of the rear face, which competes with the rear port zone. *(inferred)*
+  - The 2.0 mm closed gap adds about 1 mm to the closed thickness.
+
 ## D-005 — Default branch `main`
 
 - **Status:** accepted (Phase 0 approval, 2026-09-25)

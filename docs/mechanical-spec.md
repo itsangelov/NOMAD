@@ -35,13 +35,15 @@ All dimensions are in mm unless noted.
 | BASE_SIDE_MARGIN | TBD | TBD | 8 | Keyboard edge to inner side wall |
 | BASE_FRONT_MARGIN | TBD | TBD | 15 | Base front face to trackpad front edge (includes wall) |
 | BASE_REAR_ZONE_DEPTH | TBD | TBD | 30 | Keyboard rear edge to base rear face: hinge + rear port zone |
-| HINGE_AXIS_OFFSET | TBD | TBD | 8 | Hinge axis inset from the base rear face, at base top-surface height |
+| HINGE_AXIS_OFFSET | TBD | TBD | 0 | Hinge axis inset from the base rear face (negative = behind it). Working input follows the D-006 provisional rear-face hinge direction; the exact position is TBD |
+| HINGE_AXIS_HEIGHT | TBD | TBD | 0 | Hinge axis height above the base top surface. Exact Z is TBD (mechanism prototype). With a 2.0 closed gap at inset 0, heights 0–2 give 1.41 mm minimum clearance and heights ≥ 4 give 2.0 (A.2b) |
 
 ### Lid
 
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
 | LID_THICKNESS | TBD | TBD | 25 | Placeholder: display 5 + cassette 8 + walls 2 × 2.5 + ~7 rail/structure allowance |
+| LID_CLOSED_GAP | TBD | TBD | 2.0 | *Geometric* closed-lid standoff between the base top surface and the lid display face (e.g. bumpers). Not the same as MIN_GAP, which is the clearance *requirement*. The 2.0 working value gives ~1.0 mm modeled margin (D-006, A.2b) |
 | LID_ANGLE_NOMINAL | TBD | TBD | 105° | Nominal open pose for checks |
 | LID_ANGLE_MAX | TBD | TBD | 135° | Maximum open pose for checks |
 
@@ -77,6 +79,8 @@ The keyboard and trackpad are centred on the chassis longitudinal centreline, wi
 | KEYBOARD_LATERAL_OFFSET | TBD | TBD | 0 | Design intent: 0 = centred on the chassis centreline |
 | TRACKPAD_LATERAL_OFFSET | TBD | TBD | 0 | Design intent: 0 = centred on the chassis centreline |
 | TRACKPAD_KEYBOARD_GAP | TBD | TBD | 10 | Gap between the keyboard and the trackpad below it |
+| KEYBOARD_TOP_RECESS | TBD | TBD | 1 | Keyboard top surface below the base top surface |
+| TRACKPAD_TOP_RECESS | TBD | TBD | 1 | Trackpad top surface below the base top surface |
 
 ### Computer, storage and GNSS
 

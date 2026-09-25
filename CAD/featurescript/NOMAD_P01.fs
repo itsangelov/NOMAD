@@ -23,9 +23,11 @@ export const WALL_THICKNESS = 2.5 * millimeter; // WORKING (status TBD)
 export const BASE_SIDE_MARGIN = 8 * millimeter; // WORKING (status TBD)
 export const BASE_FRONT_MARGIN = 15 * millimeter; // WORKING (status TBD)
 export const BASE_REAR_ZONE_DEPTH = 30 * millimeter; // WORKING (status TBD)
-export const HINGE_AXIS_OFFSET = 8 * millimeter; // WORKING (status TBD)
+export const HINGE_AXIS_OFFSET = 0 * millimeter; // WORKING (status TBD)
+export const HINGE_AXIS_HEIGHT = 0 * millimeter; // WORKING (status TBD)
 // --- lid ---
 export const LID_THICKNESS = 25 * millimeter; // WORKING (status TBD)
+export const LID_CLOSED_GAP = 2 * millimeter; // WORKING (status TBD)
 export const LID_ANGLE_NOMINAL = 105 * degree; // WORKING (status TBD)
 export const LID_ANGLE_MAX = 135 * degree; // WORKING (status TBD)
 // --- display ---
@@ -47,6 +49,8 @@ export const TRACKPAD_THICKNESS = 13 * millimeter; // WORKING (status TBD)
 export const KEYBOARD_LATERAL_OFFSET = 0 * millimeter; // WORKING (status TBD)
 export const TRACKPAD_LATERAL_OFFSET = 0 * millimeter; // WORKING (status TBD)
 export const TRACKPAD_KEYBOARD_GAP = 10 * millimeter; // WORKING (status TBD)
+export const KEYBOARD_TOP_RECESS = 1 * millimeter; // WORKING (status TBD)
+export const TRACKPAD_TOP_RECESS = 1 * millimeter; // WORKING (status TBD)
 // --- computer ---
 export const PI_WIDTH = 85 * millimeter; // VALUE (provisional)
 export const PI_DEPTH = 56 * millimeter; // VALUE (provisional)
@@ -69,7 +73,7 @@ export const SOLAR_HUB_AXIS_OFFSET_Y = 100 * millimeter; // WORKING via FORMULA 
 export const SOLAR_HUB_AXIS_OFFSET_Z = 4 * millimeter; // WORKING via FORMULA SOLAR_CASSETTE_THICKNESS / 2 = 4 (status TBD)
 export const SOLAR_INDEX_STEP = 15 * degree; // WORKING (status TBD)
 export const SOLAR_HUB_PIN_DIAMETER = 5 * millimeter; // WORKING (status TBD)
-export const NOMAD_PARAM_BASIS = { "BODY_WIDTH" : "formula", "BODY_DEPTH" : "formula", "BODY_HEIGHT" : "working", "WALL_THICKNESS" : "working", "BASE_SIDE_MARGIN" : "working", "BASE_FRONT_MARGIN" : "working", "BASE_REAR_ZONE_DEPTH" : "working", "HINGE_AXIS_OFFSET" : "working", "LID_THICKNESS" : "working", "LID_ANGLE_NOMINAL" : "working", "LID_ANGLE_MAX" : "working", "DISPLAY_DIAGONAL" : "value", "DISPLAY_ACTIVE_WIDTH" : "value", "DISPLAY_ACTIVE_HEIGHT" : "value", "DISPLAY_WIDTH" : "working", "DISPLAY_HEIGHT" : "working", "DISPLAY_THICKNESS" : "working", "DISPLAY_VERTICAL_OFFSET" : "working", "KEYBOARD_WIDTH" : "value", "KEYBOARD_DEPTH" : "value", "KEYBOARD_THICKNESS" : "value", "TRACKPAD_WIDTH" : "working", "TRACKPAD_DEPTH" : "working", "TRACKPAD_THICKNESS" : "working", "KEYBOARD_LATERAL_OFFSET" : "working", "TRACKPAD_LATERAL_OFFSET" : "working", "TRACKPAD_KEYBOARD_GAP" : "working", "PI_WIDTH" : "value", "PI_DEPTH" : "value", "NVME_FORMAT" : "value", "CLEARANCE" : "working", "MIN_GAP" : "working", "FASTENER_SIZE" : "value", "SOLAR_CASSETTE_WIDTH" : "formula", "SOLAR_CASSETTE_HEIGHT" : "working", "SOLAR_CASSETTE_THICKNESS" : "working", "SOLAR_ROTATION_LIMIT" : "value", "SOLAR_ROTATION_AXIS" : "value", "SOLAR_DEPLOY_CLEARANCE" : "working", "SOLAR_SLIDE_TRAVEL" : "formula", "SOLAR_RAIL_ENGAGEMENT" : "working", "SOLAR_HUB_AXIS_OFFSET_Y" : "formula", "SOLAR_HUB_AXIS_OFFSET_Z" : "formula", "SOLAR_INDEX_STEP" : "working", "SOLAR_HUB_PIN_DIAMETER" : "working" };
+export const NOMAD_PARAM_BASIS = { "BODY_WIDTH" : "formula", "BODY_DEPTH" : "formula", "BODY_HEIGHT" : "working", "WALL_THICKNESS" : "working", "BASE_SIDE_MARGIN" : "working", "BASE_FRONT_MARGIN" : "working", "BASE_REAR_ZONE_DEPTH" : "working", "HINGE_AXIS_OFFSET" : "working", "HINGE_AXIS_HEIGHT" : "working", "LID_THICKNESS" : "working", "LID_CLOSED_GAP" : "working", "LID_ANGLE_NOMINAL" : "working", "LID_ANGLE_MAX" : "working", "DISPLAY_DIAGONAL" : "value", "DISPLAY_ACTIVE_WIDTH" : "value", "DISPLAY_ACTIVE_HEIGHT" : "value", "DISPLAY_WIDTH" : "working", "DISPLAY_HEIGHT" : "working", "DISPLAY_THICKNESS" : "working", "DISPLAY_VERTICAL_OFFSET" : "working", "KEYBOARD_WIDTH" : "value", "KEYBOARD_DEPTH" : "value", "KEYBOARD_THICKNESS" : "value", "TRACKPAD_WIDTH" : "working", "TRACKPAD_DEPTH" : "working", "TRACKPAD_THICKNESS" : "working", "KEYBOARD_LATERAL_OFFSET" : "working", "TRACKPAD_LATERAL_OFFSET" : "working", "TRACKPAD_KEYBOARD_GAP" : "working", "KEYBOARD_TOP_RECESS" : "working", "TRACKPAD_TOP_RECESS" : "working", "PI_WIDTH" : "value", "PI_DEPTH" : "value", "NVME_FORMAT" : "value", "CLEARANCE" : "working", "MIN_GAP" : "working", "FASTENER_SIZE" : "value", "SOLAR_CASSETTE_WIDTH" : "formula", "SOLAR_CASSETTE_HEIGHT" : "working", "SOLAR_CASSETTE_THICKNESS" : "working", "SOLAR_ROTATION_LIMIT" : "value", "SOLAR_ROTATION_AXIS" : "value", "SOLAR_DEPLOY_CLEARANCE" : "working", "SOLAR_SLIDE_TRAVEL" : "formula", "SOLAR_RAIL_ENGAGEMENT" : "working", "SOLAR_HUB_AXIS_OFFSET_Y" : "formula", "SOLAR_HUB_AXIS_OFFSET_Z" : "formula", "SOLAR_INDEX_STEP" : "working", "SOLAR_HUB_PIN_DIAMETER" : "working" };
 export const NOMAD_UNRESOLVED = ["SERVICE_PANEL_THICKNESS", "PI_STACK_HEIGHT", "GNSS_ANTENNA_KEEPOUT", "MIN_WALL", "CABLE_CLEARANCE", "OVERHANG_LIMIT", "INSERT_SIZE", "BATTERY_BAY_WIDTH", "BATTERY_BAY_DEPTH", "BATTERY_BAY_HEIGHT"];
 // END GENERATED PARAMS
 
@@ -80,20 +84,26 @@ export const NOMAD_PARENTS = { "ENV_KEYBOARD" : "SKEL_BASE", "ENV_TRACKPAD" : "S
 
 // ================= Frames =================
 
-export function nomadHingePoint() returns Vector
+// A hinge definition: axis inset from the base rear face and height above the base top surface.
+export function nomadDefaultHinge() returns map
 {
-    return vector(0 * millimeter, BODY_DEPTH - HINGE_AXIS_OFFSET, BODY_HEIGHT);
+    return { "offset" : HINGE_AXIS_OFFSET, "height" : HINGE_AXIS_HEIGHT };
+}
+
+export function nomadHingePoint(hinge is map) returns Vector
+{
+    return vector(0 * millimeter, BODY_DEPTH - hinge.offset, BODY_HEIGHT + hinge.height);
 }
 
 // Axis direction is -X so that a positive angle raises the lid's free (front) edge.
-export function nomadHingeLine() returns Line
+export function nomadHingeLine(hinge is map) returns Line
 {
-    return line(nomadHingePoint(), vector(-1, 0, 0));
+    return line(nomadHingePoint(hinge), vector(-1, 0, 0));
 }
 
-export function nomadLidTransform(angle is ValueWithUnits) returns Transform
+export function nomadLidTransform(angle is ValueWithUnits, hinge is map) returns Transform
 {
-    return rotationAround(nomadHingeLine(), angle);
+    return rotationAround(nomadHingeLine(hinge), angle);
 }
 
 export enum NomadLidPose
@@ -164,41 +174,45 @@ export function nomadBuildBase(context is Context, id is Id) returns map
     // D-003: trackpad centred below the keyboard; both on the centreline at offset 0.
     const tpY0 = BASE_FRONT_MARGIN;
     const kbY0 = tpY0 + TRACKPAD_DEPTH + TRACKPAD_KEYBOARD_GAP;
+    const kbTop = BODY_HEIGHT - KEYBOARD_TOP_RECESS;
     const keyboard = nomadBox(context, id + "keyboard",
-            vector(KEYBOARD_LATERAL_OFFSET - KEYBOARD_WIDTH / 2, kbY0, BODY_HEIGHT - KEYBOARD_THICKNESS),
-            vector(KEYBOARD_LATERAL_OFFSET + KEYBOARD_WIDTH / 2, kbY0 + KEYBOARD_DEPTH, BODY_HEIGHT));
+            vector(KEYBOARD_LATERAL_OFFSET - KEYBOARD_WIDTH / 2, kbY0, kbTop - KEYBOARD_THICKNESS),
+            vector(KEYBOARD_LATERAL_OFFSET + KEYBOARD_WIDTH / 2, kbY0 + KEYBOARD_DEPTH, kbTop));
     nomadTag(context, keyboard, "ENV_KEYBOARD", nomadEnvColor());
 
+    const tpTop = BODY_HEIGHT - TRACKPAD_TOP_RECESS;
     const trackpad = nomadBox(context, id + "trackpad",
-            vector(TRACKPAD_LATERAL_OFFSET - TRACKPAD_WIDTH / 2, tpY0, BODY_HEIGHT - TRACKPAD_THICKNESS),
-            vector(TRACKPAD_LATERAL_OFFSET + TRACKPAD_WIDTH / 2, tpY0 + TRACKPAD_DEPTH, BODY_HEIGHT));
+            vector(TRACKPAD_LATERAL_OFFSET - TRACKPAD_WIDTH / 2, tpY0, tpTop - TRACKPAD_THICKNESS),
+            vector(TRACKPAD_LATERAL_OFFSET + TRACKPAD_WIDTH / 2, tpY0 + TRACKPAD_DEPTH, tpTop));
     nomadTag(context, trackpad, "ENV_TRACKPAD", nomadEnvColor());
 
     return { "SKEL_BASE" : base, "ENV_KEYBOARD" : keyboard, "ENV_TRACKPAD" : trackpad };
 }
 
-// Built in the closed pose (lying on the base, display face down), then rotated about the hinge.
-export function nomadBuildLid(context is Context, id is Id, angle is ValueWithUnits) returns map
+// Built in the closed pose (resting LID_CLOSED_GAP above the base, display face down),
+// then rotated about the hinge.
+export function nomadBuildLid(context is Context, id is Id, angle is ValueWithUnits, hinge is map) returns map
 {
     const halfW = BODY_WIDTH / 2;
     const zero = 0 * millimeter;
-    const lid = nomadTray(context, id + "shell", vector(-halfW, zero, BODY_HEIGHT), vector(halfW, BODY_DEPTH, BODY_HEIGHT + LID_THICKNESS), WALL_THICKNESS, -1);
+    const lidZ0 = BODY_HEIGHT + LID_CLOSED_GAP;
+    const lid = nomadTray(context, id + "shell", vector(-halfW, zero, lidZ0), vector(halfW, BODY_DEPTH, lidZ0 + LID_THICKNESS), WALL_THICKNESS, -1);
     nomadTag(context, lid, "SKEL_LID", nomadSkelColor());
 
     // Closed pose: the lid free edge is at y = 0, so a positive offset moves toward -Y.
     const displayCentreY = BODY_DEPTH / 2 - DISPLAY_VERTICAL_OFFSET;
     const display = nomadBox(context, id + "display",
-            vector(-DISPLAY_WIDTH / 2, displayCentreY - DISPLAY_HEIGHT / 2, BODY_HEIGHT),
-            vector(DISPLAY_WIDTH / 2, displayCentreY + DISPLAY_HEIGHT / 2, BODY_HEIGHT + DISPLAY_THICKNESS));
+            vector(-DISPLAY_WIDTH / 2, displayCentreY - DISPLAY_HEIGHT / 2, lidZ0),
+            vector(DISPLAY_WIDTH / 2, displayCentreY + DISPLAY_HEIGHT / 2, lidZ0 + DISPLAY_THICKNESS));
     nomadTag(context, display, "ENV_DISPLAY", nomadEnvColor());
 
-    opTransform(context, id + "pose", { "bodies" : qUnion([lid, display]), "transform" : nomadLidTransform(angle) });
+    opTransform(context, id + "pose", { "bodies" : qUnion([lid, display]), "transform" : nomadLidTransform(angle, hinge) });
     return { "SKEL_LID" : lid, "ENV_DISPLAY" : display };
 }
 
-export function nomadBuildRoundA(context is Context, id is Id, lidAngle is ValueWithUnits) returns map
+export function nomadBuildRoundA(context is Context, id is Id, lidAngle is ValueWithUnits, hinge is map) returns map
 {
-    return mergeMaps(nomadBuildBase(context, id + "base"), nomadBuildLid(context, id + "lid", lidAngle));
+    return mergeMaps(nomadBuildBase(context, id + "base"), nomadBuildLid(context, id + "lid", lidAngle, hinge));
 }
 
 // Finds each Round A body by its NOMAD attribute within `scope`; exactly one must exist.
@@ -391,7 +405,7 @@ export const nomadLid = defineFeature(function(context is Context, id is Id, def
     }
     {
         const angle = nomadLidPoseAngle(definition.lidPose);
-        nomadBuildLid(context, id, angle);
+        nomadBuildLid(context, id, angle, nomadDefaultHinge());
         setVariable(context, "NOMAD_LID_ANGLE", angle);
     }, { "lidPose" : NomadLidPose.NOMINAL });
 

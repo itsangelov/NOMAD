@@ -36,10 +36,12 @@ body:
   BASE_SIDE_MARGIN:        { value: null, status: TBD, source: "Keyboard edge to inner side wall", working: 8 }
   BASE_FRONT_MARGIN:       { value: null, status: TBD, source: "Base front face to trackpad front edge (includes wall)", working: 15 }
   BASE_REAR_ZONE_DEPTH:    { value: null, status: TBD, source: "Keyboard rear edge to base rear face: hinge + rear port zone", working: 30 }
-  HINGE_AXIS_OFFSET:       { value: null, status: TBD, source: "Hinge axis inset from base rear face, at base top-surface height", working: 8 }
+  HINGE_AXIS_OFFSET:       { value: null, status: TBD, source: "Hinge axis inset from the base rear face (negative = behind it)", working: 0, note: "D-006 provisional rear-face hinge direction; exact position TBD (mechanism prototype)" }
+  HINGE_AXIS_HEIGHT:       { value: null, status: TBD, source: "Hinge axis height above the base top surface", working: 0, note: "Exact Z TBD (mechanism prototype). With a 2.0 closed gap at inset 0, heights 0-2 give 1.41 mm min clearance, >= 4 give 2.0 (A.2b)" }
 
 lid:
   LID_THICKNESS:           { value: null, status: TBD, source: "Display + controller + solar bay + walls", working: 25, note: "Placeholder: display 5 + cassette 8 + walls 2x2.5 + ~7 rail/structure allowance" }
+  LID_CLOSED_GAP:          { value: null, status: TBD, source: "Geometric closed-lid standoff between base top surface and lid display face (e.g. bumpers). Not the same as MIN_GAP, which is the clearance requirement", working: 2.0, note: "D-006: P0.1 working value chosen to give ~1.0 mm modeled margin over MIN_GAP (A.2b)" }
   LID_ANGLE_NOMINAL:       { value: null, unit: deg, status: TBD, source: "Nominal open pose for checks", working: 105 }
   LID_ANGLE_MAX:           { value: null, unit: deg, status: TBD, source: "Maximum open pose for checks", working: 135 }
 
@@ -64,6 +66,8 @@ layout:
   KEYBOARD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline", working: 0 }
   TRACKPAD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline", working: 0 }
   TRACKPAD_KEYBOARD_GAP:   { value: null, status: TBD, source: "D-003; trackpad sits below keyboard", working: 10 }
+  KEYBOARD_TOP_RECESS:     { value: null, status: TBD, source: "Keyboard top surface below the base top surface", working: 1 }
+  TRACKPAD_TOP_RECESS:     { value: null, status: TBD, source: "Trackpad top surface below the base top surface", working: 1 }
 
 computer:
   PI_WIDTH:                { value: 85, status: provisional, source: "Raspberry Pi 5 board outline, approximate" }
