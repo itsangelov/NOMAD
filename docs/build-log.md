@@ -180,3 +180,37 @@ API requests used by Round B.1: 9. Cycle total: 75 / 2,500.
 - **Rail cantilever over the display** (all concepts): 0.67 mm static and 2.0 mm at 3 g, against 1.0 mm clearance. This is a new risk; a metal stiffener in each rail is the likely mitigation.
 - **No new collisions**; the hinge clearance stays ≥ 1.41 mm.
 - **No Onshape run.** API total 75 / 2,500.
+
+## 2026-09-25 — P0.1 test coupons designed (Concept C provisional basis; not printed yet)
+
+- **Spec:** `prototypes/P0.1/coupons/P01_test_coupons.md`. Expected values from `CAD/tools/coupon_expectations.py`.
+- **Coupon A (solar rail):**
+  - the full 198 mm V1 rail on a clamped pad stub
+  - carriage with load post, and a 5 mm display surrogate (1.0 mm gap)
+  - A1 is the printed rail; A2 has slotted walls for generic 10 × 2 aluminium or 10 × 1.5 steel strips
+  - Expected: A1 0.69 mm at 300 g, touching at +0.44 kg; A2 0.06–0.11 mm.
+- **Coupon B (rear shell):**
+  - the full 202 mm span on 14 mm shelves with an M3 insert joint at 70 mm pitch, a removable 1.0 mm clearance block, and a 90 mm strip
+  - B1 plain 2.5 plate; B2 ribbed (h 11 default, 6 and 8 optional)
+  - Expected: B1 14.7 mm at 20 N (touches at 1.4 N); B2 h 11 0.55 mm at 20 N.
+- **Design note:** ribs may stop at the edge-beam line (moment is ~zero over the supports), which frees the screw bands.
+- **Printing:** coupon A fits a 220 mm-class bed; coupon B needs ≥ 235 mm in one axis. Roughly 0.45 kg of PETG in total.
+- No Onshape use. API total 75 / 2,500.
+
+## 2026-09-25 — P0.1 coupon files generated (Round B.3; not printed yet)
+
+- **Files:**
+  - `CAD/coupons/P0.1/generate_coupons.py`: parametric master, standard-library Python.
+  - 13 print-ready STLs and matching OpenSCAD copies.
+  - A README with parts, orientations, infill, hardware, assembly, and test-critical vs fixture dimensions.
+- **Parts:** A1 and A2 rails, pad stub, carriage + post, load platform, display surrogate; B frame, clearance block, B1, B2 at h 6/8/11, load pad.
+- **Sanity checks:** all passed.
+  - every mesh watertight (0 open or non-manifold edges), one body per part
+  - channel 22.6 × 8.0, slot 17.6, lips present, carriage fit, strip slots open, ribs attached, 1.0 mm references, bed fit
+  - STL read-back matches
+- **Geometry changes from the spec:**
+  - rail 200 long (end stop beyond the 198 channel, preserving the 149.5 mm arm)
+  - carriage post +2 mm (load rod clears the lips)
+  - edge reliefs instead of chamfers
+  - load platform added
+- **Estimate:** ~0.58 kg PETG, ~35–45 h printing (rough).

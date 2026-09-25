@@ -28,6 +28,7 @@ Do not silently change: overall architecture, the solar concept, display orienta
 - Round B (initial solar kinematic skeleton) has been modeled: `prototypes/P0.1/solar_round_b.md` (model: `CAD/tools/solar_skeleton_model.py`, cross-checked in Onshape). The solar rail architecture is **not chosen** and awaits the owner.
 - Round B.1 (V1 feasibility pass) has been modeled: `prototypes/P0.1/solar_v1_feasibility.md` (model: `CAD/tools/solar_v1_feasibility.py`). V1 needs minimal fixes to be viable and is **not chosen**.
 - Round B.2 (lid structure / printability screening of concepts A, B and C) has been done: `prototypes/P0.1/lid_structure_screening.md`. No concept is chosen.
+- P0.1 test coupons (rail A1/A2, rear shell B1/B2) have been designed on the provisional Concept C basis: `prototypes/P0.1/coupons/P01_test_coupons.md`. They are not yet printed or tested. Printable files are in `CAD/coupons/P0.1/`. Regenerate with `py CAD/coupons/P0.1/generate_coupons.py`; that file is the parametric master.
 - D-001 accepted: P0.1 geometry is generated with FeatureScript. This covers P0.1 only, not the long-term CAD architecture.
 - D-002 accepted: `CAD/parameters/nomad.yaml` holds the authoritative parameter values.
 - D-003 accepted: the trackpad is centred below the keyboard, and both sit on the chassis centreline. Positions are parameterized; trackpad dimensions are TBD until the modules are selected.
