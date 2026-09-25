@@ -21,14 +21,14 @@ Do not silently change: overall architecture, the solar concept, display orienta
 ## Current status
 
 - Phase: V1 mechanical architecture. Prototype: **P0.1** (mechanical proof of concept).
-- Phase 0 (workspace setup) is done. The NOMAD Onshape document exists (link in `CAD/README.md`). It has no Feature Studio or geometry yet.
+- Phase 0 (workspace setup) is done. The NOMAD Onshape document exists (link in `CAD/README.md`). Its only Feature Studio is `NOMAD_P01_Coupons`, used by the owner-created Part Studio `P0.1 Coupons` (P0.1 test coupons, below); it holds no NOMAD product (chassis) geometry yet.
 - Phase 1 Round A (skeleton + keyboard/trackpad/display envelopes) has been modeled and tested in the scratch context only; results are in `docs/build-log.md`.
 - Round A.1 (closed-lid clearances, hinge comparison, body-height check) has been modeled. The hinge direction is now set provisionally by D-006.
 - Round A.2: the hinge-axis feasibility map is in `prototypes/P0.1/hinge_feasibility_map.md` (model: `CAD/tools/hinge_feasibility_2d.py`, cross-checked in Onshape). A.2b varies the closed gap (`prototypes/P0.1/closed_gap_sweep.md`).
 - Round B (initial solar kinematic skeleton) has been modeled: `prototypes/P0.1/solar_round_b.md` (model: `CAD/tools/solar_skeleton_model.py`, cross-checked in Onshape). The solar rail architecture is **not chosen** and awaits the owner.
 - Round B.1 (V1 feasibility pass) has been modeled: `prototypes/P0.1/solar_v1_feasibility.md` (model: `CAD/tools/solar_v1_feasibility.py`). V1 needs minimal fixes to be viable and is **not chosen**.
 - Round B.2 (lid structure / printability screening of concepts A, B and C) has been done: `prototypes/P0.1/lid_structure_screening.md`. No concept is chosen.
-- P0.1 test coupons (rail A1/A2, rear shell B1/B2) have been designed on the provisional Concept C basis: `prototypes/P0.1/coupons/P01_test_coupons.md`. They are not yet printed or tested. Printable files are in `CAD/coupons/P0.1/`. Regenerate with `py CAD/coupons/P0.1/generate_coupons.py`; that file is the parametric master.
+- P0.1 test coupons (rail A1/A2, rear shell B1/B2) have been designed on the provisional Concept C basis: `prototypes/P0.1/coupons/P01_test_coupons.md`. They are not yet printed or tested. **Onshape CAD:** Feature Studio `NOMAD_P01_Coupons` in the NOMAD document (custom feature "P0.1 Coupons"; snapshot `CAD/featurescript/NOMAD_P01_Coupons.fs`), validated in scratch and inserted by the owner into the Part Studio **P0.1 Coupons** (13 parts, visually verified). The coupon geometry is persistent in the NOMAD document; physical coupons are not yet printed or tested. Reference STLs: `CAD/coupons/P0.1/` via `py CAD/coupons/P0.1/generate_coupons.py`. The two must agree; `onshape_crosscheck.py` gives the expected sizes and volumes.
 - D-001 accepted: P0.1 geometry is generated with FeatureScript. This covers P0.1 only, not the long-term CAD architecture.
 - D-002 accepted: `CAD/parameters/nomad.yaml` holds the authoritative parameter values.
 - D-003 accepted: the trackpad is centred below the keyboard, and both sit on the chassis centreline. Positions are parameterized; trackpad dimensions are TBD until the modules are selected.

@@ -214,3 +214,24 @@ API requests used by Round B.1: 9. Cycle total: 75 / 2,500.
   - edge reliefs instead of chamfers
   - load platform added
 - **Estimate:** ~0.58 kg PETG, ~35–45 h printing (rough).
+
+## 2026-09-25 — P0.1 coupons in Onshape (Feature Studio `NOMAD_P01_Coupons`)
+
+- **Onshape write (approved):** created Feature Studio `NOMAD_P01_Coupons` (element `2e9a95c6ec40fe948348a500`) in the NOMAD main workspace and wrote the coupon FeatureScript. Compile check on write: no errors. Read back: matches the local snapshot `CAD/featurescript/NOMAD_P01_Coupons.fs`. It is the NOMAD document's only Feature Studio; no Part Studio feature was added (the connector cannot), so **no coupon geometry exists in a NOMAD Part Studio until the owner inserts "P0.1 Coupons"**.
+- **Feature:** one custom feature builds all 13 coupons as separate named solids (`CPN_*`), print orientation, laid out 20 mm apart. Dialog: B2 rib heights 6 / 8 / 11 and insert hole Ø 4.0 × 6.0; all other dimensions are named `CPN_*` constants (coupon-local, deliberately not in `nomad.yaml`).
+- **Validation (modeled, Onshape kernel, scratch Part Studio; one `test_feature` run, harness `NOMAD_P01_Coupons.test.fs`):**
+  - 13 solid bodies, 13 unique expected names, 13/13 bounding boxes exact, all on Z = 0, one solid each.
+  - Volumes vs `onshape_crosscheck.py` (exact, true holes): max deviation < 0.00005 %.
+  - Laid-out parts: 0 overlaps, 0 touches (78 pairs).
+  - Point probes 185/192. The 7 misses were misplaced probes (A2 channel edge probed at Y 16.05 < 16.1; B2 rib-side probes at X 115, on the mid-span transverse rib); the reference model is solid at the same 7 points, so the kernel agrees with it at all 192. Probes corrected in the harness; not re-run.
+  - Rigs 16/16: rail seated on the pad stub with insert holes over the stub holes; display gap 1.000; carriage stowed against the end stop with no interference, arm 149.500; centred clearance 0.300 (A1 and A2); at the +Y wall and up against the lips it touches without interference, 0.05 mm higher it interferes (lip engagement 2.2 per side); B1 and all three B2 plates seated on the shelves with no interference; clearance-block gap 1.000 under every plate; load pad seated; plate holes over the frame inserts.
+- **Discrepancies from the reference generator:** none dimensional. Round holes are true circles (STL: 0.1 mm steps); joints are exact face contact instead of the generator's 0.01 mm overlaps.
+- **API:** 14 requests (1 inspection list, 1 `test_feature` ≈ 9, create, write, read-back, list). Cycle total ≈ 89–90 / 2,500.
+
+## 2026-09-25 — Milestone: persistent Onshape coupon geometry (NOMAD → P0.1)
+
+- P0.1 coupon geometry is now persistent in the NOMAD Onshape document. The geometry was validated in scratch against the reference generator, then inserted into the user-created P0.1 Coupons Part Studio and visually verified by the user. Physical coupons have not yet been printed or tested.
+- **Confirmed by the owner:** the `NOMAD_P01_Coupons` Feature Studio is in the main NOMAD workspace; the owner created the Part Studio **P0.1 Coupons** and inserted the "P0.1 Coupons" custom feature; the feature regenerates without error; all 13 `CPN_*` parts are present and look correct; the geometry stays editable through the feature dialog and the Feature Studio.
+- **Evidence levels:** geometry *modeled* and validated in a scratch Part Studio (previous entry); insertion and appearance *visually verified by the owner* in NOMAD. Nothing is *physically tested* or *measured*.
+- **Source sync:** `CAD/featurescript/NOMAD_P01_Coupons.fs` is the file written to the Feature Studio (read back identical on write, unchanged locally since). No geometry changed in this pass; no Onshape API calls.
+- **Next (not started):** export and print-service preparation for the physical coupons.

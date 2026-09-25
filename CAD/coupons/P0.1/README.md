@@ -8,11 +8,15 @@ The test design and procedure are in `prototypes/P0.1/coupons/P01_test_coupons.m
 
 **Location:** `CAD/coupons/P0.1/`. The repo has no `CAD/01_CHASSIS/` tree, and creating a numbered tree just for coupons would restructure `CAD/`. The coupons are self-contained derived test articles, so they live here.
 
+**Status (2026-09-25):** P0.1 coupon geometry is now persistent in the NOMAD Onshape document. The geometry was validated in scratch against the reference generator, then inserted into the user-created P0.1 Coupons Part Studio and visually verified by the user. Physical coupons have not yet been printed or tested.
+
 ## Source and regeneration
 
 | Item | Role |
 |---|---|
-| `generate_coupons.py` | **Parametric master.** Standard-library Python; all dimensions are parameters at the top. |
+| Onshape Feature Studio `NOMAD_P01_Coupons` | **CAD master** (NOMAD document, element `2e9a95c6ec40fe948348a500`; snapshot `CAD/featurescript/NOMAD_P01_Coupons.fs`). Custom feature "P0.1 Coupons" builds all 13 parts as named solids (`CPN_*`, mapping below); it is inserted in the owner-created Part Studio **P0.1 Coupons**. Edit geometry there (dialog or Feature Studio), not in exported meshes. |
+| `generate_coupons.py` | **Local reference** and STL/SCAD source. Standard-library Python; all dimensions are parameters at the top. Must match the Feature Studio. |
+| `onshape_crosscheck.py` | Exact expected bounding boxes and volumes (true round holes) for the Onshape parts. |
 | `stl/*.stl` | Generated, print-ready binary STL, in mm, already in print orientation (Z = build direction). |
 | `scad/*.scad` | Generated OpenSCAD copies of the same geometry, for an independent re-render. **Edit the Python, not these.** |
 
@@ -29,6 +33,24 @@ The generator rewrites all STL and SCAD files and runs the sanity checks; it fai
 - Box faces are exact.
 - Round holes are stepped at **0.1 mm**, finer than a 0.4 mm nozzle and 0.2 mm layer can resolve.
 - Every mesh is watertight: each edge is shared by exactly two faces in opposite directions, with no degenerate triangles and one solid body per part.
+
+## Onshape part names
+
+| STL file | Onshape part |
+|---|---|
+| `A1_rail_printed` | `CPN_A1_rail` |
+| `A2_rail_stiffener_slots` | `CPN_A2_rail_stiffener_slots` |
+| `A_pad_stub` | `CPN_A_pad_stub` |
+| `A_carriage_load_post` | `CPN_A_carriage_load_post` |
+| `A_load_platform` | `CPN_A_load_platform` |
+| `A_display_surrogate` | `CPN_A_display_surrogate` |
+| `B_frame_supports` | `CPN_B_supports` |
+| `B_clearance_block` | `CPN_B_clearance_block` |
+| `B1_plate_plain_2p5` | `CPN_B1_plate` |
+| `B2_plate_ribbed_h06` / `h08` / `h11` | `CPN_B2_h6_plate` / `CPN_B2_h8_plate` / `CPN_B2_h11_plate` (name follows the dialog rib height) |
+| `B_load_pad` | `CPN_B_load_pad` |
+
+In Onshape every part is in print orientation on Z = 0, laid out side by side 20 mm apart. Dialog parameters: the three B2 rib heights (6 / 8 / 11) and the insert hole diameter / depth (4.0 / 6.0); everything else is a named `CPN_*` constant at the top of the Feature Studio. Round holes are true circles in Onshape (the STLs step them at 0.1 mm).
 
 ## Parts
 
