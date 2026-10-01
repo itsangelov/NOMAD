@@ -7,6 +7,7 @@ anything else with a line-numbered error, so it can never silently misread the f
 Usage:  py CAD/tools/yaml_to_featurescript.py [--check]
   default  rewrite the GENERATED PARAMS block in CAD/featurescript/NOMAD_P01.fs
   --check  exit 1 if the block is out of date (no write)
+  --target FILE  write/check the block in CAD/featurescript/FILE instead (Round E: NOMAD_E_Prototype.fs)
 """
 
 import ast
@@ -342,6 +343,9 @@ def splice(fs_text, block):
 
 
 def main(argv):
+    fs_path = FS_PATH
+    if "--target" in argv:                     # Round E: the same block in another FeatureScript file
+        fs_path = FS_PATH.parent / argv[argv.index("--target") + 1]
     doc = parse_restricted_yaml(YAML_PATH.read_text(encoding="utf-8"))
     params = flatten(doc)
     errors = validate(params)
@@ -366,19 +370,19 @@ def main(argv):
     if missing:
         print(f"  WARNING: not mentioned in {SPEC_PATH.name}: {', '.join(missing)}")
 
-    current = FS_PATH.read_text(encoding="utf-8")
+    current = fs_path.read_text(encoding="utf-8")
     updated = splice(current, block)
     if "--check" in argv:
         if updated != current:
-            print(f"{FS_PATH.name}: GENERATED PARAMS block is OUT OF DATE")
+            print(f"{fs_path.name}: GENERATED PARAMS block is OUT OF DATE")
             return 1
-        print(f"{FS_PATH.name}: GENERATED PARAMS block is up to date")
+        print(f"{fs_path.name}: GENERATED PARAMS block is up to date")
         return 0
     if updated != current:
-        FS_PATH.write_text(updated, encoding="utf-8", newline="\n")
-        print(f"wrote {FS_PATH.relative_to(ROOT)}")
+        fs_path.write_text(updated, encoding="utf-8", newline="\n")
+        print(f"wrote {fs_path.relative_to(ROOT)}")
     else:
-        print(f"{FS_PATH.name}: no change")
+        print(f"{fs_path.name}: no change")
     return 0
 
 

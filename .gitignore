@@ -20,3 +20,12 @@ desktop.ini
 # Slicer / print scratch
 *.gcode
 *.bgcode
+
+# Generated P0.1 coupon outputs (deterministic; regenerate with py CAD/coupons/P0.1/generate_coupons.py)
+CAD/coupons/P0.1/stl/
+CAD/coupons/P0.1/scad/
+
+# Generated P0.2 coupon outputs (deterministic; regenerate with py CAD/tools/generate_p02_coupons.py)
+CAD/coupons/P0.2/stl/
+CAD/coupons/P0.2/scad/
+CAD/coupons/P0.2/print_order/

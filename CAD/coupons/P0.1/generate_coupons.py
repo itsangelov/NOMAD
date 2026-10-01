@@ -29,7 +29,7 @@ FLOOR, LIP_T, WALL = 2.5, 2.5, 2.5
 CH_W, CH_H, SLOT_W = 22.6, 8.0, 17.6
 RAIL_H = FLOOR + CH_H + LIP_T    # 13.0
 EAR_W, PAD_LEN = 12.0, 28.5
-INSERT_D, INSERT_DEPTH = 4.0, 6.0      # M3 heat-set insert hole: SET PER INSERT DATASHEET
+INSERT_D, INSERT_DEPTH = 4.0, 7.0      # M3 heat-set insert hole (P0.2-HW): 4.0 = smallest common pilot (drill up per datasheet); 7.0 = 5.7 insert + melt relief
 INSERT_X = (7.0, 21.5)
 A2_WALL = 4.1                          # thickened side wall hosting the strip slot
 STRIP_T, STRIP_H = 2.0, 10.0           # flat-strip envelope (10x2 Al; 10x1.5 steel also fits)
@@ -347,7 +347,7 @@ def probes(parts):
          and r1.solid((100, y1c - SLOT_W / 2 - 0.05, 12)) and r1.solid((100, y1c + SLOT_W / 2 + 0.05, 12))),
         ("A1 end stop solid beyond X 198, channel open at X 0",
          r1.solid((RAIL_CHANNEL_LEN + 1, y1c, 5)) and not r1.solid((0.05, y1c, 5))),
-        ("A1 ear insert holes open from below, blind at 6.0",
+        (f"A1 ear insert holes open from below, blind at {INSERT_DEPTH:g}",
          all(not r1.solid((x, EAR_W / 2, 3)) and r1.solid((x, EAR_W / 2, INSERT_DEPTH + 0.5)) for x in INSERT_X)),
         ("A2 channel and slot same as A1 (22.6 x 8.0, 17.6)",
          not r2.solid((100, y2c, 6)) and not r2.solid((100, y2c + SLOT_W / 2 - 0.05, 12)) and r2.solid((100, y2c + SLOT_W / 2 + 0.05, 12))),

@@ -50,7 +50,7 @@ The generator rewrites all STL and SCAD files and runs the sanity checks; it fai
 | `B2_plate_ribbed_h06` / `h08` / `h11` | `CPN_B2_h6_plate` / `CPN_B2_h8_plate` / `CPN_B2_h11_plate` (name follows the dialog rib height) |
 | `B_load_pad` | `CPN_B_load_pad` |
 
-In Onshape every part is in print orientation on Z = 0, laid out side by side 20 mm apart. Dialog parameters: the three B2 rib heights (6 / 8 / 11) and the insert hole diameter / depth (4.0 / 6.0); everything else is a named `CPN_*` constant at the top of the Feature Studio. Round holes are true circles in Onshape (the STLs step them at 0.1 mm).
+In Onshape every part is in print orientation on Z = 0, laid out side by side 20 mm apart. Dialog parameters: the three B2 rib heights (6 / 8 / 11) and the insert hole diameter / depth (Onshape default 4.0 / 6.0; **set the depth to 7.0 mm in the dialog** to match the local generator after P0.2-HW, see `prototypes/P0.1/P0.2_insert_interface.md`); everything else is a named `CPN_*` constant at the top of the Feature Studio. Round holes are true circles in Onshape (the STLs step them at 0.1 mm).
 
 ## Parts
 
@@ -89,7 +89,7 @@ In Onshape every part is in print orientation on Z = 0, laid out side by side 20
 
 | Item | Qty | Notes |
 |---|---|---|
-| M3 heat-set insert | 6 (A 2, B 4) | Holes are **Ø4.0 × 6.0 deep**; set `INSERT_D` / `INSERT_DEPTH` to the insert datasheet and regenerate |
+| M3 heat-set insert | 6 (A 2, B 4) | Holes are **Ø4.0 × 7.0 deep** (P0.2-HW: Ø4.0 is the smallest common pilot, drill up to the datasheet value; 7.0 gives melt relief under a 5.7 insert). See `prototypes/P0.1/P0.2_insert_interface.md` |
 | M3 × 8 screw | 6 (A 2, B 4) | A: through the 2.5 mm counterbore seat. B: through the 2.5 mm plate in the rib-free bands |
 | Flat strip, ~194 mm long | 2 (A2 only) | 10 × 2 aluminium or 10 × 1.5 steel (slot 2.3 × 10.4); no final material chosen |
 | M5 × 60 bolt or rod | 1 | load rod through the post (alternative to the platform) |

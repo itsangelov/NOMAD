@@ -1,5 +1,9 @@
 # P0.1 Test Coupons: Solar Rail (A) and Rear Shell (B)
 
+> **Test procedure superseded by P0.2** (`prototypes/P0.1/P0.2_physical_test_plan.md`). The coupon geometry below is unchanged and reused. Two corrections apply to the A2 procedure:
+> - Strips must be **shimmed to a snug fit in Z**. With the 0.4 mm slot play they don't engage until ~2.8 mm of tip deflection.
+> - Measure **both lips**, because one strip makes the section asymmetric.
+
 **Printable files:** `CAD/coupons/P0.1/` (see its README).
 
 **Round B.3 file changes** (details in that README):
@@ -62,7 +66,7 @@ The lid mapping is:
 - **Outboard end (X 0):** open, for inserting the carriage. The deployed end stop is not part of this coupon.
 - **Attachment ear** (candidate pad attachment, on the cable-corridor side):
   - solid block X 0–28.5, Y −12.0 to 0, Z 0–13.0
-  - two M3 heat-set insert holes from the underside at (X 7.0, Y −6.0) and (X 21.5, Y −6.0), sized to the insert maker's datasheet (the model assumes Ø4.0 × 6.0 deep)
+  - two M3 heat-set insert holes from the underside at (X 7.0, Y −6.0) and (X 21.5, Y −6.0), sized to the insert maker's datasheet (the model uses Ø4.0 × 7.0 deep after P0.2-HW; see `P0.2_insert_interface.md`)
 - The ear is where the rail meets the front frame in V1: beside the rail at lid x 118.5–147. The cable corridor keep-out ends at lid |x| ≤ 55, so the ear doesn't block it.
 
 ```

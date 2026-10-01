@@ -37,6 +37,11 @@ CABLE_R = 20.0       # service-loop bend-radius envelope (not a wire selection)
 E_PETG = 2000.0      # MPa, nominal PETG modulus for a rough plate estimate only
 TILTS_REPORT = [0, 15, -15, 30, -30, 45, -45, 60, -60, 75, -75]
 
+# STUDY INPUTS PINNED (2026-09-26, Round E0.5): "V1 as specified" used the Round B working values. nomad.yaml now
+# carries the V1 + fixes values themselves (22.6 / 8), so the as-specified case is pinned to keep this report
+# (solar_v1_feasibility.md) reproducible. The fixed case derives its values from first principles below.
+ROUND_B_CARRIAGE_WIDTH, ROUND_B_DEPLOY_CLEARANCE = 12.0, 5.0
+
 
 CABLE_R_OFF = PIN / 2 + MIN_GAP + CABLE_D / 2     # cable centre offset from the tilt axis (beside the pin)
 
@@ -48,11 +53,11 @@ def config(fix=False):
     deploy clearance 5. Fixes: bracket/carriage enclose pin + cable side by side, carriage wide enough to
     be retained under the bracket slot, an 8 mm cable corridor between the rails, deploy clearance 8.
     """
-    deploy = V["SOLAR_DEPLOY_CLEARANCE"] + (CABLE_D + 2 * MIN_GAP - V["SOLAR_DEPLOY_CLEARANCE"] if fix else 0)
+    deploy = CABLE_D + 2 * MIN_GAP if fix else ROUND_B_DEPLOY_CLEARANCE
     bracket_w = PIN + MIN_GAP + CABLE_D + 2 * WALL if fix else PIN + 2 * WALL
     coff = (MIN_GAP + CABLE_D) / 2 if fix else 0.0       # carriage/rail centre offset from the pin, toward the cable
     slot_w = bracket_w + 2 * CLR
-    cw = slot_w + 2 * WALL if fix else V["SOLAR_CARRIAGE_WIDTH"]
+    cw = slot_w + 2 * WALL if fix else ROUND_B_CARRIAGE_WIDTH
     rail_w, rail_h = cw + 2 * WALL, V["SOLAR_CARRIAGE_HEIGHT"] + 2 * WALL
     corridor = CABLE_D + 2 * MIN_GAP if fix else MIN_GAP
     travel = WC + WALL + deploy

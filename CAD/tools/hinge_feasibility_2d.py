@@ -21,7 +21,11 @@ from yaml_to_featurescript import YAML_PATH, flatten, parse_restricted_yaml, res
 
 P, _ = resolve(flatten(parse_restricted_yaml(YAML_PATH.read_text(encoding="utf-8"))))
 V = {k: v for k, (v, _) in P.items()}
-D, H, T, G = V["BODY_DEPTH"], V["BODY_HEIGHT"], V["LID_THICKNESS"], V["LID_CLOSED_GAP"]
+D, H, G = V["BODY_DEPTH"], V["BODY_HEIGHT"], V["LID_CLOSED_GAP"]
+# STUDY INPUT PINNED (2026-09-26, Round E0.5): Rounds A.1 / A.2 / A.2b were run with the Round A lid placeholder
+# LID_THICKNESS = 25. nomad.yaml now derives LID_THICKNESS from the Round D.1 stack (37.6); pinning keeps this
+# study's report (hinge_feasibility_map.md, closed_gap_sweep.md) reproducible. Current-lid hinge checks: c2_screening.py.
+T = 25.0
 MIN_GAP = V["MIN_GAP"]
 ANG_NOM, ANG_MAX = V["LID_ANGLE_NOMINAL"], V["LID_ANGLE_MAX"]
 

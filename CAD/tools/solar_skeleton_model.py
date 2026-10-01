@@ -25,12 +25,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import hinge_feasibility_2d as hm  # noqa: E402
 
 V = hm.V
-D, H, T0, G, W = V["BODY_DEPTH"], V["BODY_HEIGHT"], V["LID_THICKNESS"], V["LID_CLOSED_GAP"], V["BODY_WIDTH"]
+D, H, G, W = V["BODY_DEPTH"], V["BODY_HEIGHT"], V["LID_CLOSED_GAP"], V["BODY_WIDTH"]
 WALL, MIN_GAP = V["WALL_THICKNESS"], V["MIN_GAP"]
 WC, HC, TC = V["SOLAR_CASSETTE_WIDTH"], V["SOLAR_CASSETTE_HEIGHT"], V["SOLAR_CASSETTE_THICKNESS"]
-S, L, LINK = V["SOLAR_SLIDE_TRAVEL"], V["SOLAR_RAIL_ENGAGEMENT"], V["SOLAR_HUB_LINK_LENGTH"]
-CW, CH, PIN = V["SOLAR_CARRIAGE_WIDTH"], V["SOLAR_CARRIAGE_HEIGHT"], V["SOLAR_HUB_PIN_DIAMETER"]
-HUB_Y, HUB_Z = V["SOLAR_HUB_AXIS_OFFSET_Y"], V["SOLAR_HUB_AXIS_OFFSET_Z"]
+L, CH, PIN = V["SOLAR_RAIL_ENGAGEMENT"], V["SOLAR_CARRIAGE_HEIGHT"], V["SOLAR_HUB_PIN_DIAMETER"]
+# STUDY INPUTS PINNED (2026-09-26, Round E0.5): Round B ran with the Round A lid placeholder and the Round B solar
+# working values. nomad.yaml now carries the B.1 V1 + fixes values (carriage 22.6, deploy clearance 8, travel 158,
+# link 11.5, hub from the rail geometry) and the Round D.1 lid (37.6); pinning keeps solar_round_b.md reproducible.
+ROUND_B_DEPLOY_CLEARANCE = 5.0
+T0 = 25.0
+CW = 12.0
+S = WC + WALL + ROUND_B_DEPLOY_CLEARANCE           # 155
+LINK = WALL + ROUND_B_DEPLOY_CLEARANCE + MIN_GAP   # 8.5
+HUB_Y, HUB_Z = HC / 2, TC / 2                      # Round B V0: hub at the cassette mid-plane
 TILT_MAX, INDEX = V["SOLAR_ROTATION_LIMIT"]["max"], V["SOLAR_INDEX_STEP"]
 DISP_T, DISP_W, DISP_H = V["DISPLAY_THICKNESS"], V["DISPLAY_WIDTH"], V["DISPLAY_HEIGHT"]
 HINGE = (D - V["HINGE_AXIS_OFFSET"], H + V["HINGE_AXIS_HEIGHT"])
@@ -215,7 +222,7 @@ def travel_budget():
     rail_needed = S + L
     own_half = X_WALL_IN - MIN_GAP - XI
     print("=== Travel budget (single-stage carriage, any layout) ===")
-    print(f"required cassette travel S = {need:g} (cassette fully outside lid + {V['SOLAR_DEPLOY_CLEARANCE']:g} clearance)")
+    print(f"required cassette travel S = {need:g} (cassette fully outside lid + {ROUND_B_DEPLOY_CLEARANCE:g} clearance)")
     print(f"carriage always sits inboard of the cassette by engagement {L:g} + link {LINK:g} = {L + LINK:g}")
     print(f"rail length needed per side = {rail_needed:g} (x {XI - LINK - L:g} .. {XI + S - LINK:g})")
     print(f"rail length available inside own half = {own_half:g}  ->  available carriage travel {own_half - L:g} "
