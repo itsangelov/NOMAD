@@ -1,5 +1,7 @@
 # Round E — D-009 S1 Solar Tilt Hard-Stop Feasibility Study
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 > **ERRATUM (2026-09-28, `round_e_d009_load_reassessment.md` §11):** the hub-pin **root** results in §7–§9 are wrong.
 > - Affected figures: "pin root, stop couple only / + design handling bending" 2.12 / **1.23** at T_d and 1.06 / 0.62 at 2.52, and the "pre-existing" lock value **2.09 → 1.75**.
 > - The stop (or index) force and its reaction are internal to the pin + cassette system. The bracket bore passes the matching moment back to the pin, so the root sees only the external loads. **Root SF is 2.09 at T_d** in both cases.

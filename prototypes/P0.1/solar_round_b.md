@@ -1,5 +1,7 @@
 # P0.1 Round B: Solar Cassette Kinematic Skeleton (initial analysis)
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 **Status: modeled, P0.1 working geometry. No solar rail architecture has been chosen.** Kinematic envelopes only: cassette body, hub pin, carriage and fixed-rail keep-out. No hardware, panels or motors. D-004 kinematics are assumed throughout: lateral slide out of the lid, tilt about an axis along the slide direction, rail carries structural load, hub pin carries rotation, indexed tilt.
 
 ## Method

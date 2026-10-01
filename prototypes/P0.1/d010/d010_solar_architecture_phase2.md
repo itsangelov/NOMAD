@@ -1,5 +1,7 @@
 # D-010 Phase 2: solar architecture engineering study, A (sliding wings) vs B1 (solar-lid leaf)
 
+> **D-010 DECIDED (2026-10-01): B1 SELECTED** by the owner as the NOMAD V1 lid/solar architecture. This study is part of the decision record and is kept unchanged; statements below such as "pending" or "nothing is chosen" describe the state when it was written. See `docs/decisions.md` D-010.
+
 **Status:** study complete, **awaiting owner review**. This is not production CAD and does not approve anything.
 
 | | |

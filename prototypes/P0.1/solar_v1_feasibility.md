@@ -1,5 +1,7 @@
 # P0.1 Round B.1: V1 Solar Layout Feasibility Pass
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 **Status: modeled, P0.1 working geometry. V1 is NOT chosen.** This pass asks one question: can V1 physically exist as a sensible printed lid while preserving the D-004 motion?
 
 ## Method

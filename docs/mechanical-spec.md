@@ -4,6 +4,11 @@ Revision: P0.1 (draft). No values below are locked.
 
 > **Source of truth (D-002):** `CAD/parameters/nomad.yaml` holds the authoritative machine-readable parameter values. This document is the human-readable specification and must agree with it. If they differ, the YAML is correct and this document must be updated.
 
+> **Active architecture: B1 (D-010, accepted 2026-10-01).**
+> - **B1:** one solar leaf behind the display lid, on two friction hinges. The B1 parameters are in [Lid (B1)](#lid-b1--active-v1-architecture-d-010) and [Solar leaf (B1)](#solar-leaf-b1--active-v1-architecture-d-010).
+> - **Architecture A, SUPERSEDED / DEFERRED FOR NOMAD V1:** the class-A lid rows and the [Solar (Architecture A)](#solar-architecture-a--superseded--deferred-for-nomad-v1) sections describe the sliding/tilting cassettes (D-004 / D-009). They are kept as the A-path record. They are not the V1 design.
+> - **V1 requirements by subsystem:** `docs/v1-requirements.md`.
+
 ## Parameter status legend
 
 | Status | Meaning |
@@ -48,9 +53,13 @@ All dimensions are in mm unless noted.
 
 ### Lid
 
+`LID_CLOSED_GAP` and `LID_ANGLE_*` (display hinge) apply to V1.
+
+The class-A stack rows are **Architecture A, SUPERSEDED / DEFERRED FOR NOMAD V1** (D-010). These are `LID_THICKNESS` as formulated, and `LID_BACK_GAP` to `LID_RIB_HEIGHT`. They are kept so the A studies and the Round E prototype reproduce. The B1 lid is in [Lid (B1)](#lid-b1--active-v1-architecture-d-010).
+
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
-| LID_THICKNESS | TBD | TBD | = DISPLAY_BEZEL_LIP + DISPLAY_THICKNESS + MIN_GAP + SOLAR_RAIL_LAYER_HEIGHT + MIN_GAP + SOLAR_CASSETTE_THICKNESS + LID_BACK_GAP + LID_REAR_SHELL_DEPTH → 37.6 | Enclosed-lid stack, Round D.1 class A (sandwich rear shell). **PROVISIONAL — PENDING P0.2 PHYSICAL VALIDATION.** Replaces the Round A placeholder 25, which was below every enclosed lid (Round D). Class A is the Round E visualization default, not a lid-class decision |
+| LID_THICKNESS | TBD | TBD | = DISPLAY_BEZEL_LIP + DISPLAY_THICKNESS + MIN_GAP + SOLAR_RAIL_LAYER_HEIGHT + MIN_GAP + SOLAR_CASSETTE_THICKNESS + LID_BACK_GAP + LID_REAR_SHELL_DEPTH → 37.6 | **Architecture A (class-A lid): SUPERSEDED / DEFERRED FOR V1.** The B1 stack (core + vented gap + leaf, ~31 EST) is not yet re-baselined (V1 step 7). *History:* enclosed-lid stack, Round D.1 class A (sandwich rear shell); was PROVISIONAL — PENDING P0.2 PHYSICAL VALIDATION. Replaced the Round A placeholder 25 |
 | LID_BACK_GAP | TBD | TBD | 2.0 | Stowed cassette to rear-shell clearance; the shell may deflect ≤ half of it (Round D / D.1) |
 | LID_REAR_SHELL_DEPTH | TBD | TBD | 6.6 | Class A sandwich rear shell (skin + core + skin), sized at the D.1 criterion; = P0.2 coupon B-S30. Pending P0.2 |
 | LID_SANDWICH_SKIN | TBD | TBD | 1.2 | Class A sandwich skins (D.1, P0.2) |
@@ -134,7 +143,53 @@ The keyboard and trackpad are centred on the chassis longitudinal centreline, wi
 | INSERT_SIZE | TBD | TBD | — | Heat-set inserts; depends on the insert supplier |
 | OVERHANG_LIMIT | TBD | TBD | — | Print-dependent |
 
-### Solar
+### Lid (B1) — active V1 architecture (D-010)
+
+The B1 lid has three layers:
+1. a thin **core** (display, controller zone, back shell);
+2. a **vented air gap** with low-e foil on the core back;
+3. the **solar leaf**.
+
+The axis of the solar leaf hinge sits at the lid's top edge. The stack is about 31 mm (19 + 6 + 6, EST, D-010 Phase 2), and the B1 closed size is 301 × 235 × 73.0 (CALC). Neither is re-baselined into `LID_THICKNESS` yet (V1 step 7).
+
+| Parameter | Value | Status | P0.1 working input | Source / notes |
+|---|---|---|---|---|
+| LID_CORE_THICKNESS | TBD | TBD | 19 | B1 lid core: bezel lip + display + gap + controller zone + thin back shell (1 + 5 + 1 + 8 + 4, EST). Display and controller not selected |
+| SOLAR_LEAF_AIR_GAP | TBD (min) | TBD | 6 | Vented gap between the lid back and the panel back, with low-e foil. Phase 2 §13 recommends ≥ 6 as a requirement; EST thermal model, not tested |
+
+### Solar leaf (B1) — active V1 architecture (D-010)
+
+- **Leaf:** one leaf behind the display lid, hinged at the lid top edge.
+- **Hinges:** two structural friction hinges. TorqMaster **SB-188-SB-261-6** is the current selected hinge **candidate**, subject to physical validation.
+- **Cable:** a dedicated sleeve near the hinge axis, R12 minimum bend radius.
+- **Stay:** a mandatory rear outrigger stay.
+- **Panel:** Voltaic P108 is the **candidate**.
+
+Records:
+- **Engineering record and coupon:** `prototypes/B1_SB261/`.
+- **Architecture study:** `prototypes/P0.1/d010/d010_solar_architecture_phase2.md`.
+- **Frame:** the closed-lid frame of `CAD/tools/d010_phase2_study.py`.
+
+Nothing here is physically validated.
+
+| Parameter | Value | Status | P0.1 working input | Source / notes |
+|---|---|---|---|---|
+| SOLAR_LEAF_ANGLE_MAX | 190° | provisional | — | Owner target (D-010): approximately 0–190° usable leaf motion. Scratch kernel: ≥ 2.03 mm leaf-to-lid at 190°, first contact at 201° |
+| SOLAR_LEAF_CABLE_BEND_RADIUS | ≥ 12 | provisional | — | Owner concept (D-010): R12 minimum bend radius for static bends (3 × *d* of the assumed Ø4 cable). Phase 2 assumed 6 × *d* for repeated flex. The moving sections are axial twist zones (≤ 3.5°/mm). Cable not selected |
+| SOLAR_LEAF_HINGE_AXIS_INSET | TBD | TBD | 4.0 | Leaf hinge axis from the lid top edge (SB-261 scratch rail; kernel-checked, not tested) |
+| SOLAR_LEAF_HINGE_AXIS_HEIGHT | TBD | TBD | 2.5 | Leaf hinge axis above the lid-back face (scratch rail: axis z 63.5, lid back z 61) |
+| SOLAR_LEAF_HINGE_SPACING | TBD | TBD | 230 | Distance between the two leaf hinge centres (scratch rail x = ±115). Hinge candidate SB-188-SB-261-6: 33.8 long, barrel Ø7.05 (IGES) |
+| SOLAR_LEAF_WIDTH | TBD | TBD | 289 | Leaf outline X: panel 273 + 2 × 8 frame (Phase 2); follows the panel selection |
+| SOLAR_LEAF_DEPTH | TBD | TBD | = BODY_DEPTH → 235 | Leaf outline Y = lid depth (Phase 2). The SB-261 scratch rail starts the leaf frame at y 9 |
+| SOLAR_LEAF_THICKNESS | TBD | TBD | 6 | Leaf frame: 4 mm panel in a rebate under a 2 mm lip (Phase 2, EST) |
+| SOLAR_PANEL_WIDTH | TBD | TBD | 273 | Panel not selected. Voltaic P108 candidate: 273 (VENDOR) |
+| SOLAR_PANEL_DEPTH | TBD | TBD | 223 | Same; P108: 223 (VENDOR) |
+| SOLAR_PANEL_THICKNESS | TBD | TBD | 4 | Same; P108: 4, ETFE on 2 mm FR4 (VENDOR) |
+| SOLAR_STAY_REACH | TBD | TBD | 105 | Rear outrigger stay reach behind the base (Phase 2 §11: ≥ 90 recommended, 105 modelled). Mandatory for B1; design details TBD |
+
+### Solar (Architecture A) — SUPERSEDED / DEFERRED FOR NOMAD V1
+
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** These rows describe Architecture A: two sliding/tilting cassettes (D-004 / D-009). B1 was selected as the active V1 architecture. The rows and the YAML values are kept unchanged as the A-path engineering record (the A studies and the Round E E2 lid read them). They do not describe the V1 design.
 
 Working inputs follow the Round B.1 **V1 + minimal fixes** geometry (the only solar layout that passed B.1), adopted as working values for Round E. The Round B values they replace (carriage 12, deploy clearance 5, hub at the cassette centre) stay pinned inside the Round B / B.1 study scripts, so those reports still reproduce.
 
@@ -166,7 +221,7 @@ Working inputs follow the Round B.1 **V1 + minimal fixes** geometry (the only so
 | SOLAR_INDEX_STEP | TBD (deg) | TBD | 15° | D-004: discrete indexed positions with a positive lock |
 | SOLAR_HUB_PIN_DIAMETER | TBD | TBD | 5 | D-004: dedicated metal hub/pin carries the rotational load |
 
-#### Solar tilt index lock and hub-pin anti-rotation (D-009, Round E; PENDING PHYSICAL VALIDATION)
+#### Solar tilt index lock and hub-pin anti-rotation (D-009, Round E; Architecture A — SUPERSEDED / DEFERRED FOR V1)
 
 Architecture approved 2026-09-28 (design basis: `prototypes/P0.1/round_e_solar_index_lock_investigation.md`, `…_manufacturing_check.md`, `round_e_solar_hub_pin_anti_rotation_check.md`; implementation record: `round_e_solar_index_lock_implementation.md`).
 
@@ -228,7 +283,7 @@ Architecture approved 2026-09-28 (design basis: `prototypes/P0.1/round_e_solar_i
 | SOLAR_ANTIROT_DOWEL_OFFSET_Z | TBD | TBD | −2.5 | Dowel offset from the pin axis, Z |
 | SOLAR_ANTIROT_PUSHOUT_DIAMETER | TBD | TBD | 2 | Service push-out hole behind the dowel |
 
-Solar kinematics (D-004): each cassette slides laterally out of the lid, then tilts independently about an axis approximately along its slide direction. The rail carries deployment and structural loads, and the hub/pin carries rotational load. Printed gears position and actuate only. Rotation is locked at discrete indexed positions, with no motors, no continuous rotation and no slip ring.
+Solar kinematics of Architecture A (D-004, superseded for V1): each cassette slides laterally out of the lid, then tilts independently about an axis approximately along its slide direction. The rail carries deployment and structural loads, and the hub/pin carries rotational load. Printed gears position and actuate only. Rotation is locked at discrete indexed positions, with no motors, no continuous rotation and no slip ring.
 
 ### I/O (Round C)
 
@@ -273,4 +328,10 @@ Engineering envelope model only; layout and results in `prototypes/P0.1/base_v01
 - Port zones: USB-C, 2–3 × USB-A, HDMI, audio, Ethernet, GPIO, microSD, power, expansion
 - Cable corridors for every important cable
 - Service-panel zones that never block airflow
-- Solar cassette storage (rear of display lid) and the deployment envelope
+- Solar (B1, D-010):
+  - the leaf on the lid back, with its 0–190° sweep envelope
+  - the vented air gap and foil
+  - the two leaf hinges and the cable sleeve and twist zone
+  - the stay (stowed under the base and deployed behind it)
+  - the shared display-hinge cable pass
+  - (Architecture A's cassette storage and deployment envelope are superseded.)

@@ -2,7 +2,7 @@
 
 > **PHYSICAL VALIDATION REQUIRED.** The coupon is designed and kernel-checked only. It has **not** been printed, assembled or tested, and no hardware has been ordered.
 >
-> This is exploratory, pre-decision work. D-010 is pending and B1 is not selected (see [README.md](README.md)).
+> D-010 was accepted on 2026-10-01: **B1 is selected**. SB-188-SB-261-6 is the current hinge candidate. This coupon is its physical validation gate (V1 dependency step 13; no purchase before step 12). See [README.md](README.md).
 
 - **Source:** the final coupon report, [reports/04](reports/04_coupon_final_report_2026-10-01.md) (2026-10-01), reorganised here. No values were added.
 - **Model:** Onshape scratch workspace `07eafe33cb44fd16843cea57`, feature `B1HingeCoupon` (see [SOURCES.md](SOURCES.md)). Code: [src/fs/coupon_common.fs](src/fs/coupon_common.fs), [src/fs/coupon_prod.fs](src/fs/coupon_prod.fs).
@@ -162,4 +162,4 @@ All of the following must hold on at least one coupon, preferably both hinges:
 - A wall or insert failure: first try the planned fallback, a thread-forming screw on the leaf side or a wall-margin change.
 - Torque below 0.83 N·m: an owner decision (torque margin or hinge band), not a geometry fix.
 
-**Even after a pass,** the unpublished load and temperature data remain open risks. **Migration also requires the owner's D-010 decision to select B1.**
+**Even after a pass,** the unpublished load and temperature data remain open risks. **The D-010 condition (B1 selected) is met as of 2026-10-01.**

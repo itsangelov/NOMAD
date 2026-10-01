@@ -2,11 +2,13 @@
 
 > **PHYSICAL VALIDATION REQUIRED.** Nothing in this folder has been printed, assembled, measured or physically tested. No hinge has been purchased. The hinge is **not** physically validated. Every result below is *IGES* (measured from the vendor's file), *kernel* (measured in an Onshape scratch model), *CALC* (analytic) or *PUB* (vendor-published). See [VALIDATION_STATUS.md](VALIDATION_STATUS.md).
 
-> **EXPLORATORY, PRE-DECISION WORK.**
-> - **D-010** (architecture A sliding wings vs B1 solar leaf) is still **pending the owner's decision**. B1 is **not** officially selected.
-> - **D-007** is **not** accepted (still proposed).
-> - This record does not change `CAD/parameters/nomad.yaml`, `docs/decisions.md`, `docs/mechanical-spec.md`, any production FeatureScript, or the NOMAD Onshape document. Those still describe the architecture-A baseline, and this record does not rewrite them.
-> - The work below only answers whether B1 *could* use this hinge, if B1 is chosen.
+> **DECISION UPDATE (2026-10-01): D-010 ACCEPTED, B1 SELECTED.**
+> - The owner locked **B1** as the NOMAD V1 lid/solar architecture (`docs/decisions.md` D-010).
+> - **SB-188-SB-261-6** is the current selected leaf-hinge **candidate**, subject to physical validation. It is not a validated or purchased part.
+> - **D-007** is still **not** accepted (proposed).
+> - The B1 working parameters from this record are in `CAD/parameters/nomad.yaml` (`solar_leaf`, `lid_b1`; TBD with working inputs). V1 requirements: `docs/v1-requirements.md` §8.
+>
+> *History:* this record was written earlier the same day as **exploratory, pre-decision work**, while D-010 was pending. The body below keeps that wording where it describes what was known then.
 
 Recorded 2026-10-01 as part of a Git checkpoint. The original session reports are archived verbatim in [reports/](reports/).
 

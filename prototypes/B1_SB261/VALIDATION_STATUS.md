@@ -11,11 +11,12 @@
 
 | Decision | State |
 |---|---|
-| D-010 (A vs B1) | Pending the owner |
-| B1 | **Not** officially selected |
+| D-010 (A vs B1) | **Accepted 2026-10-01: B1 selected** (was pending when this record was first written) |
+| B1 | **Selected** V1 lid/solar architecture |
+| SB-188-SB-261-6 | Current selected leaf-hinge **candidate**; **VALIDATION REQUIRED** |
 | D-007 | Proposed, **not** accepted |
 
-This is exploratory, pre-decision work.
+This work began as exploratory, pre-decision work. Since D-010 it is the current B1 hinge baseline, still subject to the physical gates below.
 
 ## Status by item
 
@@ -45,10 +46,10 @@ This is exploratory, pre-decision work.
 - Not in `NOMAD_D010_Concepts`.
 - Not in `NOMAD_E_Prototype`.
 
-**Repo:** `src/` holds the scratch code only. `nomad.yaml` has no SB-261 or B1-rail parameters.
+**Repo:** `src/` holds the scratch code only. Since D-010, `nomad.yaml` carries the B1 hinge-rail position as **TBD working inputs** (`SOLAR_LEAF_HINGE_AXIS_INSET` 4.0, `SOLAR_LEAF_HINGE_AXIS_HEIGHT` 2.5, `SOLAR_LEAF_HINGE_SPACING` 230). These are not validated values.
 
 ## What would change the status
 
-1. The owner's D-010 decision. Without B1 selected, no migration happens.
+1. ~~The owner's D-010 decision.~~ Done 2026-10-01: B1 selected.
 2. A coupon test that passes the [migration gate](COUPON_SPEC.md#7-migration-gate-before-sb-261-enters-authoritative-nomad-cad).
 3. Vendor answers on load, material and temperature (questions in [reports/01](reports/01_hardware_second_pass_2026-10-01.md) §4). Contacting the vendor needs owner approval.

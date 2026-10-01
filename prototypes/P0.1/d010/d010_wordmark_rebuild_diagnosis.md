@@ -1,5 +1,7 @@
 # D-010 concept: wordmark rebuild failure: diagnosis and repair (2026-09-29)
 
+> **D-010 DECIDED (2026-10-01): B1 SELECTED** by the owner as the NOMAD V1 lid/solar architecture. This study is part of the decision record and is kept unchanged; statements below such as "pending" or "nothing is chosen" describe the state when it was written. See `docs/decisions.md` D-010.
+
 **Status: REPAIRED.** The isolated `NOMAD_D010_Concepts` Feature Studio compiles and the full gallery regenerates with the NOMAD wordmark on and off. It was written to Onshape, read back byte-identical, and the persisted file itself evaluated cleanly in scratch.
 - **Not changed:** production CAD, `NOMAD_E_Prototype`, `nomad.yaml`, the Architecture A implementation, the B1 mechanics, and the wordmark's font, size and position.
 - No Git commit or push.

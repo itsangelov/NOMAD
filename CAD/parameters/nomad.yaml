@@ -22,10 +22,21 @@
 #
 # FORMAT: restricted YAML subset (comments, two-level block mappings, inline flow maps/lists,
 #   double-quoted strings, numbers, null/true/false, bare words). The generator rejects anything else.
+#
+# ACTIVE ARCHITECTURE (D-010, accepted 2026-10-01): B1, a single solar leaf behind the display lid.
+#   - Parameters for B1 are in the groups `lid_b1` and `solar_leaf` (end of file).
+#   - The group `solar` and the class-A lid parameters in `lid` (LID_BACK_GAP, LID_REAR_SHELL_DEPTH, LID_SANDWICH_*,
+#     LID_EDGE_BAND, LID_MID_PLATE_THICKNESS, LID_RIB_*, and the LID_THICKNESS formula) belong to Architecture A
+#     (sliding/tilting cassettes, D-004 / D-009).
+#   - They are SUPERSEDED / DEFERRED FOR NOMAD V1. They are kept unchanged only so that the existing A-path study
+#     scripts and the Round E digital prototype still reproduce. Do not use them for V1 B1 geometry.
+#   - A full re-baseline of this file is V1 dependency step 7 (docs/v1-requirements.md), after the hardware envelopes
+#     and the power and thermal architecture.
 
 meta:
   revision: P0.1
   locked: false
+  architecture: "B1 (D-010, accepted 2026-10-01)"
 
 body:
   BODY_WIDTH:              { value: null, status: TBD, source: "Keyboard width + walls; trackpad layout (D-003)", formula: "KEYBOARD_WIDTH + 2 * (BASE_SIDE_MARGIN + WALL_THICKNESS)" }
@@ -47,8 +58,10 @@ body:
   HINGE_AXIS_HEIGHT:       { value: null, status: TBD, source: "Hinge axis height above the base top surface", working: 0, note: "Exact Z TBD (mechanism prototype). With a 2.0 closed gap at inset 0, heights 0-2 give 1.41 mm min clearance, >= 4 give 2.0 (A.2b)" }
   HINGE_BARREL_DIAMETER:   { value: null, status: TBD, source: "Representative hinge knuckle envelope on the hinge axis (Round E digital prototype); hinge hardware TBD", working: 8, note: "Visualization envelope only, not a hardware selection" }
 
+# Lid: display-hinge parameters (LID_CLOSED_GAP, LID_ANGLE_*) apply to V1. The class-A stack below (LID_THICKNESS formula,
+# LID_BACK_GAP .. LID_RIB_HEIGHT) is Architecture A: SUPERSEDED / DEFERRED FOR V1 (D-010). The B1 lid is in `lid_b1`.
 lid:
-  LID_THICKNESS:           { value: null, status: TBD, source: "Enclosed-lid layer stack, Round D.1 class A (sandwich rear shell)", formula: "DISPLAY_BEZEL_LIP + DISPLAY_THICKNESS + MIN_GAP + SOLAR_RAIL_LAYER_HEIGHT + MIN_GAP + SOLAR_CASSETTE_THICKNESS + LID_BACK_GAP + LID_REAR_SHELL_DEPTH", note: "PROVISIONAL - PENDING P0.2 PHYSICAL VALIDATION. Replaces the Round A placeholder 25 (below every enclosed lid, Round D). Class A is the Round E visualization default, not a lid-class decision" }
+  LID_THICKNESS:           { value: null, status: TBD, source: "Enclosed-lid layer stack, Round D.1 class A (sandwich rear shell)", formula: "DISPLAY_BEZEL_LIP + DISPLAY_THICKNESS + MIN_GAP + SOLAR_RAIL_LAYER_HEIGHT + MIN_GAP + SOLAR_CASSETTE_THICKNESS + LID_BACK_GAP + LID_REAR_SHELL_DEPTH", note: "ARCHITECTURE A (class-A lid) - SUPERSEDED / DEFERRED FOR V1 by D-010 (B1). Formula kept so the A studies and the Round E prototype reproduce; the B1 stack (core + vented gap + leaf, ~31 EST) is not yet re-baselined (V1 step 7). Was: PROVISIONAL - PENDING P0.2 PHYSICAL VALIDATION" }
   LID_BACK_GAP:            { value: null, status: TBD, source: "Stowed cassette to rear-shell clearance; the shell may deflect <= half of it (Round D / D.1)", working: 2.0 }
   LID_REAR_SHELL_DEPTH:    { value: null, status: TBD, source: "Class A sandwich rear shell depth: skin + core + skin, sized at the D.1 criterion (P0.2 coupon B-S30)", working: 6.6, note: "PROVISIONAL - PENDING P0.2 PHYSICAL VALIDATION" }
   LID_SANDWICH_SKIN:       { value: null, status: TBD, source: "Class A sandwich skin thickness (D.1, P0.2 B-S30)", working: 1.2 }
@@ -117,6 +130,8 @@ fasteners:
   FASTENER_SIZE:           { value: ["M3", "M2.5"], unit: none, status: provisional, source: "Standard family" }
   INSERT_SIZE:             { value: null, status: TBD, source: "Heat-set inserts; depends on supplier" }
 
+# Solar: ARCHITECTURE A (sliding/tilting cassettes, D-004 / D-009) - SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).
+# Kept unchanged as the A-path record (A studies and the Round E E2 lid read these values). The V1 solar leaf is in `solar_leaf`.
 solar:
   SOLAR_CASSETTE_WIDTH:     { value: null, status: TBD, source: "Bounded by lid width (two side by side)", formula: "(BODY_WIDTH - 2 * WALL_THICKNESS - MIN_GAP) / 2" }
   SOLAR_CASSETTE_HEIGHT:    { value: null, status: TBD, source: "Bounded by lid height", working: 200 }
@@ -204,3 +219,28 @@ battery:
   POWER_ELEC_WIDTH:        { value: null, status: TBD, source: "Power-electronics envelope (BMS/charger/solar input/DC-DC), X; modules not selected (Round C)", working: 90 }
   POWER_ELEC_DEPTH:        { value: null, status: TBD, source: "Power-electronics envelope, Y (Round C)", working: 45 }
   POWER_ELEC_HEIGHT:       { value: null, status: TBD, source: "Power-electronics envelope, Z (Round C)", working: 20 }
+
+# ======================================================================================================
+# ARCHITECTURE B1 (D-010, accepted 2026-10-01): the ACTIVE V1 lid/solar architecture.
+# Only values that are established are given as `value`:
+#   - architecture-level owner targets: status provisional
+#   - everything else: TBD with a working input taken from the B1 studies (D-010 Phase 2, prototypes/B1_SB261)
+# Nothing here is physically validated. The B1 study frame is the closed-lid frame of CAD/tools/d010_phase2_study.py.
+# No production CAD reads these parameters yet; they are emitted for the integrated Virtual V1 CAD (V1 step 9).
+lid_b1:
+  LID_CORE_THICKNESS:      { value: null, status: TBD, source: "B1 lid core: bezel lip + display + gap + controller zone + thin back shell (D-010 Phase 2: 1 + 5 + 1 + 8 + 4, EST); display and controller not selected", working: 19 }
+  SOLAR_LEAF_AIR_GAP:      { value: null, status: TBD, source: "Vented air gap between the lid back and the panel back, with low-e foil on the lid back (D-010 Phase 2 s.13 recommends >= 6 as a mechanical requirement; EST thermal model, not tested)", limit: min, working: 6 }
+
+solar_leaf:
+  SOLAR_LEAF_ANGLE_MAX:    { value: 190, unit: deg, status: provisional, source: "D-010 (owner, 2026-10-01): approximately 0-190 deg usable solar-leaf motion. Scratch kernel: >= 2.03 mm leaf-to-lid at 190, first contact at 201 (prototypes/B1_SB261)" }
+  SOLAR_LEAF_CABLE_BEND_RADIUS: { value: 12, status: provisional, limit: min, source: "D-010 (owner, 2026-10-01): R12 minimum cable bend-radius concept for static bends (3 x d of the assumed 4 mm cable). Cable not selected", note: "D-010 Phase 2 assumed 6 x d for repeated flex; the moving sections are axial twist zones (<= 3.5 deg/mm). Scratch kernel: all 5 bends R 12.00" }
+  SOLAR_LEAF_HINGE_AXIS_INSET: { value: null, status: TBD, source: "Leaf hinge axis from the lid top edge, closed-lid frame (SB-261 scratch rail, prototypes/B1_SB261; kernel-checked, not tested)", working: 4.0 }
+  SOLAR_LEAF_HINGE_AXIS_HEIGHT: { value: null, status: TBD, source: "Leaf hinge axis above the lid-back face (SB-261 scratch rail: axis z 63.5, lid back z 61)", working: 2.5 }
+  SOLAR_LEAF_HINGE_SPACING: { value: null, status: TBD, source: "Distance between the two leaf hinge centres (SB-261 scratch rail: x = +/-115)", reference: "Hinge candidate TorqMaster SB-188-SB-261-6, 33.8 mm long, barrel 7.05 (IGES)", working: 230 }
+  SOLAR_LEAF_WIDTH:        { value: null, status: TBD, source: "Leaf outline X: panel 273 + 2 x 8 frame (D-010 Phase 2); follows the panel selection", working: 289 }
+  SOLAR_LEAF_DEPTH:        { value: null, status: TBD, source: "Leaf outline Y = lid depth (D-010 Phase 2); the SB-261 scratch rail starts the leaf frame at y 9", formula: "BODY_DEPTH" }
+  SOLAR_LEAF_THICKNESS:    { value: null, status: TBD, source: "Leaf frame: 4 mm panel in a rebate under a 2 mm lip (D-010 Phase 2, EST)", working: 6 }
+  SOLAR_PANEL_WIDTH:       { value: null, status: TBD, source: "Solar panel outline X; panel not selected", reference: "Voltaic P108 candidate: 273 (VENDOR)", working: 273 }
+  SOLAR_PANEL_DEPTH:       { value: null, status: TBD, source: "Solar panel outline Y; panel not selected", reference: "Voltaic P108 candidate: 223 (VENDOR)", working: 223 }
+  SOLAR_PANEL_THICKNESS:   { value: null, status: TBD, source: "Solar panel thickness; panel not selected", reference: "Voltaic P108 candidate: 4, ETFE on 2 mm FR4 (VENDOR)", working: 4 }
+  SOLAR_STAY_REACH:        { value: null, status: TBD, source: "Rear outrigger stay reach behind the base (D-010 Phase 2 s.11: >= 90 recommended, 105 modelled; mandatory for B1; design details TBD)", working: 105 }

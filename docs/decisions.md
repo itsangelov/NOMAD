@@ -39,7 +39,7 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
 
 ## D-004 — Solar cassette kinematic architecture
 
-- **Status:** accepted (2026-09-25) as the P0.1 solar kinematic architecture
+- **Status:** accepted (2026-09-25) as the P0.1 solar kinematic architecture. **SUPERSEDED / DEFERRED FOR NOMAD V1** on 2026-10-01 by D-010 (B1 selected). The record below is kept unchanged as Architecture A history.
 - **Decision:**
   - Each cassette slides laterally outward from its stored position in the display lid.
   - After deployment, each cassette rotates/tilts toward the sun independently of the other.
@@ -78,6 +78,9 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
   - A rear-face hinge increases rear overhang when open. With a 2.0 gap at 105°: 61.8–90.8 mm at inset 0 (depending on axis height) and up to 98.3 mm at inset −6, versus 54.2–76.7 mm for the feasible inset hinges.
   - It may place hinge hardware at or proud of the rear face, which competes with the rear port zone. *(inferred)*
   - The 2.0 mm closed gap adds about 1 mm to the closed thickness.
+- **Note (2026-10-01, D-010):**
+  - D-006 applies to the **display** hinge and is unchanged by B1. It stays provisional, and the display-hinge hardware is TBD.
+  - B1 raises the display-hinge holding requirement to about 1.6 N·m per hinge with a φ-max stop (CALC, D-010 Phase 2 §10).
 
 ## D-005 — Default branch `main`
 
@@ -111,6 +114,16 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
   - The compute bay sits under a palm rest (heat, inferred).
   - Rear ports are limited to Z ≤ 19 by the lid sweep of the D-006 hinge. This holds only for a 25 mm lid; it conflicts at 31.5 and 42.5 (modeled). It couples the base to the pending lid-thickness decision.
   - The shell needs a ≥ 310 mm-class bed or a split.
+- **Note (2026-10-01):**
+  - D-007 is **still proposed**. D-010 (B1) does not accept it, and the repository holds no owner acceptance of it.
+  - **B1 changes one input:** the lid is thinner (B1 stack ~31 EST vs the class-A 37.6). The B1 plug-zone result is +2.07 at φ 125 and −2.3 mm at φ 135, so the rear-I/O conflict is reduced, not solved.
+  - **Owner decisions still needed** (from `prototypes/P0.1/c2_architectural_screening.md` §4):
+    1. Placement: accept as working, amend, or reject (compute in the right palm bay, battery in the left bay, electronics under the keyboard).
+    2. I/O policy: rear vs side.
+    3. GNSS as a separate cabled module.
+    4. Shell structure: one body or split.
+    5. Whether the working body envelope 301 × 235 × 40 stays.
+  - These depend on the real hardware envelopes and the power and thermal architecture (`docs/v1-requirements.md` §18).
 
 ## D-008 — Round E digital prototype implementation method
 
@@ -126,12 +139,58 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
   - Mirrored left/right solar systems, each in its own half of the lid (V1 + fixes).
   - Sub-assemblies BASE / SERVICE / LID / HARDWARE.
 - **Tradeoff:** full reuse of the validated local models and the YAML pipeline, and diffable geometry, at the cost of manual Assembly work and API allocation per update. The prototype is not production CAD.
+- **Note (2026-10-01, D-010):**
+  - **Superseded for V1:** the lid and solar scope of Round E (class A lid, mirrored sliding solar systems, the E2 "NOMAD E Lid" feature) is Architecture A.
+  - **Still valid:** the D-008 implementation method itself. The E1 base remains a visualization of the *proposed* D-007 base.
 
-## D-010 — Solar architecture: sliding wings (A) vs solar lid (B)
+## D-010 — NOMAD V1 Lid/Solar Architecture: B1 SELECTED
 
-- **Status:** **pending owner decision** (study 2026-09-28: `prototypes/P0.1/d010_solar_architecture_comparison.md`). Nothing is chosen.
-- **Study recommendation:** B1 (single top-hinged solar leaf on the lid back with a positive angle lock, vented air gap and a fold-out rear stay), gated by a one-day physical mock-up.
-- **Phase 2** (2026-09-28, `prototypes/P0.1/d010/d010_solar_architecture_phase2.md`, tool `CAD/tools/d010_phase2_study.py`; Onshape concept Feature Studio `NOMAD_D010_Concepts`, isolated). **Still pending the owner's decision.**
+- **Status:** **accepted** by the owner on **2026-10-01**. **Architecture B1 is the selected NOMAD V1 lid/solar architecture.** It was pending from 2026-09-28 until then.
+- **Scope:** this decision selects the *architecture*. It does **not** select every component. Each component keeps its own status (below and in `docs/v1-requirements.md`).
+- **Selected architecture (B1):**
+  - **Solar leaf:** one large solar leaf behind the display lid, hinged at the lid's top edge, covering the lid back.
+  - **Leaf hinges:** two structural friction hinges. The current selected hinge candidate is **TorqMaster SB-188-SB-261-6**, subject to physical validation.
+  - **Motion:** approximately **0–190°** usable leaf motion.
+  - **Cable:** a dedicated cable sleeve near the leaf hinge axis, with an **R12 minimum cable bend-radius** concept.
+  - **Panel:** **Voltaic P108** is the current solar-panel **candidate** (not selected).
+  - **Stay:** the stay concept from Phase 2, two fold-out rear outrigger arms on the base. It is **mandatory** for B1's high leaf positions.
+  - **Lid:** the B1 lid architecture: a thin lid core with the display, a vented air gap with low-e foil on the lid back, and the leaf.
+- **Maturity:**
+  - The current virtual geometry is mature enough to proceed with integrated Virtual V1 design (dependency order in `docs/v1-requirements.md` §18).
+  - **Physical validation remains a future gate.** Nothing in B1 is physically tested.
+- **Validated virtual results** (*modeled*: KERNEL / CALC from EST; not tested). These are design evidence, **not** product requirements:
+  - **SB-261 rail** (`prototypes/B1_SB261/`, Onshape scratch):
+    - **Motion:** leaf 0–190° with ≥ 2.03 mm to the lid, first contact at 201°. Block-to-band running gap 0.50.
+    - **Cable:** all bends R 12.00. Twist zone 64 mm at 2.97°/mm. Hinge-to-cable separation ≥ 9.8.
+    - **Insert walls:** 1.20–1.47 (the lid wall is below the insert vendor's 1.6 guidance; coupon required).
+    - **Torque:** band -6 is 0.96–1.13 N·m per hinge (PUB) against ≈ 0.83 required (CALC), SF ≈ 1.16. Load, material and temperature ratings are unpublished.
+  - **Phase 2** (`prototypes/P0.1/d010/d010_solar_architecture_phase2.md`):
+    - mass 2.62 kg total (CALC from EST)
+    - rear tip wind 11.4–18 m/s with the stay vs 2.4–8.3 without (CALC)
+    - closed size 301 × 235 × 73.0 (CALC)
+    - P108 9.5–10.9 W nameplate (VENDOR), 5.6–7.1 W real at best aim (CALC/ASSUMED)
+    - display-hinge holding requirement about 1.6 N·m per hinge (CALC)
+- **Explicitly not selected by D-010:**
+  - display hinges (hardware TBD; D-006 direction still provisional)
+  - display and controller SKU
+  - battery, power electronics, cooling hardware, keyboard (all TBD)
+  - the final panel (P108 candidate)
+  - the stay design details
+  - lid thickness and lid structure details
+- **Consequences:**
+  - **Architecture A is SUPERSEDED / DEFERRED FOR NOMAD V1.** A is the sliding/tilting cassette path: D-004, D-009, S1 / S1-R, F3, the Round B / B.1 / B.2 / D / D.1 lid-rail studies, the class-A lid and the Round E E2 lid.
+    - Its records are preserved unchanged as engineering history and possible later reference.
+    - Its open items (D-009 ±80° stops, the hub bracket below SF 2, the A cable crossing) are **no longer V1 blockers**.
+  - `nomad.yaml` keeps the A parameters, marked superseded, so the existing study scripts and the Round E prototype still reproduce. B1 parameters are added with honest status. A full re-baseline is dependency step 7.
+  - **The rear-port / lid-sweep conflict remains open** (B1 stack: +2.07 at φ 125, −2.3 mm at φ 135; CALC/KERNEL).
+  - **D-007 is not accepted by this decision.**
+- **Remaining gates (physical, later):**
+  - the SB-261 coupon migration gate (`prototypes/B1_SB261/COUPON_SPEC.md` §7)
+  - the Phase 2 §24 mock-ups: tipping/stay, thermal gap + foil, cable twist cycling, hinge torque, ASA frame warp, transport/latch, display-hinge pass
+- **History:**
+  - Study 2026-09-28: `prototypes/P0.1/d010_solar_architecture_comparison.md`.
+  - **Study recommendation:** B1 (single top-hinged solar leaf on the lid back with a positive angle lock, vented air gap and a fold-out rear stay), gated by a one-day physical mock-up.
+- **Phase 2** (2026-09-28, `prototypes/P0.1/d010/d010_solar_architecture_phase2.md`, tool `CAD/tools/d010_phase2_study.py`; Onshape concept Feature Studio `NOMAD_D010_Concepts`, isolated). It was pending the owner's decision until 2026-10-01.
   - **RECOMMEND B1, conditional** on the physical mock-ups.
   - **Why:** A's cable routing is not V1-acceptable:
     - an unresolved carriage-to-loop crossing through the structural rail wall;
@@ -147,14 +206,24 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
     - a **mandatory** rear outrigger stay (tip wind 5.4–8.3 m/s without it, 11.4–18 m/s with it);
     - display hinges at about 1.6 N·m each.
   - **Corrections to Phase 1:** no visor while generating power; mass is equal (2.64 / 2.62 kg).
-- **If B is chosen:** D-004's lateral-slide architecture and the D-009 wing mechanism are superseded and kept as analysis records.
+- **B1 hinge refinement after Phase 2** (2026-10-01, scratch; `prototypes/B1_SB261/`):
+  - Phase 2's generic friction hinges (x ±55, axis z 69) and hollow cable knuckle were refined around the real TorqMaster SB-188-SB-261-6 IGES.
+  - **Hinge positions:** centres at x ±115.
+  - **Axis:** y 4.0, z 63.5, i.e. 2.5 above the lid back in the closed-lid frame.
+  - **Cable:** a sleeve with a 64 mm twist zone at x 12–76.
+  - The coupon is designed, not printed.
+- **B was chosen (2026-10-01):** as this section anticipated, D-004's lateral-slide architecture and the D-009 wing mechanism are superseded for V1 and kept as analysis records.
 - **Main tradeoffs:**
   - B: far fewer and simpler parts, better orientation, charges while closed; but a rearward CoG and wind sensitivity when deployed, lid-hinge torque, stowed heat (needs a gap), cells on the exterior.
   - A: protected cells and a neutral CoG; but high complexity and open D-009 problems.
 
 ## D-009 — Solar tilt index lock and hub-pin anti-rotation (Round E)
 
-- **Status:** **accepted** by the owner on 2026-09-28. It is implemented in the local digital prototype and is **PENDING PHYSICAL VALIDATION**.
+- **Status:** **SUPERSEDED / DEFERRED FOR NOMAD V1** on 2026-10-01 by D-010 (B1 selected).
+  - D-009 was accepted by the owner on 2026-09-28 as part of Architecture A and implemented in the local digital prototype (pending physical validation).
+  - It is kept unchanged below as an engineering record.
+  - Its open items are no longer V1 work items.
+- **Status as recorded on 2026-09-28** (history):
   - One part of it is unresolved: the **±80° structural hard stops are required but not packaged** (`SOLAR_TILT_STOP_ANGLE` open).
   - The persistent Onshape Feature Studio is not updated until the stops are decided.
 - **Context:**

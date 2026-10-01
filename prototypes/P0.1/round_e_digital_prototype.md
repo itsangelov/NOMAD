@@ -1,5 +1,7 @@
 # Round E — NOMAD Digital Prototype: Progress Log
 
+> **PARTLY SUPERSEDED FOR NOMAD V1 (D-010, 2026-10-01).** Its lid / solar content (class-A lid, sliding solar cassettes, E2 lid, F3, D-009) is **Architecture A**, superseded / deferred for V1; B1 was selected. The base content still shows the *proposed* D-007 (not accepted). Kept unchanged as an engineering record. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 **Plan:** `round_e_implementation_plan.md`, approved 2026-09-26 with the owner decisions recorded in D-008 (`docs/decisions.md`).
 
 **Status:** E0.5, E1 and E2 done; **F3 APPROVED AND IMPLEMENTED — OPTION B** (see the F3 implementation section below). **Stopped for review**; E3/E4 (solar mechanism implementation / validation) have not started.

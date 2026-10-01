@@ -1,5 +1,7 @@
 # D-010 — Solar Architecture Comparison (Sliding Wings vs Solar Lid)
 
+> **D-010 DECIDED (2026-10-01): B1 SELECTED** by the owner as the NOMAD V1 lid/solar architecture. This study is part of the decision record and is kept unchanged; statements below such as "pending" or "nothing is chosen" describe the state when it was written. See `docs/decisions.md` D-010.
+
 **Status:** architecture study and decision gate. **Nothing is chosen.**
 
 > **ERRATUM (D-010 Phase 2, 2026-09-28, `prototypes/P0.1/d010/d010_solar_architecture_phase2.md`):**

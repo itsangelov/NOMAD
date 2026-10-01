@@ -1,5 +1,7 @@
 # P0.1 Test Coupons: Printable Files
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 Physical test articles for the two largest P0.1 screening risks:
 - **Coupon A:** the solar rail cantilever over the display.
 - **Coupon B:** the 202 mm rear-shell span and its insert joint.

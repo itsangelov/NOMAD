@@ -693,3 +693,41 @@ No Git commit or push.
   - ignored caches and generated coupon STL/SCAD
   - `.claude/` local settings
 - No push.
+
+## 2026-10-01 — D-010 locked: B1 selected; source of truth migrated; V1 requirements sheet
+
+- **Decision (owner):** **D-010 accepted: Architecture B1** is the NOMAD V1 lid/solar architecture.
+  - It is one solar leaf behind the display lid, on two structural friction hinges.
+  - SB-188-SB-261-6 is the current selected hinge candidate.
+  - Leaf motion about 0–190°, cable sleeve with R12, mandatory stay, Voltaic P108 panel candidate.
+  - Physical validation remains a future gate.
+- **Architecture A** (D-004, D-009, Rounds B–E solar and lid-rail work, class-A lid, the E2 lid, the P0.1/P0.2 coupons) is **SUPERSEDED / DEFERRED FOR NOMAD V1**.
+  - Nothing was deleted or rewritten.
+  - Each A-path record got a one-line banner under its title (24 files, additions only). The D-010 study records got a "decided" banner.
+- **Source-of-truth changes:**
+  - `docs/decisions.md`:
+    - D-010 rewritten as accepted (history kept).
+    - D-004 and D-009 marked superseded for V1.
+    - Notes added to D-006, D-007 and D-008.
+  - `CAD/parameters/nomad.yaml`:
+    - header and `meta.architecture`
+    - the `solar` group and the class-A lid parameters marked superseded (comments and one `note`)
+    - new groups `lid_b1` (2) and `solar_leaf` (12): two provisional owner targets (`SOLAR_LEAF_ANGLE_MAX` 190°, `SOLAR_LEAF_CABLE_BEND_RADIUS` 12); everything else TBD with working inputs from D-010 Phase 2 and `prototypes/B1_SB261/`
+    - **No existing value, working input or formula changed.**
+  - Generated parameter blocks regenerated:
+    - `NOMAD_P01.fs` and `NOMAD_E_Prototype.fs`, the 14 new constants only.
+    - Local only; **not written to Onshape**; no feature uses them.
+  - `docs/mechanical-spec.md`: B1 sections added; A sections marked superseded.
+  - `docs/solar.md`: rewritten for B1 (A kept as a superseded section).
+  - Also updated: `docs/architecture.md`, `docs/hardware.md`, `docs/power.md`, `README.md`, `CLAUDE.md`, `CAD/README.md`, `prototypes/P0.1/README.md`, and the `prototypes/B1_SB261/` status lines.
+- **New:** `docs/v1-requirements.md`.
+  - Requirements by subsystem with the LOCKED / DEFINED / CANDIDATE / TBD / VALIDATION REQUIRED / BLOCKED scheme.
+  - Battery/power and thermal are explicitly unresolved.
+  - The 14-step V1 dependency order.
+- **D-007:** still **proposed**. No owner acceptance exists in the repository. The open owner decisions are listed in D-007 and `v1-requirements.md` §17.
+- **Checks:**
+  - YAML validation and both generated-block checks pass.
+  - The base layout and E-lid layout checks pass.
+  - Every study script gives output identical to the pre-change baseline, apart from the expected parameter count.
+- **No production geometry changed.** No Onshape calls (API 517 of 2,500). Nothing purchased. No push.
+- **Next:** V1 dependency step 3, down-select real hardware envelopes.

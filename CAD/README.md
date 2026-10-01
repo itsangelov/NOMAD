@@ -2,11 +2,16 @@
 
 **Onshape is the master parametric model.** Nothing in this folder replaces it.
 
+**Active architecture: B1 (D-010, accepted 2026-10-01).**
+- No B1 geometry exists in the NOMAD Onshape document yet. The B1 concept is in the isolated `NOMAD_D010_Concepts`. The SB-261 hinge rail is in the connector's scratch document (`prototypes/B1_SB261/SOURCES.md`).
+- **Architecture A, superseded / deferred for V1:** the Architecture A geometry (the Round E E2 lid "NOMAD E Lid" in `NOMAD_E_Prototype`, the P0.1 rail and lid coupons, the `solar` YAML group) is kept as history.
+- The B1 YAML groups (`lid_b1`, `solar_leaf`) are emitted into the generated parameter blocks of `NOMAD_P01.fs` and `NOMAD_E_Prototype.fs` as constants only. No feature uses them, and this was **not** written to Onshape.
+
 | Folder | Contents |
 |---|---|
 | `parameters/` | `nomad.yaml`: the authoritative machine-readable mechanical parameters (D-002). FeatureScript values are derived from it. |
 | `featurescript/` | `NOMAD_P01.fs`: the P0.1 FeatureScript source (D-001), whose parameter block is generated from `nomad.yaml`. Once a Feature Studio exists in Onshape, this is its snapshot, and Onshape is correct for everything outside the generated parameter block. `NOMAD_P01.test.fs` is the scratch test harness and is never written to Onshape. |
-| `coupons/P0.1/` | P0.1 physical test coupons (test articles, not lid parts). The CAD master is the Onshape Feature Studio `NOMAD_P01_Coupons` (snapshot `featurescript/NOMAD_P01_Coupons.fs`, harness `NOMAD_P01_Coupons.test.fs`). `generate_coupons.py` is the local reference → `stl/` (print-ready) + `scad/`; `onshape_crosscheck.py` gives the expected Onshape sizes and volumes. |
+| `coupons/P0.1/` | P0.1 physical test coupons (test articles, not lid parts; Architecture A rail / class-A lid basis, superseded / deferred for V1 by D-010). The CAD master is the Onshape Feature Studio `NOMAD_P01_Coupons` (snapshot `featurescript/NOMAD_P01_Coupons.fs`, harness `NOMAD_P01_Coupons.test.fs`). `generate_coupons.py` is the local reference → `stl/` (print-ready) + `scad/`; `onshape_crosscheck.py` gives the expected Onshape sizes and volumes. |
 | `tools/` | `yaml_to_featurescript.py` (YAML → FeatureScript parameter block, with `--check`); `build_test_payload.py` (assembles the single-feature test payload); `base_v01_layout.py` (Round C base V0.1 layout spec + checks; generates the base layout block in `NOMAD_P01.fs` and the harness data in `NOMAD_P01.basev01.test.fs`, with `--write` / `--check`). |
 | `exports/` | Derived STEP / STL / 3MF files. Name them `<revision>_<part>.<ext>`, e.g. `P0.1_solar_rail.stl`. |
 | `drawings/` | Derived drawings and dimensioned sketches. |

@@ -8,8 +8,11 @@ NOMAD carries its own computing, storage, offline knowledge, maps, GNSS navigati
 
 ## Status
 
-**Phase:** NOMAD V1 — Mechanical Architecture & Chassis Engineering
-**Current prototype:** P0.1 — mechanical proof of concept (not yet modeled)
+**Phase:** NOMAD V1 — Virtual V1 design (finish the virtual design before buying hardware)
+**Current prototype:** P0.1 — mechanical proof of concept (envelope and concept models; nothing physically tested)
+**Architecture:** **B1** (D-010, accepted 2026-10-01). The display lid carries one solar leaf behind it, on two friction hinges.
+- The earlier sliding/tilting solar cassettes (Architecture A) are superseded / deferred for V1.
+- Requirements and remaining work: [`docs/v1-requirements.md`](docs/v1-requirements.md).
 
 ## Baseline hardware (provisional)
 
@@ -22,7 +25,7 @@ NOMAD carries its own computing, storage, offline knowledge, maps, GNSS navigati
 | Trackpad | Perixx PERIPAD-501 II (candidate) |
 | GNSS | SparkFun GNSS Flex pHAT / DAN-F10N (candidate) |
 | Power | Ready-made modules; battery sized from measured consumption |
-| Solar | Two deployable sliding/rotating solar cassettes |
+| Solar | B1 solar leaf behind the lid (D-010): Voltaic P108 (candidate), TorqMaster SB-188-SB-261-6 leaf hinges (candidate), fold-out rear stay |
 
 ## Repository layout
 
@@ -40,4 +43,6 @@ NOMAD carries its own computing, storage, offline knowledge, maps, GNSS navigati
 - **Parametric CAD:** Onshape. Exported STEP/STL/3MF files are derived outputs.
 - **Specifications:** `docs/`
 - **Decisions:** `docs/decisions.md`
+- **V1 requirements:** `docs/v1-requirements.md`
+- **Mechanical parameters:** `CAD/parameters/nomad.yaml` (D-002)
 - **Build history:** `docs/build-log.md`

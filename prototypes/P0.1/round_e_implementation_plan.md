@@ -1,5 +1,7 @@
 # Round E — NOMAD Full Digital Prototype: E0 Architecture Review and Implementation Plan
 
+> **PARTLY SUPERSEDED FOR NOMAD V1 (D-010, 2026-10-01).** Its lid / solar content (class-A lid, sliding solar cassettes, E2 lid, F3, D-009) is **Architecture A**, superseded / deferred for V1; B1 was selected. The base content still shows the *proposed* D-007 (not accepted). Kept unchanged as an engineering record. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 **Status:** plan only, awaiting approval.
 - No Onshape changes, and no YAML, geometry or Git changes.
 - One read-only FeatureScript documentation search (~1 API call) confirmed that `opMateConnector` exists.

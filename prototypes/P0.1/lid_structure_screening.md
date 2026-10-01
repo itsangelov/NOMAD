@@ -1,5 +1,7 @@
 # P0.1 Round B.2: Lid Structure and Printability Screening (V1 + fixes)
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 **Status: modeled, screening only. Stiffness values are simple beam estimates, NOT FEA. No lid concept and no V1 architecture has been chosen.**
 
 ## Basis

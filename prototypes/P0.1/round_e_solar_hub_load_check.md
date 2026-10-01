@@ -1,5 +1,7 @@
 # Round E — Solar Hub / Pin Load Sanity Check (F3 Option B baseline)
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 **Status:** analysis only. No CAD, FeatureScript, Onshape, parameter or Git change.
 
 **Baseline:** the implemented F3 Option B geometry, as in the repository (`e_lid_layout.py` evaluated from `nomad.yaml`).

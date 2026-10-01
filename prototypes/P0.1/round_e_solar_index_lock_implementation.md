@@ -1,5 +1,7 @@
 # Round E — Solar Tilt Index Lock: Implementation (D-009)
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 **Status:** approved by the owner on 2026-09-28 and implemented in `nomad.yaml`, the spec, the E-lid generator and the local FeatureScript. Validated locally and in an Onshape scratch Part Studio. **The persistent Onshape Feature Studio has NOT been updated.**
 - **Why not:** the approved ±80° structural hard stops could not be packaged (§8). This is an unresolved critical item, and the owner's precondition for the persistent write is that none remains.
 - No Git commit or push.

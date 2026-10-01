@@ -1,5 +1,7 @@
 # P0.1 Test Coupons: Solar Rail (A) and Rear Shell (B)
 
+> **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** This record belongs to **Architecture A** (sliding/tilting solar cassettes and their lid, D-004 / D-009). The owner selected **Architecture B1** (one solar leaf behind the display lid) as the active V1 architecture. The content below is kept unchanged as an engineering record and possible later reference; it does not describe the V1 design. See `docs/decisions.md` D-010 and `docs/v1-requirements.md`.
+
 > **Test procedure superseded by P0.2** (`prototypes/P0.1/P0.2_physical_test_plan.md`). The coupon geometry below is unchanged and reused. Two corrections apply to the A2 procedure:
 > - Strips must be **shimmed to a snug fit in Z**. With the 0.4 mm slot play they don't engage until ~2.8 mm of tip deflection.
 > - Measure **both lips**, because one strip makes the section asymmetric.
