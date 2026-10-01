@@ -731,3 +731,38 @@ No Git commit or push.
   - Every study script gives output identical to the pre-change baseline, apart from the expected parameter count.
 - **No production geometry changed.** No Onshape calls (API 517 of 2,500). Nothing purchased. No push.
 - **Next:** V1 dependency step 3, down-select real hardware envelopes.
+
+## 2026-10-01 — E-POWER-001: V1 hardware + energy characterization (desk study, €0)
+
+- **Record:** `prototypes/V1/E-POWER-001_hardware_energy_characterization.md`. It has 26 sources, all retrieved 2026-10-01: manufacturer sources first, third-party sources labelled.
+- **Selected:** unchanged (Pi 5 8 GB only).
+- **Candidates characterized:**
+  - Pi 5 power; Active Cooler; M.2 HAT+; Raspberry Pi SSD, with WD SN740 as the power reference
+  - displays: Winstar WF101NTYA4LNN0, AUO B101UAN01.C, Waveshare (G)
+  - Perixx keyboards and trackpads
+  - SparkFun / u-blox DAN-F10N and the ANN-MB5 antenna
+  - display hinges: Southco E6, TorqMaster SB-254-H
+  - Voltaic P108 (official data refreshed: 9.92 W peak, Voc 20.45 V, 17.34 V / 570 mA)
+- **Preliminary power model:** published data only. Documented subtotals, each + TBD:
+  - standby ≈ 10.1–10.9 W
+  - normal ≈ 10.9 W
+  - max sustained ≈ 17.7–22.4 W
+  - **The display is the largest load. The P108 peak is below every state.**
+- **Energy principle recorded:** solar = field energy replenishment, not the primary power source (`docs/power.md`, SYS-10).
+- **Key conflicts (documented, not solved):**
+  - Display at full backlight 6.8 W typ > the ≤ 6 W target.
+  - Candidate displays thicker or taller than the working envelope.
+  - The controller board is uncharacterized.
+  - No keyboard ≤ 8 mm (retail 14–21 mm).
+  - PERIPAD-501 II unverified.
+  - The DAN-F10N is an antenna module, and has no GLONASS (docs corrected).
+  - M.2 HAT+ 0–50 °C ambient.
+  - Pi draws 1–1.4 W when "off" unless `POWER_OFF_ON_HALT=1`.
+  - The 5 V rail must be 5 A-capable for the 1.6 A USB budget.
+- **Docs updated:** `docs/hardware.md`, `docs/power.md`, `docs/v1-requirements.md`, `docs/architecture.md`, `docs/solar.md`, `README.md`, `CLAUDE.md`.
+- **Not changed:**
+  - `nomad.yaml`, so no TBD was replaced. Verified values are recorded for the step 7 re-baseline.
+  - Production CAD.
+  - `decisions.md`.
+- **No battery or power electronics chosen.** No Onshape calls. Nothing purchased. No push.
+- **Next:** step 5, the power architecture and battery capacity from the characterized loads. This needs the owner's runtime target.

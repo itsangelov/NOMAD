@@ -1,6 +1,6 @@
 # NOMAD V1 Requirements
 
-**Revision:** 2026-10-01, written when D-010 = B1 was locked. Planning baseline for the remaining **Virtual V1** work.
+**Revision:** 2026-10-01, written when D-010 = B1 was locked. **Updated 2026-10-01 by E-POWER-001** (hardware and energy characterization, `prototypes/V1/E-POWER-001_hardware_energy_characterization.md`): sourced candidate data, preliminary power model, conflicts C1–C14. Planning baseline for the remaining **Virtual V1** work.
 
 **Principle:** finish the virtual design before spending money wherever reasonably possible.
 
@@ -43,15 +43,16 @@
 | SYS-7 | **Operating concept** (details in §8): table-top use, lid open about 105–110° (working). The B1 leaf is deployed and aimed by hand, with the stay deployed at high leaf angles. It charges while closed. Manual only, no motors | DEFINED | `CLAUDE.md` (no motors without approval); D-010 Phase 2 named states |
 | SYS-8 | **Priorities, in order:** function, reliability, serviceability, modularity, mechanical simplicity, manufacturability, offline capability, expandability, aesthetics | LOCKED | `CLAUDE.md` |
 | SYS-9 | Target ambient operating and storage temperature range | TBD | Not set by the owner. D-010 used 35 °C as a calculation case only |
+| SYS-10 | **Energy-system principle:** NOMAD's solar system is a field energy replenishment system, not its primary power source. B1 deploys a larger panel when stationary while keeping NOMAD compact when stowed. No energy independence and no runtime extension is claimed until a power budget and a solar-yield model exist | LOCKED (principle) | Owner, 2026-10-01 (E-POWER-001); `docs/power.md` |
 
 ## 3. Compute
 
 | ID | Requirement | Status | Source / notes |
 |---|---|---|---|
 | CMP-1 | Raspberry Pi 5, 8 GB | LOCKED (current selection) | `docs/hardware.md` "selected" |
-| CMP-2 | **Storage:** 500–512 GB NVMe, 2230 preferred, through the Raspberry Pi M.2 HAT+ | DEFINED (target) / CANDIDATE (HAT+) | SSD not selected; `NVME_FORMAT` 2230 provisional |
-| CMP-3 | **Active cooling** is required for the Pi 5 | DEFINED | `docs/hardware.md`. Hardware TBD (§10) |
-| CMP-4 | Pi stack height (Pi + cooler + HAT+ + NVMe) | TBD | Working 30, inferred 25–28, not measured. It drives `BODY_HEIGHT` and the compute bay (D-007) |
+| CMP-2 | **Storage:** 500–512 GB NVMe, 2230 preferred, through the Raspberry Pi M.2 HAT+ (Standard: 2230/2242, ≤ 3 A to the device, 16 mm stacking header so it fits over the Active Cooler) | DEFINED (target) / CANDIDATE (HAT+, Raspberry Pi SSD 512 GB) | MFR briefs (E-POWER-001 §2.3). 2230 + HAT+ + Active Cooler compatible on paper. SSD power not published; reference SN740 512 GB: 50 mW avg active, ≤ 4.7 W max |
+| CMP-3 | **Active cooling** is required for the Pi 5. The Active Cooler is temperature-controlled by firmware (0 % below 50 °C, 100 % at 75 °C); passive cooling is not assumed sufficient | DEFINED / CANDIDATE (Active Cooler) | MFR (E-POWER-001 §2.2). The Active Cooler current is not published; the fan draws from the Pi's USB budget |
+| CMP-4 | Pi stack height (Pi + Active Cooler + 16 mm stacking header + HAT+ + NVMe) | TBD | Working 30, not measured. The Active Cooler drawing suggests 13.7 (inferred). Verify against the drawings (E-POWER-001 C8) |
 | CMP-5 | Compute placement in the base | TBD | D-007 proposes the right palm-rest bay; not accepted |
 | CMP-6 | Remaining compute hardware (cooler model, HAT+, SSD, RTC battery, any expansion) | TBD | |
 
@@ -59,9 +60,9 @@
 
 | ID | Requirement | Status | Source / notes |
 |---|---|---|---|
-| DSP-1 | **Target class:** about 10.1" IPS, 1920 × 1200 (16:10), ≥ 400 nit (500+ preferred), matte, non-touch, HDMI, ≤ 6 W | DEFINED | `docs/architecture.md`, `docs/hardware.md` |
-| DSP-2 | Display panel and controller SKU | TBD | Not selected |
-| DSP-3 | **Physical envelope:** outline, thickness, controller size and location (lid band or base), cable exit | TBD | Working 235 × 150 × 5 and controller 12 are placeholders, not from a datasheet. Must come from the actual candidate hardware (step 3) |
+| DSP-1 | **Target class:** about 10.1" IPS, 1920 × 1200 (16:10), ≥ 400 nit (500+ preferred), matte, non-touch, HDMI, ≤ 6 W. **The ≤ 6 W target needs a brightness condition:** the best-documented panel draws 6.8 W typ / 7.8 W max at full backlight before the controller (E-POWER-001 C1) | DEFINED | `docs/architecture.md`, `docs/hardware.md`; MFR Winstar data |
+| DSP-2 | **Display panel and controller.** Shortlist: Winstar WF101NTYA4LNN0 (500 nit, LVDS, anti-glare, −20…+70 °C, best documented); AUO B101UAN01.C (400 nit, eDP, glossy, 0–50 °C, 3P data); Waveshare 10.1inch HDMI LCD (G) (integrated HDMI controller, touch, data incomplete). The controller board is uncharacterized | CANDIDATE (panels) / TBD (controller) | E-POWER-001 §2.4. Not selected |
+| DSP-3 | **Physical envelope:** outline, thickness, controller size and location (lid band or base), cable exit | TBD | Candidate panels: 231.4 × 152.3 × 9.1 (Winstar) / 229.7 × 150.3 × 4.6 (AUO). Both exceed working `DISPLAY_HEIGHT` 150 or `DISPLAY_THICKNESS` 5 (E-POWER-001 C2). Controller TBD (C3) |
 | DSP-4 | Display temperature rating vs closed-in-sun heating (B1 with foil: display about 50–57 °C at 35 °C ambient, EST) | TBD | D-010 Phase 2 §13; LCD limits are unknown until the panel is selected |
 
 ## 5. Keyboard
@@ -70,14 +71,14 @@
 |---|---|---|---|
 | KBD-1 | **Envelope target:** about 280 × 105 × ≤ 8 mm | DEFINED | `nomad.yaml` provisional values (spec target) |
 | KBD-2 | Wired USB HID, ultra-low-profile, no battery, no wireless | DEFINED | `docs/hardware.md` |
-| KBD-3 | Actual keyboard model | TBD | Not selected |
+| KBD-3 | **Actual keyboard model.** Retail wired USB candidates (Perixx PERIBOARD-426 / -416 / -422 / -332 / -409H) are **14–21 mm thick and 116–146 mm deep as sold**. None meets KBD-1. An uncased or OEM keyboard module has not yet been searched | TBD (conflict) | E-POWER-001 §3, C4 |
 | KBD-4 | Centred on the chassis centreline, above the trackpad | LOCKED | D-003 |
 
 ## 6. Trackpad
 
 | ID | Requirement | Status | Source / notes |
 |---|---|---|---|
-| TPD-1 | Perixx PERIPAD-501 II (about 86 × 75 × 13) | CANDIDATE | `docs/hardware.md` |
+| TPD-1 | Perixx PERIPAD-501 II: **availability and dimensions unverified** (not listed on the Perixx stores; no official dimensions; the earlier ~86 × 75 × 13 is unverified). Verified alternative: PERIPAD-506, 135 × 116 × 14, USB-C to A | CANDIDATE (unverified) | E-POWER-001 §3, C5 |
 | TPD-2 | Centred below the keyboard; the position is parameterized | LOCKED | D-003 |
 | TPD-3 | Final envelope, mounting and electrical interface | TBD | D-003 keeps the dimensions TBD until the module is selected |
 
@@ -87,7 +88,7 @@
 |---|---|---|---|
 | LID-1 | **B1 lid architecture:** a thin core (display, controller zone, back shell), a vented air gap with low-e foil, and the solar leaf on top | LOCKED (architecture) | D-010 |
 | LID-2 | B1 lid stack thickness (about 19 core + 6 gap + 6 leaf = 31, EST) | TBD | Needs the actual display stack (DSP-3) |
-| LID-3 | **Display-hinge subsystem:** hardware, axis position, torque (about 1.6 N·m per hinge for B1, CALC), φ-max stop | TBD | D-006 sets only a provisional rear-face direction. Working closed gap 2.0; lid angles 105 nominal / 135 max (working) |
+| LID-3 | **Display-hinge subsystem:** hardware, axis position, torque (about 1.5–1.8 N·m per hinge for B1, CALC), φ-max stop. Candidates: Southco E6-10-216-50 / E6-10-416-50 (1.8 N·m symmetric, 20 000 cycles within ±20 %), E6-10-216F-50 (1.8 / 1.1 asymmetric), TorqMaster SB-188-SB-254-H (1.36–1.69 N·m) | TBD / CANDIDATE | D-006 sets only a provisional rear-face direction. Working closed gap 2.0; lid angles 105 nominal / 135 max (working). Hinge size and fit not verified (E-POWER-001 C11) |
 | LID-4 | **Rear-port / lid-sweep interaction must be resolved.** The B1 stack clears the plug keep-out by +2.07 at φ 125 but is −2.3 mm at φ 135 (KERNEL / CALC) | BLOCKED | Needs the display-hinge geometry (LID-3), the lid stack (LID-2) and the I/O policy (PRT-1). Dependency step 8 |
 | LID-5 | **Shared display-hinge cable pass** (display cable + solar cable) | TBD | Display cable size unknown (D-010 Phase 2 §12) |
 | LID-6 | **Final lid geometry** | BLOCKED | Needs the actual display stack (DSP-3) and the display hinge (LID-3) |
@@ -99,7 +100,7 @@
 | SOL-1 | **B1 solar leaf:** one leaf behind the display lid, hinged at the lid top edge | LOCKED | D-010 |
 | SOL-2 | **Usable leaf motion** about 0–190° (`SOLAR_LEAF_ANGLE_MAX` 190) | DEFINED; VALIDATION REQUIRED | Owner target. KERNEL: ≥ 2.03 mm at 190°, first contact 201° (`prototypes/B1_SB261/`) |
 | SOL-3 | **Leaf hinges:** two structural friction hinges. Current selected candidate: TorqMaster SB-188-SB-261-6 | CANDIDATE; VALIDATION REQUIRED | Torque 0.96–1.13 N·m per hinge (PUB) vs about 0.83 required (CALC), SF ≈ 1.16. Load, material and temperature unpublished. Coupon designed, not printed |
-| SOL-4 | **Panel:** Voltaic P108, 273 × 223 × 4, 18 V, 9.5–10.9 W nameplate (VENDOR) | CANDIDATE | Not selected. Real output 5.6–7.1 W at best aim (CALC/ASSUMED). Solar is supplementary for a 6–10 W system |
+| SOL-4 | **Panel:** Voltaic P108: 9.92 W peak, Voc 20.45 V, 17.34 V / 570 mA, 22.3 × 27.4 × 0.4 cm, 328 g, 3.5 × 1.1 mm plug, 50 cm cable (MFR, 2026-10-01). Isc and temperature ratings are not published | CANDIDATE | Not selected. Replaces the earlier 9.5–10.9 W range. Solar is replenishment only (SYS-10): the 9.92 W peak is below every preliminary load state |
 | SOL-5 | **Cable:** dedicated sleeve near the hinge axis; static bends R ≥ 12 (`SOLAR_LEAF_CABLE_BEND_RADIUS`); twist along the axis ≤ 3.5°/mm; leaf connector so the panel can be removed; no slip ring | DEFINED; VALIDATION REQUIRED | Owner concept (D-010). KERNEL: 5 bends at R 12.00, 2.97°/mm over 64 mm. Cable not selected (Ø4 ASSUMED). Twist cycling test needed |
 | SOL-6 | **Stay:** mandatory fold-out rear outrigger stay | DEFINED; VALIDATION REQUIRED | Rear tip wind 11.4–18 m/s with the stay vs 2.4–8.3 without (CALC). Design details TBD |
 | SOL-7 | **Thermal:** vented gap ≥ 6 mm with low-e foil; sun-exposed parts ASA or light-coloured | DEFINED; VALIDATION REQUIRED | D-010 Phase 2 §13 (EST). Thermal mock-up needed |
@@ -118,7 +119,7 @@
 
 | ID | Item | Status | Depends on |
 |---|---|---|---|
-| PWR-1 | Power budget (idle / typical / peak per load) | TBD | Step 3 (hardware envelopes and datasheets); measurement later |
+| PWR-1 | **Power budget** (idle / typical / peak per load) | DEFINED (preliminary, published data only); VALIDATION REQUIRED (measurement) | E-POWER-001 §4–§5. Documented subtotals: standby ≈ 10.1–10.9 W, normal ≈ 10.9 W, max sustained ≈ 17.7–22.4 W, each **+ TBD** (display controller, HID, fan, HAT+, conversion losses) |
 | PWR-2 | Battery voltage | TBD | PWR-1 |
 | PWR-3 | Chemistry and pack architecture | TBD | PWR-1 |
 | PWR-4 | Capacity | TBD | PWR-1, PWR-5 |
@@ -132,6 +133,8 @@
 | PWR-12 | Protection (fusing, reverse polarity, over/under-voltage, temperature) | TBD | PWR-2, PWR-3 |
 | PWR-13 | Power switch and its behaviour | TBD | PWR-2 |
 | PWR-14 | Charging / input behaviour: charge while running, solar plus external input, charging while closed in the sun. Charging must be temperature-limited (D-010 Phase 2 §13: ≤ 45 °C for Li-ion) | TBD | PWR-3, §10 |
+| PWR-15 | **Off-state drain:** the Pi 5 draws about 1–1.4 W when "off" by default, about 0.01 W with `POWER_OFF_ON_HALT=1`. NOMAD must set the EEPROM option or cut power | DEFINED | MFR (E-POWER-001 C10) |
+| PWR-16 | **The 5 V rail feeding the Pi must be 5 A-capable** for the Pi to allow 1.6 A of downstream USB, which the fan and USB HID devices share. Otherwise the limit is 600 mA, or peripherals are powered separately | DEFINED (requirement on the rail; no converter chosen) | MFR (E-POWER-001 C9) |
 
 ## 10. Thermal — UNRESOLVED
 
@@ -150,14 +153,15 @@
 | THM-5 | Fan and duct selection | TBD | |
 | THM-6 | Solar and closed-lid heat: display +15–22 K with gap and foil; panel 66–91 °C at 35 °C ambient (EST) | TBD; VALIDATION REQUIRED | D-010 Phase 2 §13 |
 | THM-7 | Ambient operating temperature target | TBD | Owner decision (SYS-9) |
+| THM-8 | **Component temperature limits** found so far: M.2 HAT+ 0–50 °C ambient; Pi 5 0–70 °C; Raspberry Pi SSD 0–70 °C; Winstar panel −20…+70 °C; AUO panel 0–50 °C; DAN-F10N −40…+85 °C. The **internal air temperature must stay ≤ 50 °C** while the HAT+ is used | DEFINED (from MFR data) | E-POWER-001 C7 |
 
 ## 11. GNSS
 
 | ID | Requirement | Status | Source / notes |
 |---|---|---|---|
-| GNS-1 | SparkFun GNSS Flex pHAT / u-blox DAN-F10N; GPS / Galileo / GLONASS (/ BeiDou); external antenna; PPS; Linux support | CANDIDATE | `docs/hardware.md`, `docs/architecture.md` |
+| GNS-1 | SparkFun GNSS Flex pHAT – DAN-F10N (GPS-29491). The u-blox DAN-F10N is an **antenna module** (internal L1/L5 patch, 20.0 × 20.0 × 11.6). GPS / Galileo / BeiDou / QZSS / NavIC; **no GLONASS**. 2.7–3.6 V, 21 mA tracking / 26 mA acquisition. UART + PPS; U.FL / SMA for an external antenna. Linux support required (unchanged requirement) | CANDIDATE | MFR (u-blox, SparkFun); E-POWER-001 §2.6. Corrects the earlier "GLONASS" listing |
 | GNS-2 | Mounted as a separate cabled module, not stacked on the Pi | TBD | Working assumption in D-007 (proposed) |
-| GNS-3 | Antenna type, location and keep-out (away from major noise sources) | TBD | `GNSS_ANTENNA_KEEPOUT` TBD |
+| GNS-3 | **Antenna:** internal patch (needs sky view) or external L1/L5 active antenna, e.g. u-blox ANN-MB5 (49.14 × 46.14 × 15.94, 17 mA at 5 V, SMA, 3 m cable). Location and keep-out | TBD / CANDIDATE | `GNSS_ANTENNA_KEEPOUT` TBD. D-007's under-keyboard GNSS placement implies an external antenna (E-POWER-001 C6) |
 
 ## 12. Ports / Controls — final list NOT defined
 
@@ -231,7 +235,7 @@ The P0.1 reserved-volume list (`docs/mechanical-spec.md`) keeps room for: USB-C,
 
 1. **D-010 B1 architecture formalization.** Done 2026-10-01.
 2. **V1 requirements.** This sheet, 2026-10-01.
-3. **Down-select real hardware envelopes:**
+3. **Down-select real hardware envelopes.** First pass done 2026-10-01 (E-POWER-001): candidates characterized, conflicts C1–C14 open:
    - display and controller
    - keyboard and trackpad
    - Pi stack, cooler and SSD
@@ -239,7 +243,7 @@ The P0.1 reserved-volume list (`docs/mechanical-spec.md`) keeps room for: USB-C,
    - display hinges
    - panel confirmation
    - Use datasheets and published drawings only. €0.
-4. **Establish the power budget** from datasheets (PWR-1).
+4. **Establish the power budget** from datasheets (PWR-1). Preliminary model done 2026-10-01 (E-POWER-001); it gets refined as step 3 closes.
 5. **Establish the battery / power architecture** (PWR-2 … PWR-14).
 6. **Establish the thermal architecture** (§10).
 7. **Re-baseline `nomad.yaml`:**

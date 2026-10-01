@@ -16,7 +16,13 @@
   - Bends are R ≥ 12, and the twist happens along the axis (the scratch rail has a 64 mm zone at 2.97°/mm).
   - A connector at the leaf lets the panel come off.
   - No slip ring, no loop, no gears.
-- **Panel:** **Voltaic P108** is the current **candidate**. It is 273 × 223 × 4, ETFE on FR4, 328 g, 18 V, 9.5–10.9 W nameplate (VENDOR, unverified). Not selected.
+- **Panel:** **Voltaic P108** is the current **candidate**, not selected. Per the manufacturer page (2026-10-01, E-POWER-001):
+  - 9.92 W peak, Voc 20.45 V, Vmp 17.34 V, Imp 570 mA
+  - 22.3 × 27.4 × 0.4 cm, matte ETFE on 2.0 mm FR4, 328 g
+  - 3.5 × 1.1 mm plug, 50 cm cable
+  - Isc and temperature ratings are not published
+  - This replaces the earlier 9.5–10.9 W range.
+- **Role:** a field energy **replenishment** system, not NOMAD's primary power source (`power.md`). The P108 peak rating is below every preliminary load state.
 - **Lid:** a vented air gap of at least 6 mm with low-e foil between the lid back and the panel back (Phase 2 §13, EST). Sun-exposed parts should be ASA or light-coloured.
 - **Stay:** a **mandatory** fold-out rear outrigger stay (two stainless flats on M4 shoulder screws at the rear base corners). Without it, B1 tips at 2.4–8.3 m/s; with it, at 11.4–18 m/s (CALC). Design details are TBD.
 

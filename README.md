@@ -22,7 +22,7 @@ NOMAD carries its own computing, storage, offline knowledge, maps, GNSS navigati
 | Storage | 500–512 GB NVMe (2230 preferred) via Raspberry Pi M.2 HAT+ |
 | Display | 10.1" IPS, 1920×1200, 16:10, ≥400 nit, matte, HDMI (SKU not locked) |
 | Keyboard | Ultra-low-profile wired USB HID, ~280×105 mm (SKU not locked) |
-| Trackpad | Perixx PERIPAD-501 II (candidate) |
+| Trackpad | Perixx PERIPAD-501 II (candidate; availability and dimensions unverified, see E-POWER-001) |
 | GNSS | SparkFun GNSS Flex pHAT / DAN-F10N (candidate) |
 | Power | Ready-made modules; battery sized from measured consumption |
 | Solar | B1 solar leaf behind the lid (D-010): Voltaic P108 (candidate), TorqMaster SB-188-SB-261-6 leaf hinges (candidate), fold-out rear stay |

@@ -23,11 +23,11 @@ Requirements by subsystem, with their status and the dependency order of the rem
 | Display | 10.1" IPS 1920×1200, ≥400 nit (500+ preferred), matte, HDMI, non-touch, ≤6 W | SKU not locked |
 | Display hinges | Rear-face direction (D-006, provisional); ~1.6 N·m each for B1 (CALC) | TBD |
 | Keyboard | Ultra-low-profile wired USB HID, ~280×105 mm, ≤8 mm | SKU not locked |
-| Trackpad | Perixx PERIPAD-501 II | candidate |
-| GNSS | SparkFun GNSS Flex pHAT / DAN-F10N; GPS/Galileo/GLONASS(/BeiDou), external antenna, PPS | candidate |
+| Trackpad | Perixx PERIPAD-501 II (availability and dimensions unverified, E-POWER-001); verified alternative PERIPAD-506 | candidate |
+| GNSS | SparkFun GNSS Flex pHAT / DAN-F10N; GPS / Galileo / BeiDou / QZSS / NavIC, L1/L5 (no GLONASS, per u-blox); integrated patch antenna or external antenna; PPS | candidate |
 | Power | Ready-made modules; battery voltage and DC/DC TBD | TBD |
 | Battery | Removable bay; capacity from measured consumption | TBD |
-| Solar | B1 leaf (D-010): Voltaic P108 candidate panel; TorqMaster SB-188-SB-261-6 candidate leaf hinges; manual; no motors | architecture locked; parts candidate |
+| Solar | B1 leaf (D-010), a field energy replenishment system, not the primary power source: Voltaic P108 candidate panel (9.92 W peak); TorqMaster SB-188-SB-261-6 candidate leaf hinges; manual; no motors | architecture locked; parts candidate |
 
 ## Software (planned areas)
 
@@ -40,3 +40,4 @@ Launcher, offline maps, navigation, offline knowledge, local AI, power managemen
 - Hardware: `hardware.md`
 - Power: `power.md`
 - Solar: `solar.md`
+- Hardware and energy characterization (E-POWER-001): `../prototypes/V1/E-POWER-001_hardware_energy_characterization.md`
