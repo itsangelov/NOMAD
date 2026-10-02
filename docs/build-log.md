@@ -766,3 +766,28 @@ No Git commit or push.
   - `decisions.md`.
 - **No battery or power electronics chosen.** No Onshape calls. Nothing purchased. No push.
 - **Next:** step 5, the power architecture and battery capacity from the characterized loads. This needs the owner's runtime target.
+
+## 2026-10-02 — E-POWER research campaign (research only; nothing selected)
+
+- **Dossier:** `docs/E-POWER-RESEARCH-CAMPAIGN.md`. **Calculator:** `prototypes/V1/epower_campaign_calc.py` (standard library; reproduces every derived number).
+- **Scope:** display and controllers, the refined load model, battery chemistry and scenarios (4 / 6 / 8 h × LOW / NORMAL / HIGH / WORST), bay fit, power architectures A–D, charging, solar yield (PVGIS 5.3, Sofia, 2018–2023 hourly), MPPT compatibility, thermal, mass, power-flow model, candidate tables and EU prices.
+- **Key findings** (CALC from MFR / 3P data and stated assumptions):
+  - **Display:**
+    - D-A (AUO eDP + Beck BTC-mini-eDP): 2.7 / 3.3 / 4.6 W at 25 / 50 / 100 % PWM.
+    - D-W (Winstar LVDS + Beck BTC-mini + LED driver): 3.4 / 5.0 / 8.4 W.
+    - No documented panel meets ≥ 400 nit + matte + ≤ 6 W.
+  - **System at battery:** NORMAL 8.7 W (D-A) / 10.6 W (D-W); HIGH 18.0 / 22.1 W.
+  - **The 90 × 82 × 30 bay holds at most 4 × 21700:** 71 Wh (Samsung 50E) or 92 Wh (Molicel M65A, datasheet v0.1, marginal fit).
+    - NORMAL 4–6 h fits.
+    - NORMAL 8 h and every HIGH-load target do not.
+    - A second layer exceeds the 40 mm body height.
+  - **Above 100 Wh needs airline approval** (IATA 2026).
+  - **Solar into battery:** about 48 Wh/day summer median, 36 annual mean, 16 winter median, 5 on poor winter days. That is about 91 / 68 / 30 / 10 % of a NORMAL 6 h day.
+  - **A buck-only MPPT cannot charge 4S Li-ion from a hot P108;** buck-boost (BQ25798, LT8491) works with any pack.
+  - **Thermal:** M.2 HAT+ 0–50 °C ambient caps outside air at about 35–40 °C. HIGH-load base heat of 13 W needs about 2.4 CFM.
+- **Conflicts and decisions:** EP-C01–EP-C20 and the requirement-conflict table are documented and **not applied**. Owner decisions are listed in dossier §19.
+- **Corrections recorded:**
+  - PERIPAD-501 II 86 × 75 × 13 mm is verified by the official Perixx manual.
+  - PERIBOARD-416 is 16 mm per its manual (the product page says 21).
+- **Not changed:** `nomad.yaml`, CAD, Onshape, requirement statuses. No Onshape calls, no purchases, no push.
+- **Source-access notes:** CAPTCHA and bot-checked sites were not bypassed; snippet-only values were dropped or verified at the source.

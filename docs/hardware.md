@@ -4,6 +4,7 @@ Component selections and their status. Update this file when a SKU is locked or 
 
 - The architecture is B1 (D-010). Requirement status by subsystem is in `v1-requirements.md`.
 - **Characterization:** `prototypes/V1/E-POWER-001_hardware_energy_characterization.md` (2026-10-01). It holds the sourced electrical and physical data, the preliminary power model and the conflicts. Nothing there was bought or measured.
+- **Energy-chain research (2026-10-02):** `docs/E-POWER-RESEARCH-CAMPAIGN.md`. It adds display controllers (Beck BTC-mini / BTC-mini-eDP), cells, BMS, chargers, MPPT, regulators and candidate tables. Nothing is selected.
 
 | Component | Candidate / target | Status | Key data (source in E-POWER-001) | Key constraints |
 |---|---|---|---|---|

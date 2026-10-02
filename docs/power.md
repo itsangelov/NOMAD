@@ -27,6 +27,18 @@
 
 The battery, power and charging architecture is **unresolved**. The open items are listed in `v1-requirements.md` §9. Nothing in this file selects them.
 
+## E-POWER research campaign (2026-10-02)
+
+The full research dossier is `docs/E-POWER-RESEARCH-CAMPAIGN.md` (calculator: `prototypes/V1/epower_campaign_calc.py`). It covers:
+- display and controller research
+- refined load scenarios
+- battery chemistry, scenarios and bay fit
+- power architectures, charging, solar yield (PVGIS) and MPPT compatibility
+- thermal and mass
+- conflicts EP-C01–EP-C20 and the **owner decisions required**
+
+**It selects nothing.** The table below remains the E-POWER-001 preliminary budget.
+
 ## Power budget (preliminary, published data only — E-POWER-001)
 
 - **Full record, sources and evidence labels:** `prototypes/V1/E-POWER-001_hardware_energy_characterization.md`.

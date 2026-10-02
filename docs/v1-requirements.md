@@ -1,6 +1,6 @@
 # NOMAD V1 Requirements
 
-**Revision:** 2026-10-01, written when D-010 = B1 was locked. **Updated 2026-10-01 by E-POWER-001** (hardware and energy characterization, `prototypes/V1/E-POWER-001_hardware_energy_characterization.md`): sourced candidate data, preliminary power model, conflicts C1–C14. Planning baseline for the remaining **Virtual V1** work.
+**Revision:** 2026-10-01, written when D-010 = B1 was locked. **Research reference (2026-10-02):** `docs/E-POWER-RESEARCH-CAMPAIGN.md`. It is research only; requirement statuses below are unchanged, and the owner decisions it lists are pending. **Updated 2026-10-01 by E-POWER-001** (hardware and energy characterization, `prototypes/V1/E-POWER-001_hardware_energy_characterization.md`): sourced candidate data, preliminary power model, conflicts C1–C14. Planning baseline for the remaining **Virtual V1** work.
 
 **Principle:** finish the virtual design before spending money wherever reasonably possible.
 

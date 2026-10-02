@@ -27,7 +27,12 @@ Do not silently change: overall architecture, the solar concept, display orienta
   - Record: `prototypes/B1_SB261/`. Requirements and dependency order: **`docs/v1-requirements.md`**.
   - **Architecture A** (sliding/tilting cassettes: D-004, D-009, Rounds B–E solar/lid-rail work, class-A lid, E2 lid) is **SUPERSEDED / DEFERRED FOR V1**. Its records below are kept as history, not active work.
   - **E-POWER-001** (2026-10-01, `prototypes/V1/E-POWER-001_hardware_energy_characterization.md`): V1 hardware candidates characterized from manufacturer sources, preliminary power model (documented subtotals ≈ 10–22 W + TBD), conflicts C1–C14. No battery or power electronics chosen; solar = field energy replenishment (`docs/power.md`).
-  - Next: dependency step 5, the power architecture and battery capacity derived from the characterized loads.
+  - **E-POWER research campaign** (2026-10-02, `docs/E-POWER-RESEARCH-CAMPAIGN.md`, calculator `prototypes/V1/epower_campaign_calc.py`). Research only, nothing selected.
+    - Display trade: D-A AUO eDP + Beck BTC-mini-eDP, 2.7–4.7 W, vs D-W Winstar LVDS + BTC-mini + LED driver, 3.4–8.9 W.
+    - The battery bay holds at most 71 Wh (50E) or 92 Wh (M65A, preliminary).
+    - Solar into battery: about 5–48 Wh/day in Sofia.
+    - Conflicts EP-C01–C20.
+  - Next: **owner decisions** (dossier §19: runtime target, normal brightness, display direction, energy ceiling, solar importance, charging input), then power-architecture baseline.
 - Phase: Virtual V1 (finish the virtual design before buying hardware). Prototype: **P0.1** (mechanical proof of concept).
 - Phase 0 (workspace setup) is done. The NOMAD Onshape document exists (link in `CAD/README.md`). Its only Feature Studio is `NOMAD_P01_Coupons`, used by the owner-created Part Studio `P0.1 Coupons` (P0.1 test coupons, below); it holds no NOMAD product (chassis) geometry yet.
 - Phase 1 Round A (skeleton + keyboard/trackpad/display envelopes) has been modeled and tested in the scratch context only; results are in `docs/build-log.md`.
