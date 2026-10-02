@@ -791,3 +791,30 @@ No Git commit or push.
   - PERIBOARD-416 is 16 mm per its manual (the product page says 21).
 - **Not changed:** `nomad.yaml`, CAD, Onshape, requirement statuses. No Onshape calls, no purchases, no push.
 - **Source-access notes:** CAPTCHA and bot-checked sites were not bypassed; snippet-only values were dropped or verified at the source.
+
+## 2026-10-02 — E-POWER-002: power architecture baseline (virtual; parts not selected)
+
+- **Document:** `docs/E-POWER-002-POWER-ARCHITECTURE.md`. **Calculator:** `prototypes/V1/epower_architecture_calc.py` (imports the campaign loads).
+- **Owner direction recorded:** runtime 6 h normal-use target / 4 h minimum (PWR-5 LOCKED); ≤ 92 Wh if possible; keep the P108; USB-C PD as the primary input; D-A as the provisional electrical baseline.
+- **Comparison of 1S4P / 2S2P / 3S1P / 4S1P** (only 4 × 21700 fit the bay):
+  - 1S is rejected: 10.7 A at cutoff in the worst case, beyond the BQ25798's 6 A continuous and 9.3 A over-current limits (MFR).
+  - 3S is rejected: 3 cells, 49.7 Wh at end of life, misses 6 h.
+  - **4S1P is the baseline** (≤ 2.6 A worst case). 2S2P is the fallback.
+- **Baseline:**
+  - NVDC buck-boost charger: input ≤ 3.3 A, charge ≤ 5 A (baseline 3.2 A).
+  - USB-C PD 20 V 3 A preferred, ≥ 45 W minimum; 100 W gives no benefit (the input cap is ≈ 66 W). No DC barrel recommended.
+  - P108 on input 2: VOC-MPPT, reverse-polarity FET + TVS, OVP 26 V (cold Voc ≈ 23 V ASSUMED); USB-C priority; inputs not summed.
+  - 12–16.8 V bus; 5.1 V ≥ 5 A buck (`PSU_MAX_CURRENT=5000`); 12 V ±5 % buck-boost for the display controller.
+  - On-pack 3–5S protector; 10 A / 32 V DC / 1 kA MINI fuse. Prospective short circuit ≈ 119 A, so NANO2-class fuses are rejected.
+- **Results (CALC):**
+  - Runtime, D-A normal: 9.3 h new / 7.4 h end of life (92 Wh); 7.2 / 5.8 h (71 Wh).
+  - D-W misses 6 h at end of life with reserve.
+  - Power-electronics heat ≈ 1.1 W normal, ≤ 5.7 W worst while charging.
+  - Planning cost ≈ US$167 (excluding the P108).
+- **Fit:**
+  - The pack fits 90 × 82 × 30 only as a tightly bonded pack; a holder pack needs ≈ 93.6 × 82 × 31.
+  - Power electronics ≈ 66 % of the 90 × 45 floor (EST).
+- **Open owner decisions:** cell basis, pack style / bay, display, USB-C-only confirmation.
+- **Risks:** E2-R01–R13. Among them, the Active Cooler is "candidate" in the repo but "selected" in the brief; `docs/VALIDATION_STATUS.md` does not exist.
+- **Docs updated:** power, hardware, v1-requirements (PWR-2–17, §17, step 5), architecture, solar, README, CLAUDE.
+- **Not changed:** `nomad.yaml` (its battery-bay note still says no pack chosen; refresh at step 7), CAD, Onshape. Nothing purchased; no push.

@@ -4,6 +4,7 @@ Component selections and their status. Update this file when a SKU is locked or 
 
 - The architecture is B1 (D-010). Requirement status by subsystem is in `v1-requirements.md`.
 - **Characterization:** `prototypes/V1/E-POWER-001_hardware_energy_characterization.md` (2026-10-01). It holds the sourced electrical and physical data, the preliminary power model and the conflicts. Nothing there was bought or measured.
+- **Power architecture baseline (2026-10-02):** `docs/E-POWER-002-POWER-ARCHITECTURE.md`.
 - **Energy-chain research (2026-10-02):** `docs/E-POWER-RESEARCH-CAMPAIGN.md`. It adds display controllers (Beck BTC-mini / BTC-mini-eDP), cells, BMS, chargers, MPPT, regulators and candidate tables. Nothing is selected.
 
 | Component | Candidate / target | Status | Key data (source in E-POWER-001) | Key constraints |
@@ -27,6 +28,10 @@ Component selections and their status. Update this file when a SKU is locked or 
 | Solar-leaf hinges | TorqMaster SB-188-SB-261-6, ×2: band -6, 0.96–1.13 N·m, balanced (PUB) | candidate (current selection; physical validation required) | `prototypes/B1_SB261/` | SF ≈ 1.16 vs 0.83 N·m required; load, material and temperature unpublished |
 | Heat-set inserts (B1 hinge rail) | Ruthex RX-M3x5.7 (lid); M2.5 × 4, OD 3.55 (e.g. PartsBuilt PBX-TI-M25-4L35W-4PK) (leaf) | candidate | | Standard 4.6-OD M2.5 inserts must not be used at the leaf |
 | Stay | 2 stainless flats 3 × 16, M4 shoulder-screw pivots (D-010 Phase 2) | concept | | Mandatory for B1; design TBD |
-| Power modules | Ready-made DC/DC, battery management, solar charge controller | TBD | Not selected (step 5) | |
-| Battery | TBD from the power budget and runtime target | TBD | Not selected (step 5) | Removable, serviceable |
+| Battery pack | **4S1P 21700 Li-ion** (E-POWER-002 baseline). Cells: Molicel INR-21700-M65A (23.0 Wh, preliminary datasheet) or Samsung 50E-class (17.8 Wh) | candidate (topology baseline; cell **owner decision**) | 92 / 71 Wh nominal; 16.8 / 14.4 / 12.8 V; ≈ 358 / 334 g | Fits 90 × 82 × 30 only as a tightly bonded pack; removable, serviceable as a unit |
+| Charger / power path | TI BQ25798-class: NVDC buck-boost 1–4S, dual input, VOC-MPPT; US$5.20 (DigiKey) | candidate | Input ≤ 3.3 A, charge ≤ 5 A, discharge ≤ 6 A continuous (MFR) | Custom PCB in the power-electronics reserve |
+| USB-C PD sink | TI TPS25751 (I²C charger control, US$2.99) or TPS25730 (strap-configured, US$3.04) | candidate | 20 V 3 A preferred, ≥ 45 W minimum | Beside the USB-C receptacle (rear panel) |
+| BMS / protection | 3–5S standalone protector (TI BQ77915-class, US$2.05) on the pack; Littelfuse MINI 10 A / 32 V DC / 1 kA fuse (US$0.39) | candidate (requirements baseline) | OV 4.25–4.30, UV 2.8–3.0, OCD / OCC / SCD, NTC, 50 mA balancing | NANO2 0451-class fuse rejected (50 A breaking) |
+| 5 V rail | Pololu D36V50F5 (5 V 5.5 A buck, US$39.95) or a ≥ 6 A 5.1 V equivalent | candidate | 80–95 %; 25.4 × 25.4 × 9.5 mm | 5.0 V ±4 % vs the Pi's 5.1 V (E2-R03) |
+| 12 V rail | Pololu S18V20F12 (12 V 2 A buck-boost, US$29.95) | candidate | 2.9–32 V in, 80–90 %; 43 × 21 × 10 mm | For the display controller |
 | Fasteners | M2.5, M3 with heat-set inserts | provisional | | |

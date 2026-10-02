@@ -25,8 +25,8 @@ Requirements by subsystem, with their status and the dependency order of the rem
 | Keyboard | Ultra-low-profile wired USB HID, ~280×105 mm, ≤8 mm | SKU not locked |
 | Trackpad | Perixx PERIPAD-501 II (availability and dimensions unverified, E-POWER-001); verified alternative PERIPAD-506 | candidate |
 | GNSS | SparkFun GNSS Flex pHAT / DAN-F10N; GPS / Galileo / BeiDou / QZSS / NavIC, L1/L5 (no GLONASS, per u-blox); integrated patch antenna or external antenna; PPS | candidate |
-| Power | Ready-made modules; battery voltage and DC/DC TBD | TBD |
-| Battery | Removable bay; capacity from measured consumption | TBD |
+| Power | Baseline (E-POWER-002): NVDC buck-boost charger with USB-C PD + solar inputs; 12–16.8 V bus; 5.1 V ≥ 5 A and 12 V rails | architecture baseline; parts TBD |
+| Battery | Removable bay; 4S1P 21700 Li-ion baseline (92 Wh class with M65A-type cells, 71 Wh with 50E-type); runtime target 6 h normal / 4 h minimum (owner) | architecture baseline; cell and bay owner decisions |
 | Solar | B1 leaf (D-010), a field energy replenishment system, not the primary power source: Voltaic P108 candidate panel (9.92 W peak); TorqMaster SB-188-SB-261-6 candidate leaf hinges; manual; no motors | architecture locked; parts candidate |
 
 ## Software (planned areas)

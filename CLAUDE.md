@@ -32,7 +32,11 @@ Do not silently change: overall architecture, the solar concept, display orienta
     - The battery bay holds at most 71 Wh (50E) or 92 Wh (M65A, preliminary).
     - Solar into battery: about 5–48 Wh/day in Sofia.
     - Conflicts EP-C01–C20.
-  - Next: **owner decisions** (dossier §19: runtime target, normal brightness, display direction, energy ceiling, solar importance, charging input), then power-architecture baseline.
+  - **E-POWER-002 power architecture baseline** (2026-10-02, `docs/E-POWER-002-POWER-ARCHITECTURE.md`, calculator `prototypes/V1/epower_architecture_calc.py`).
+    - Architecture: 4S1P 21700 → NVDC buck-boost charger (BQ25798-class; USB-C PD 60 W preferred / 45 W minimum on input 1, P108 MPPT on input 2) → 12–16.8 V bus → 5.1 V ≥ 5 A buck (Pi) + 12 V buck-boost (display controller); on-pack 3–5S protector + 10 A MINI fuse.
+    - Owner direction 2026-10-02: runtime 6 h normal / 4 h minimum (PWR-5 LOCKED).
+    - Open owner decisions: cell basis (M65A preliminary meets 6 h; 50E meets 4 h); pack style / bay (tight pack fits 90 × 82 × 30; holder pack needs ≈ 93.6 × 82 × 31); display D-A / D-W; USB-C-only confirmation.
+  - Next: owner decisions in E-POWER-002 §15, then the thermal architecture (step 6) and the YAML re-baseline (step 7).
 - Phase: Virtual V1 (finish the virtual design before buying hardware). Prototype: **P0.1** (mechanical proof of concept).
 - Phase 0 (workspace setup) is done. The NOMAD Onshape document exists (link in `CAD/README.md`). Its only Feature Studio is `NOMAD_P01_Coupons`, used by the owner-created Part Studio `P0.1 Coupons` (P0.1 test coupons, below); it holds no NOMAD product (chassis) geometry yet.
 - Phase 1 Round A (skeleton + keyboard/trackpad/display envelopes) has been modeled and tested in the scratch context only; results are in `docs/build-log.md`.

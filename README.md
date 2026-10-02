@@ -24,7 +24,7 @@ NOMAD carries its own computing, storage, offline knowledge, maps, GNSS navigati
 | Keyboard | Ultra-low-profile wired USB HID, ~280×105 mm (SKU not locked) |
 | Trackpad | Perixx PERIPAD-501 II (candidate; availability and dimensions unverified, see E-POWER-001) |
 | GNSS | SparkFun GNSS Flex pHAT / DAN-F10N (candidate) |
-| Power | Ready-made modules; battery sized from measured consumption |
+| Power | 4S1P 21700 Li-ion baseline, USB-C PD + solar charging (E-POWER-002; parts not selected) |
 | Solar | B1 solar leaf behind the lid (D-010): Voltaic P108 (candidate), TorqMaster SB-188-SB-261-6 leaf hinges (candidate), fold-out rear stay |
 
 ## Repository layout

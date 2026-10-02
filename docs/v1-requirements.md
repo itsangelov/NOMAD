@@ -107,7 +107,7 @@
 | SOL-8 | **Physical validation gate:** the SB-261 coupon migration gate (`prototypes/B1_SB261/COUPON_SPEC.md` §7) and the D-010 Phase 2 §24 mock-ups | VALIDATION REQUIRED | Dependency step 13. **No purchase now** |
 | SOL-9 | Leaf latch for transport; PV surface protection (sleeve) | TBD | D-010 Phase 2 §16 / §20 |
 
-## 9. Battery / Power — UNRESOLVED
+## 9. Battery / Power — ARCHITECTURE BASELINE (E-POWER-002, 2026-10-02); parts TBD
 
 **Fixed so far:**
 - The battery is removable and serviceable, in a bay that is never sealed (LOCKED, principle).
@@ -115,26 +115,27 @@
 - The battery is sized from measured consumption (DEFINED approach).
 - The base reserves volume for a battery (90 × 82 × 30) and power electronics (90 × 45 × 20). These are working reserves only (D-007 proposed).
 
-**Still to establish. Nothing below has a value, and none is invented here.**
+**Status after E-POWER-002.** The values below come from E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`). Statuses use this sheet's scheme. Specific SKUs remain TBD. Nothing is physically validated.
 
 | ID | Item | Status | Depends on |
 |---|---|---|---|
 | PWR-1 | **Power budget** (idle / typical / peak per load) | DEFINED (preliminary, published data only); VALIDATION REQUIRED (measurement) | E-POWER-001 §4–§5. Documented subtotals: standby ≈ 10.1–10.9 W, normal ≈ 10.9 W, max sustained ≈ 17.7–22.4 W, each **+ TBD** (display controller, HID, fan, HAT+, conversion losses) |
-| PWR-2 | Battery voltage | TBD | PWR-1 |
-| PWR-3 | Chemistry and pack architecture | TBD | PWR-1 |
-| PWR-4 | Capacity | TBD | PWR-1, PWR-5 |
-| PWR-5 | Runtime target | TBD | Owner decision |
-| PWR-6 | BMS | TBD | PWR-2, PWR-3 |
-| PWR-7 | Charging (adapter / USB-PD / DC input) and charging behaviour | TBD | PWR-2 |
-| PWR-8 | Solar charge controller / MPPT for the panel candidate (18 V class) | TBD | PWR-2, SOL-4 |
-| PWR-9 | Pi 5 power rail | TBD | PWR-2 |
-| PWR-10 | Display power rail | TBD | DSP-2 |
-| PWR-11 | Accessory rails (GNSS, USB, fan, …) | TBD | PWR-1 |
-| PWR-12 | Protection (fusing, reverse polarity, over/under-voltage, temperature) | TBD | PWR-2, PWR-3 |
-| PWR-13 | Power switch and its behaviour | TBD | PWR-2 |
-| PWR-14 | Charging / input behaviour: charge while running, solar plus external input, charging while closed in the sun. Charging must be temperature-limited (D-010 Phase 2 §13: ≤ 45 °C for Li-ion) | TBD | PWR-3, §10 |
+| PWR-2 | **Battery voltage:** 4S: 16.8 V full / 14.4 V nominal / 12.8 V system cutoff (3.2 V/cell) / 11.2 V BMS floor | DEFINED (baseline) | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §3–§4: 1S exceeds the charger's 6 A discharge limit; 3S fits only 3 cells |
+| PWR-3 | **Chemistry and pack architecture:** Li-ion 21700, **4S1P** (4 cells, single layer); LiFePO4 cannot meet the target in the bay | DEFINED (baseline); cell SKU **TBD (owner)** | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §4 |
+| PWR-4 | **Capacity:** 92 Wh class (4 × Molicel M65A-type, preliminary datasheet) needed for 6 h at end of life with reserve; 71 Wh class (4 × 50E-type) meets the 4 h minimum only | CANDIDATE; **owner decision** | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §12, §15 |
+| PWR-5 | **Runtime target:** 6 h normal interactive use (design target), 4 h minimum acceptable; 8 h reference only; maximum sustained load is a separate stress case | **LOCKED** (owner, 2026-10-02) | Owner direction in the E-POWER-002 brief |
+| PWR-6 | **BMS:** on-pack 3–5S protector with OV 4.25–4.30 V, UV 2.8–3.0 V, discharge / charge over-current, short-circuit < 1 ms, NTC, 50 mA passive balancing; plus a 10 A / 32 V DC / ≥ 1 kA fuse and a secondary OV protector (recommended) | DEFINED (requirements); SKU TBD | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §9 (reference: TI BQ77915) |
+| PWR-7 | **Charging:** USB-C PD sink, 20 V 3 A (60 W) preferred, ≥ 45 W minimum; NVDC buck-boost charger (input ≤ 3.3 A, charge ≤ 5 A, baseline 3.2 A); charges while running; no DC barrel recommended | DEFINED (baseline); parts TBD | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §6–§7 (reference: TI BQ25798, TPS25751 / TPS25730) |
+| PWR-8 | **Solar charging:** P108 on the charger's second input; VOC-sampling MPPT (host-enabled); reverse-polarity FET + TVS; VAC OVP 26 V; USB-C priority; never a direct system source | DEFINED (baseline); **VALIDATION REQUIRED** | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §8 |
+| PWR-9 | **Pi 5 rail:** 5.1 V, ≥ 5 A buck from the 12–16.8 V bus; EEPROM `PSU_MAX_CURRENT=5000`; a ≥ 6 A-class part or a verified derating is recommended | DEFINED (baseline); part TBD | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §5 (E2-R03) |
+| PWR-10 | **Display rail:** 12 V ±5 %, ≈ 1 A, buck-boost from the bus (the bus straddles 12 V) | DEFINED (baseline for D-A / D-W controllers) | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §5; controller location TBD (EP-C02) |
+| PWR-11 | **Accessory rails:** USB HID, Active Cooler and GNSS (3.3 V header) are fed through the Pi (1.6 A USB budget); NVMe through the M.2 HAT+; no dedicated 3.3 V rail; an optional fused aux 5 V from the bus for an enclosure fan or future peripherals | DEFINED (baseline); aux rail TBD | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §5 |
+| PWR-12 | **Protection:** pack fuse; BMS functions (PWR-6); input OVP / reverse blocking (charger back-to-back FETs); solar reverse polarity + TVS; charger JEITA; ship mode | DEFINED (requirements) | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §8–§9 |
+| PWR-13 | **Power switch and its behaviour:** soft power via the Pi; charger ship mode for storage; pack connector as the service disconnect | TBD (behaviour / UX) | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §9 |
+| PWR-14 | **Charging / input behaviour:** charge while running (NVDC); USB-C and solar are not summed (one input at a time; USB-C priority enforced by the host); charging limited to 0–45 °C (BMS + charger JEITA), including charging while closed in the sun | DEFINED (baseline); **VALIDATION REQUIRED** | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §6–§9 |
 | PWR-15 | **Off-state drain:** the Pi 5 draws about 1–1.4 W when "off" by default, about 0.01 W with `POWER_OFF_ON_HALT=1`. NOMAD must set the EEPROM option or cut power | DEFINED | MFR (E-POWER-001 C10) |
 | PWR-16 | **The 5 V rail feeding the Pi must be 5 A-capable** for the Pi to allow 1.6 A of downstream USB, which the fan and USB HID devices share. Otherwise the limit is 600 mA, or peripherals are powered separately | DEFINED (requirement on the rail; no converter chosen) | MFR (E-POWER-001 C9) |
+| PWR-17 | **Battery pack fit:** a tightly bonded 4S1P pack fits 90 × 82 × 30 (1.3 mm per side across the width); a holder-type pack needs ≈ 93.6 × 82 × 31 | **BLOCKED** (owner decision on pack style / bay; D-007 / YAML step 7) | E-POWER-002 (`docs/E-POWER-002-POWER-ARCHITECTURE.md`) §11 |
 
 ## 10. Thermal — UNRESOLVED
 
@@ -224,7 +225,11 @@ The P0.1 reserved-volume list (`docs/mechanical-spec.md`) keeps room for: USB-C,
 | Decision | Needed for |
 |---|---|
 | **D-007:** accept as working, amend or reject the base placement (compute right palm bay, battery left bay, electronics under the keyboard), the I/O policy (rear vs side), GNSS as a separate module, the shell structure (one body vs split), and whether the working 301 × 235 × 40 envelope stays (`c2_architectural_screening.md` §4) | Steps 7–9 |
-| Runtime target (PWR-5) | Step 5 |
+| ~~Runtime target (PWR-5)~~ — decided 2026-10-02: 6 h normal target / 4 h minimum | — |
+| **Battery cell basis:** M65A-class (preliminary; meets 6 h) or a mature 50E-class cell (meets 4 h, ≈ 5.8 h at end of life) (PWR-4; E-POWER-002 §15) | Steps 5–7 |
+| **Battery pack style / bay:** a tightly bonded pack in 90 × 82 × 30, or a holder-type pack with the bay grown to ≈ 93.6 × 82 × 31 (PWR-17) | Step 7, D-007 |
+| **Display direction** D-A vs D-W (E-POWER research §19; D-W misses 6 h at end of life with reserve) | Steps 3, 5–9 |
+| **Charging input:** confirm USB-C PD only (60 W preferred / 45 W minimum), no DC barrel (PWR-7) | Step 8 |
 | Ambient operating temperature target (SYS-9 / THM-7) | Step 6 |
 | Port and control list (§12) | Steps 8–9 |
 | Audio in or out of V1 (AUD-1) | Step 3 |
@@ -244,7 +249,7 @@ The P0.1 reserved-volume list (`docs/mechanical-spec.md`) keeps room for: USB-C,
    - panel confirmation
    - Use datasheets and published drawings only. €0.
 4. **Establish the power budget** from datasheets (PWR-1). Preliminary model done 2026-10-01 (E-POWER-001); it gets refined as step 3 closes.
-5. **Establish the battery / power architecture** (PWR-2 … PWR-14).
+5. **Establish the battery / power architecture** (PWR-2 … PWR-14). Baseline done 2026-10-02 (E-POWER-002). Owner decisions on cell basis, bay and display remain (E-POWER-002 §15).
 6. **Establish the thermal architecture** (§10).
 7. **Re-baseline `nomad.yaml`:**
    - B1 lid stack

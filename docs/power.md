@@ -11,10 +11,13 @@
 
 ## Approach
 
-- V1 uses ready-made power modules.
-- The battery voltage, chemistry, capacity, BMS, charger, MPPT and DC/DC selection are **TBD**.
-- They will be reverse-engineered from the characterized loads (step 5 in `v1-requirements.md` §18).
-- **No battery is chosen. No capacity is a requirement.** An 80–120 Wh figure was mentioned earlier only as a planning envelope. It is **not** an owner requirement or a parameter.
+- V1 uses ready-made or custom power electronics built from documented ICs and modules.
+- **Owner direction (2026-10-02):**
+  - **Runtime:** 6 h normal-use design target, 4 h minimum. 8 h is reference only.
+  - **Battery:** ≤ 92 Wh if realistically possible; do not casually exceed 100 Wh.
+- **Power architecture baseline: E-POWER-002** (`docs/E-POWER-002-POWER-ARCHITECTURE.md`, 2026-10-02). It is summarised below.
+- **Not selected yet:** battery cell SKU and supplier, BMS SKU, charger PCB, PD controller, connectors and wire gauge (TBD).
+- *History:* before E-POWER-002, voltage, chemistry and capacity were TBD. An 80–120 Wh figure was once mentioned as a planning envelope only.
 
 ## Mechanical reservations
 
@@ -25,7 +28,25 @@
   - Isc and temperature ratings are not published.
   - (The earlier two-cassette input belongs to Architecture A, superseded for V1.)
 
-The battery, power and charging architecture is **unresolved**. The open items are listed in `v1-requirements.md` §9. Nothing in this file selects them.
+The battery, power and charging **architecture** now has an engineering baseline (E-POWER-002, below). Specific parts remain TBD. The requirement statuses are in `v1-requirements.md` §9.
+
+## Power architecture baseline (E-POWER-002, 2026-10-02)
+
+| Element | Baseline | Status |
+|---|---|---|
+| Battery | **4S1P 21700 Li-ion**: 16.8 / 14.4 / 12.8 V (full / nominal / system cutoff); BMS floor 11.2 V. 92 Wh class with M65A-type cells (preliminary datasheet); 71 Wh with mature 50E-type cells | BASELINE (topology); cell **TBD / owner** |
+| Charger / power path | NVDC buck-boost charger, 1–4S, dual input, VOC-MPPT (TI BQ25798-class); input ≤ 3.3 A, charge ≤ 5 A (baseline 3.2 A), discharge ≤ 6 A continuous | BASELINE; PCB TBD |
+| External input | **USB-C PD sink**; 20 V 3 A (60 W) preferred, ≥ 45 W minimum; no DC barrel recommended | BASELINE; controller TBD (TPS25751 / TPS25730 class) |
+| Solar | P108 on the second charger input through reverse-polarity protection + TVS; MPPT; USB-C has priority; never a direct system source | BASELINE |
+| System bus | 12.0–16.8 V (VSYSMIN 12 V) | BASELINE |
+| 5 V rail | 5.1 V, ≥ 5 A buck from the bus, feeding the Pi 5 (`PSU_MAX_CURRENT=5000`). USB peripherals, Active Cooler, GNSS and NVMe are fed through the Pi | BASELINE |
+| 12 V rail | 12 V ±5 % buck-boost, ≈ 1 A, feeding the display controller | BASELINE |
+| Protection | BMS on the pack (3–5S protector: OV 4.25–4.30, UV 2.8–3.0, OCD, OCC, SCD, NTC, 50 mA balancing); 10 A, 32 V DC, ≥ 1 kA MINI fuse; keyed pack connector; charger JEITA (0–45 °C charge); ship mode | BASELINE requirements; SKUs TBD |
+| Runtime (D-A, normal) | 9.3 h new / 7.4 h end of life (92 Wh); 7.2 / 5.8 h (71 Wh) | CALC |
+| Power-electronics heat | ≈ 1.1 W normal; ≤ 5.7 W worst while charging | CALC |
+| Fit | Pack fits 90 × 82 × 30 **only as a tightly bonded pack**; a holder pack needs ≈ 93.6 × 82 × 31. Power electronics ≈ 66 % of the 90 × 45 floor | CALC / EST; **owner decision** on the bay |
+
+**Not physically validated:** battery safety, charging behaviour, MPPT behaviour and thermal.
 
 ## E-POWER research campaign (2026-10-02)
 

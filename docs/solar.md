@@ -42,7 +42,7 @@
 | Cable sleeve, R12 | DEFINED (concept); **VALIDATION REQUIRED** (twist cycling) |
 | Stay | DEFINED (concept); design TBD; **VALIDATION REQUIRED** (tip test) |
 | Vented gap + foil | DEFINED (EST); **VALIDATION REQUIRED** (thermal mock-up) |
-| Solar charge controller / MPPT | TBD (power architecture) |
+| Solar charge controller / MPPT | BASELINE: charger-integrated VOC-MPPT on the second charger input (BQ25798-class), USB-C priority, never a direct system source (E-POWER-002 §8); part TBD; VALIDATION REQUIRED |
 
 ## Physical validation gates (future)
 
