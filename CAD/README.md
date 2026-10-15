@@ -3,7 +3,7 @@
 **Onshape is the master parametric model.** Nothing in this folder replaces it.
 
 **Active architecture: B1 (D-010, accepted 2026-10-01).** **Virtual V1 integration (2026-10-06):** `tools/v1_integration.py` is the integrated V1 envelope model and its checks (`docs/V1-VIRTUAL-INTEGRATION.md`).
-- **V1 visual master (2026-10-08):** the Feature Studio `NOMAD_V1_Visual` (below) holds the whole V1, including B1 on the SB-261 geometry, as an inspection model (not production CAD). It is kernel-checked and persisted, but not yet inserted into a Part Studio (owner step, `docs/V1-VISUAL-MODEL.md`).
+- **V1 visual master (2026-10-08):** the Feature Studio `NOMAD_V1_Visual` (below) holds the whole V1, including B1 on the SB-261 geometry, as an inspection model (not production CAD). It is kernel-checked and persisted, and the owner has inserted it into the Part Studio `NOMAD V1 — Digital Prototype`. It regenerates there with one open build warning, the base edge-chamfer cut (`docs/V1-VISUAL-MODEL.md`).
 - The SB-261 hinge-rail validation model stays in the connector's scratch document (`prototypes/B1_SB261/SOURCES.md`).
 - **Architecture A, superseded / deferred for V1:** the Architecture A geometry (the Round E E2 lid "NOMAD E Lid" in `NOMAD_E_Prototype`, the P0.1 rail and lid coupons, the `solar` YAML group) is kept as history.
 - The B1 YAML groups (`lid_b1`, `solar_leaf`) are emitted into the generated parameter blocks of `NOMAD_P01.fs` and `NOMAD_E_Prototype.fs` as constants only. No feature uses them, and this was **not** written to Onshape.

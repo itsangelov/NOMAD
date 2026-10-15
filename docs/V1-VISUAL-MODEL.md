@@ -33,7 +33,7 @@
 **Status (2026-10-08, simulated in the Onshape kernel, not physically tested):**
 - Compiled and regenerated in Onshape (`test_feature`, FeatureScript 3083): all 10 poses build, 287–289 bodies, every body named, no build warnings.
 - Persisted in the NOMAD document (Feature Studio above). The persisted text was read back and is byte-identical to `NOMAD_V1_Visual.onshape.fs`.
-- **Not yet inserted into a Part Studio.** The connector cannot create Part Studios or insert features: that is the owner step below.
+- **2026-10-15:** inserted by the owner into the Part Studio **`NOMAD V1 — Digital Prototype`** (element `0f33f26180e493dbfcfd4d4a`), where it regenerates. Onshape reports one open build warning: `shell cut 3` (the base's exterior edge-chamfer cut). This was not visible through the test harness. The cavity and all other geometry build; the base edges are drawn sharp. Screenshots: `docs/images/`.
 
 ## Put it in Onshape (owner, about 2 minutes)
 

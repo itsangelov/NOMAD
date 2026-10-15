@@ -49,7 +49,7 @@ Do not silently change: overall architecture, the solar concept, display orienta
   - **V1 visual master in Onshape** (2026-10-08, `docs/V1-VISUAL-MODEL.md`):
     - Feature Studio `NOMAD_V1_Visual` (element `041ff69ce1d94a2b7f74d123`). Source `CAD/featurescript/NOMAD_V1_Visual.fs`; Onshape copy `NOMAD_V1_Visual.onshape.fs` via `CAD/tools/fs_compact.py`.
     - Kernel QA: all 10 poses build; 4 open model findings.
-    - Owner step: insert the feature into a Part Studio "NOMAD V1".
+    - Inserted by the owner into the Part Studio `NOMAD V1 — Digital Prototype` (element `0f33f26180e493dbfcfd4d4a`). It regenerates with one open BUILD WARNING (`shell cut 3`, the base exterior edge chamfers). Screenshots: `docs/images/`.
   - Next: the owner decisions in V1 integration §19 (D-011 placement / I/O, envelope + keyboard, cell, display, ambient, I/O list, budget / print access). Then gate 0 (datasheets and quotes, €0) and gate 1 (SB-261 coupon). Persistent V1 Onshape CAD only after D-011.
 - Phase: Virtual V1 (finish the virtual design before buying hardware). Prototype: **P0.1** (mechanical proof of concept).
 - Phase 0 (workspace setup) is done. The NOMAD Onshape document exists (link in `CAD/README.md`). Its only Feature Studio is `NOMAD_P01_Coupons`, used by the owner-created Part Studio `P0.1 Coupons` (P0.1 test coupons, below); it holds no NOMAD product (chassis) geometry yet.
