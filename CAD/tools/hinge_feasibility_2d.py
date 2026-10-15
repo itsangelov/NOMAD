@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from yaml_to_featurescript import YAML_PATH, flatten, parse_restricted_yaml, resolve  # noqa: E402
+from yaml_to_featurescript import P01_YAML_PATH as YAML_PATH, flatten, parse_restricted_yaml, resolve  # noqa: E402
 
 P, _ = resolve(flatten(parse_restricted_yaml(YAML_PATH.read_text(encoding="utf-8"))))
 V = {k: v for k, (v, _) in P.items()}

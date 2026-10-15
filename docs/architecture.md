@@ -8,7 +8,7 @@ A clamshell field computer:
   - The leaf is hinged at the lid's top edge on two friction hinges and swings 0–190°.
   - A fold-out rear stay on the base keeps the machine from tipping when the leaf is deployed.
 
-Exact module placement inside the base is still **proposed** (D-007, not accepted; see `decisions.md`).
+Module placement inside the base: the **Virtual V1 integration baseline** (`V1-VIRTUAL-INTEGRATION.md`, proposed as **D-011**, which amends the proposed D-007). Battery in the left palm bay, compute in the right palm bay, power board / display controller / 5 V rail under the keyboard, GNSS in the rear strip. **No plugs on the rear face**: USB-C power and button on the left wall, 2 × USB-A at the front right, fan exhaust on the right wall. Not yet accepted by the owner.
 
 **Architecture A, SUPERSEDED / DEFERRED FOR V1:** two sliding/tilting solar cassettes stored in the lid (D-004 / D-009). It is kept as an engineering record only.
 
@@ -16,18 +16,21 @@ Requirements by subsystem, with their status and the dependency order of the rem
 
 ## Subsystems
 
-| Subsystem | Baseline | Status |
+| Subsystem | V1 baseline (2026-10-06) | Status |
 |---|---|---|
-| Compute | Raspberry Pi 5, 8 GB | selected |
-| Storage | 500–512 GB NVMe (2230 preferred), Raspberry Pi M.2 HAT+ | provisional |
-| Display | 10.1" IPS 1920×1200, ≥400 nit (500+ preferred), matte, HDMI, non-touch, ≤6 W | SKU not locked |
-| Display hinges | Rear-face direction (D-006, provisional); ~1.6 N·m each for B1 (CALC) | TBD |
-| Keyboard | Ultra-low-profile wired USB HID, ~280×105 mm, ≤8 mm | SKU not locked |
-| Trackpad | Perixx PERIPAD-501 II (availability and dimensions unverified, E-POWER-001); verified alternative PERIPAD-506 | candidate |
-| GNSS | SparkFun GNSS Flex pHAT / DAN-F10N; GPS / Galileo / BeiDou / QZSS / NavIC, L1/L5 (no GLONASS, per u-blox); integrated patch antenna or external antenna; PPS | candidate |
-| Power | Baseline (E-POWER-002): NVDC buck-boost charger with USB-C PD + solar inputs; 12–16.8 V bus; 5.1 V ≥ 5 A and 12 V rails | architecture baseline; parts TBD |
-| Battery | Removable bay; 4S1P 21700 Li-ion baseline (92 Wh class with M65A-type cells, 71 Wh with 50E-type); runtime target 6 h normal / 4 h minimum (owner) | architecture baseline; cell and bay owner decisions |
-| Solar | B1 leaf (D-010), a field energy replenishment system, not the primary power source: Voltaic P108 candidate panel (9.92 W peak); TorqMaster SB-188-SB-261-6 candidate leaf hinges; manual; no motors | architecture locked; parts candidate |
+| Compute | Raspberry Pi 5, 8 GB + Active Cooler | selected / candidate |
+| Storage | Raspberry Pi SSD 512 GB (2230) on the M.2 HAT+ | candidate |
+| Display | AUO G101UAN01.0 (10.1" 1920×1200, eDP 2-lane, 380–410 nit, industrial; 3P data) + Beck BTC-mini-eDP controller in the base | candidate (gate 0 data required) |
+| Display hinges | 2 × Southco E6-10-216-50 (1.8 N·m), rear-face direction (D-006), stop at 135° | candidate |
+| Keyboard | Perixx PERIBOARD-416, wired USB, 285 × 117 × 16 (the ≤ 8 mm target is not met) | candidate |
+| Trackpad | Perixx PERIPAD-501 II (86 × 75 × 13 per the official manual, not measured; availability unknown); alternative PERIPAD-506 | candidate |
+| GNSS | SparkFun GNSS Flex pHAT / DAN-F10N; GPS / Galileo / BeiDou / QZSS / NavIC, L1/L5 (no GLONASS); integrated patch under a rear-deck window; PPS | candidate |
+| Cooling | Active Cooler + Sunon MF30100V1 30 mm exhaust fan (right wall) | candidate |
+| Power | NVDC buck-boost charger (BQ25798) + USB-C PD (TPS25751) on a custom board; P108 on the MPPT input; 12–16.8 V bus; Pololu 5 V 5.5 A and 12 V rails | architecture baseline; parts candidate |
+| Battery | Removable 4S1P 21700 holder pack (Molicel M65A, 92 Wh) in its own bay; runtime NORMAL 9.2 h new / 7.4 h end of life (CALC); target 6 h / 4 h (owner) | candidate; cell = owner decision |
+| Solar | B1 leaf (D-010), a field energy replenishment system, not the primary power source: Voltaic P108 (9.92 W peak); TorqMaster SB-188-SB-261-6 leaf hinges; manual; no motors | architecture locked; parts candidate |
+
+Envelope: base 306 × 253 × 40, closed 306 × 253 × 73 (+ feet); mass ≈ 3.0 kg (CALC / EST).
 
 ## Software (planned areas)
 
@@ -35,6 +38,7 @@ Launcher, offline maps, navigation, offline knowledge, local AI, power managemen
 
 ## Detailed specifications
 
+- **Virtual V1 integration baseline: `V1-VIRTUAL-INTEGRATION.md`**
 - V1 requirements: `v1-requirements.md`
 - Mechanical: `mechanical-spec.md`
 - Hardware: `hardware.md`

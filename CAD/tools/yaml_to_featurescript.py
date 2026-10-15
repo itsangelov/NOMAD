@@ -8,6 +8,14 @@ Usage:  py CAD/tools/yaml_to_featurescript.py [--check]
   default  rewrite the GENERATED PARAMS block in CAD/featurescript/NOMAD_P01.fs
   --check  exit 1 if the block is out of date (no write)
   --target FILE  write/check the block in CAD/featurescript/FILE instead (Round E: NOMAD_E_Prototype.fs)
+  --validate-v1  validate and resolve the V1 master CAD/parameters/nomad.yaml (no FeatureScript is written)
+
+Two parameter files (Virtual V1 sprint, 2026-10-06):
+  YAML_PATH      CAD/parameters/nomad.yaml: the CURRENT Virtual V1 master (D-002). Read by CAD/tools/v1_integration.py.
+  P01_YAML_PATH  CAD/parameters/history/nomad_P0.1_2026-10-02.yaml: the frozen P0.1 / Round C / Round E / Architecture A
+                 parameter set. The P0.1 FeatureScript files (NOMAD_P01.fs, NOMAD_E_Prototype.fs = snapshots of Onshape
+                 Feature Studios) and every P0.1 study script are generated from / read this snapshot, so they keep
+                 reproducing exactly. It is history: never edit it.
 """
 
 import ast
@@ -16,7 +24,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-YAML_PATH = ROOT / "CAD" / "parameters" / "nomad.yaml"
+YAML_PATH = ROOT / "CAD" / "parameters" / "nomad.yaml"                                  # V1 master
+P01_YAML_PATH = ROOT / "CAD" / "parameters" / "history" / "nomad_P0.1_2026-10-02.yaml"  # frozen P0.1 set
 FS_PATH = ROOT / "CAD" / "featurescript" / "NOMAD_P01.fs"
 SPEC_PATH = ROOT / "docs" / "mechanical-spec.md"
 BEGIN = "// BEGIN GENERATED PARAMS"
@@ -342,11 +351,43 @@ def splice(fs_text, block):
     return pattern.sub(lambda _: block, fs_text, count=1)
 
 
+def validate_v1():
+    """Validate and resolve the V1 master; print the resolution summary. Returns an exit code."""
+    params = flatten(parse_restricted_yaml(YAML_PATH.read_text(encoding="utf-8")))
+    errors = validate(params)
+    if errors:
+        print("V1 VALIDATION FAILED: " + "; ".join(errors))
+        return 1
+    resolved, unresolved = resolve(params)
+    counts = {"value": 0, "formula": 0, "working": 0}
+    for _, basis in resolved.values():
+        counts[basis] += 1
+    status = {}
+    for _, p in params.values():
+        status[p["status"]] = status.get(p["status"], 0) + 1
+    print(f"V1 master {YAML_PATH.relative_to(ROOT)}: {len(params)} parameters, valid")
+    print(f"  status: " + ", ".join(f"{k} {v}" for k, v in sorted(status.items())))
+    print(f"  resolved by value {counts['value']}, formula {counts['formula']}, working {counts['working']}; "
+          f"unresolved (TBD, no working input): {', '.join(unresolved) or 'none'}")
+    for name in params:
+        if name in resolved and resolved[name][1] == "formula":
+            print(f"  {name} = {_num(resolved[name][0])}  ({params[name][1]['formula']})")
+    spec = SPEC_PATH.read_text(encoding="utf-8")
+    missing = [n for n in params if n not in spec]
+    if missing:
+        print(f"  NOT in {SPEC_PATH.name}: {', '.join(missing)}")
+        return 1
+    print(f"  every parameter is mentioned in {SPEC_PATH.name}")
+    return 0
+
+
 def main(argv):
+    if "--validate-v1" in argv:
+        return validate_v1()
     fs_path = FS_PATH
     if "--target" in argv:                     # Round E: the same block in another FeatureScript file
         fs_path = FS_PATH.parent / argv[argv.index("--target") + 1]
-    doc = parse_restricted_yaml(YAML_PATH.read_text(encoding="utf-8"))
+    doc = parse_restricted_yaml(P01_YAML_PATH.read_text(encoding="utf-8"))   # P0.1 FeatureScript files: frozen set
     params = flatten(doc)
     errors = validate(params)
     if errors:
@@ -358,7 +399,7 @@ def main(argv):
     counts = {"value": 0, "formula": 0, "working": 0}
     for _, basis in resolved.values():
         counts[basis] += 1
-    print(f"parsed {len(params)} parameters from {YAML_PATH.relative_to(ROOT)}")
+    print(f"parsed {len(params)} parameters from {P01_YAML_PATH.relative_to(ROOT)}")
     print(f"  authoritative value: {counts['value']}   working via formula: {counts['formula']}"
           f"   working: {counts['working']}   unresolved: {len(unresolved)}")
     for name in params:

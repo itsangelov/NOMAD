@@ -30,6 +30,21 @@
 
 The battery, power and charging **architecture** now has an engineering baseline (E-POWER-002, below). Specific parts remain TBD. The requirement statuses are in `v1-requirements.md` §9.
 
+## Virtual V1 power model (2026-10-06)
+
+`prototypes/V1/v1_power.py`, reported in `V1-VIRTUAL-INTEGRATION.md` §3–§6. It imports the E-POWER calculators unchanged and adds the V1 hardware: the G101UAN01.0 display (power modelled as the AUO B101UAN01.7, ASSUMED), the controller in the base and the 30 mm enclosure fan.
+
+**At the battery (CALC):** LOW 7.1 W, NORMAL 9.0 W, HIGH 19.1 W, WORST 24.4 W; off 0.07 W.
+
+| Item | Value |
+|---|---|
+| Runtime NORMAL, M65A 4S1P | 9.2 h new / 7.4 h end of life (6 h with reserve met, +12 %) |
+| Runtime NORMAL, 50E | 7.1 / 5.7 h (4 h minimum only) |
+| Representative day (6 h NORMAL + 1 h HIGH) | 74 Wh |
+| Solar into the battery (annual mean) | 36 Wh/day: 48 % of that day, 66 % of a 6 h NORMAL day |
+
+**Power switch:** one momentary button → Pi J2 + charger QON (ship mode). The pack connector is the service disconnect.
+
 ## Power architecture baseline (E-POWER-002, 2026-10-02)
 
 | Element | Baseline | Status |

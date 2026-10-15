@@ -124,6 +124,7 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
     4. Shell structure: one body or split.
     5. Whether the working body envelope 301 × 235 × 40 stays.
   - These depend on the real hardware envelopes and the power and thermal architecture (`docs/v1-requirements.md` §18).
+- **Note (2026-10-06):** the Virtual V1 integration uses this placement with amendments and proposes it as **D-011**. The open questions above are answered there, as proposals for the owner. D-007 itself remains proposed.
 
 ## D-008 — Round E digital prototype implementation method
 
@@ -266,3 +267,46 @@ For each decision, record: context, the decision, alternatives, the tradeoff, an
     - It cannot be fixed without a geometry change. The minimum change is an outboard metal bearing for the cassette.
     - Owner decision needed.
   - The in-cassette cable exit route.
+
+## D-011 — Virtual V1 integration baseline (hardware candidates, base placement, I/O, display hinge)
+
+- **Status:** **proposed** (2026-10-06), awaiting the project owner. B1 (D-010) is unchanged. Nothing here is physically validated or bought.
+- **Record:** `docs/V1-VIRTUAL-INTEGRATION.md`; model and checks `CAD/tools/v1_integration.py` (57 PASS / 7 WARN / 0 FAIL); hardware `prototypes/V1/v1_hardware.py`; power `prototypes/V1/v1_power.py`; BOM `prototypes/V1/V1_BOM.csv`.
+- **Context:** V1 dependency steps 3 and 6–11. The integration needed concrete placements to check anything. D-007 (base placement) was still only proposed, and the rear-port / lid-sweep conflict (LID-4) was blocked.
+- **Proposal** (provisional engineering choices made so the virtual design could close; each is reversible):
+  1. **Hardware candidates:**
+     - AUO G101UAN01.0 panel + Beck BTC-mini-eDP controller (D-A family; B101UAN01.7 is eDP 4-lane, outside the controller range)
+     - Perixx PERIBOARD-416 keyboard (285 × 117 × 16; the ≤ 8 mm target is not met by any wired candidate)
+     - PERIPAD-501 II trackpad
+     - SparkFun DAN-F10N pHAT
+     - Sunon MF30100V1 30 mm fan
+     - 2 × Southco E6-10-216-50 display hinges
+     - 4S1P M65A holder-type pack
+     - the E-POWER-002 power parts
+  2. **Placement:** the D-007 proposal, amended:
+     - **controller in the base** (only an eDP micro-coax crosses the hinge)
+     - Pi USB edge toward the trackpad bay (internal USB plugs under the trackpad)
+     - GNSS in a 36 mm rear strip under a non-metallic deck window
+     - holder-pack bay 93.6 × 82 × 31
+     - compute sled as a panel insert
+  3. **I/O: no plugs on the rear face.**
+     - Left wall: USB-C PD + power button.
+     - Front-right wall: 2 × USB-A 3.0.
+     - Right wall: fan exhaust.
+     - No Ethernet, HDMI out or audio in V1.
+     - This removes the lid-sweep conflict mechanically, with no operating rule.
+  4. **Envelope:** 306 × 253 × 40 (from the keyboard and the rear strip), lid 31.
+  5. **Display hinge:** 1.8 N·m per hinge (gravity ≤ 1.84 N·m over 60–135°, × 1.5 at the −20 % bound) with a mechanical stop at 135°.
+- **Alternatives considered:**
+  - Rear port panels with a 125° stop: +2.07 mm margin only, and it limits the lid.
+  - Controller in the lid: does not fit the 19 mm core without breaking the SB-261 rail.
+  - A 40 mm fan: does not fit the 35 mm internal height.
+  - A bonded battery pack: fits the old bay, but cells cannot be inspected or rebuilt.
+  - Pi ports facing the wall: the internal keyboard and trackpad then have no USB port.
+- **Tradeoffs:**
+  - The base grows by 5 × 18 mm.
+  - External ports are fewer.
+  - The keyboard is 16 mm thick, which shrinks the under-keyboard zone to 18.5 mm.
+  - Mass rises to 3.03 kg (CALC / EST), which improves stability.
+  - The BOM is ≈ €1 405 (approximate).
+- **Owner decisions requested** (V1 integration §19): placement / I/O, envelope + keyboard, cell basis, display direction, ambient target, I/O list, budget and print access.

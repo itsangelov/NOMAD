@@ -7,6 +7,29 @@ Component selections and their status. Update this file when a SKU is locked or 
 - **Power architecture baseline (2026-10-02):** `docs/E-POWER-002-POWER-ARCHITECTURE.md`.
 - **Energy-chain research (2026-10-02):** `docs/E-POWER-RESEARCH-CAMPAIGN.md`. It adds display controllers (Beck BTC-mini / BTC-mini-eDP), cells, BMS, chargers, MPPT, regulators and candidate tables. Nothing is selected.
 
+## V1 candidate set (2026-10-06)
+
+The Virtual V1 integration selects one candidate per function. Full records (dimensions, masses, interfaces, sources, prices, purchase gate) are in `prototypes/V1/v1_hardware.py`. The BOM is `prototypes/V1/V1_BOM.csv`; the reasoning is in `V1-VIRTUAL-INTEGRATION.md` §2.
+
+| Function | V1 candidate | Status |
+|---|---|---|
+| Computer | Raspberry Pi 5 8 GB + Active Cooler + M.2 HAT+ + Raspberry Pi SSD 512 GB | selected / candidate |
+| Display | **AUO G101UAN01.0** (eDP 2-lane, industrial, 3P data) | candidate; datasheet needed (gate 0) |
+| Display controller | **Beck BTC-mini-eDP**, in the base | candidate; quote needed |
+| Keyboard | **Perixx PERIBOARD-416** (285 × 117 × 16, 332 g, MFR manual) | candidate |
+| Trackpad | Perixx PERIPAD-501 II | candidate; availability unknown |
+| GNSS | SparkFun GNSS Flex pHAT DAN-F10N (US$74.95, in stock) | candidate |
+| Enclosure fan | **Sunon MF30100V1-1000U-A99** (30 × 30 × 10, 5 V, 0.6 W, 5.5 CFM) | candidate |
+| Display hinges | **2 × Southco E6-10-216-50** (1.8 N·m, €39.38 each, RS) | candidate |
+| Leaf hinges | 2 × TorqMaster SB-188-SB-261-6 | candidate (coupon gate) |
+| Panel | Voltaic P108 | candidate |
+| Cells / pack | 4 × Molicel M65A (preliminary) in a holder-type 4S1P pack (custom spec) | candidate; cell = owner |
+| Power board | Custom: BQ25798 + TPS25751 (bench-validated first on TI USB-PD-CHG-EVM-01) | spec / candidate |
+| Rails | Pololu D36V50F5 (5 V 5.5 A), S18V20F12 (12 V) | candidate |
+| Power button | 12 mm sealed momentary → Pi J2 + charger QON | provisional (generic spec) |
+
+## Characterization table (E-POWER-001 and the research campaign; history of the candidates above)
+
 | Component | Candidate / target | Status | Key data (source in E-POWER-001) | Key constraints |
 |---|---|---|---|---|
 | Computer | Raspberry Pi 5, 8 GB | selected | 85 × 56, holes 58 × 49 (MFR drawing); 5 V / 5 A USB-C PD; typical active 0.8 A (MFR); 3.2 W idle / 9.8 W stress (3P); 1–1.4 W when off unless `POWER_OFF_ON_HALT=1` (MFR) | Needs active cooling; 1.6 A USB budget shared with the fan |
@@ -20,7 +43,7 @@ Component selections and their status. Update this file when a SKU is locked or 
 | Display controller | HDMI → LVDS / eDP board | TBD | Not characterized | Placement and cable through the hinge |
 | Display hinges | Southco E6-10-216-50 / E6-10-416-50 (1.8 N·m symmetric; 20 000 cycles ±20 %); E6-10-216F-50 (1.8 / 1.1 asymmetric); TorqMaster SB-188-SB-254-H (1.36–1.69 N·m) | candidates | Southco catalogue; TorqMaster per `prototypes/B1_SB261/reports/01` | ~1.5–1.8 N·m per hinge target (D-010 CALC); fit with D-006 unverified |
 | Keyboard | Perixx PERIBOARD-426 (276 × 138 × 14), -416 / -332 (285 × 116 × 21, 361 g), -422 (291 × 138 × 19), -409H (314 × 146 × 20) | candidates | USB HID; power not published (MFR) | **None meets ≤ 8 mm** |
-| Trackpad | Perixx PERIPAD-501 II | **unverified** | Not listed on the Perixx stores; the repo's ~86 × 75 × 13 is unverified | |
+| Trackpad | Perixx PERIPAD-501 II | candidate (availability unknown) | 86 × 75 × 13 per the official Perixx manual, not measured (E-POWER research campaign [K1], 2026-10-02); not listed on the Perixx stores | |
 | Trackpad | Perixx PERIPAD-501 / PERIPAD-506 | candidates | 501: no official dimensions. 506: 135 × 116 × 14, USB-C to A (MFR) | |
 | GNSS | SparkFun GNSS Flex pHAT – DAN-F10N (GPS-29491) | candidate | DAN-F10N antenna module 20 × 20 × 11.6 (u-blox); GPS / Galileo / BeiDou / QZSS / NavIC, L1/L5, **no GLONASS**; 21 mA tracking / 26 mA acquisition at 2.7–3.6 V; UART + PPS | The internal patch needs sky view |
 | GNSS antenna | Internal patch (default) or u-blox ANN-MB5 (L1/L5 active, 49.14 × 46.14 × 15.94, 17 mA at 5 V, SMA, 3 m RG174, IPX7) | candidate | MFR | |

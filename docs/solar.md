@@ -2,6 +2,15 @@
 
 **Active architecture: B1 (D-010, accepted 2026-10-01).** One large solar leaf behind the display lid. Requirements and their status: `docs/v1-requirements.md` §8. Parameters: `docs/mechanical-spec.md` (Lid (B1), Solar leaf (B1)).
 
+## V1 integration (2026-10-06)
+
+- B1 is integrated unchanged. The SB-261 axis stays at (y 4.0, z 63.5) closed, because the lid core stays 19.
+- **Leaf outline:** 290 × 239 (panel + 2 × 8 frame). It now follows the panel, not the lid, because the lid grew to 253 deep.
+- **Leaf mass:** ≈ 413 g. It needs 0.78 N·m per hinge vs 0.96–1.13 published (SF ≈ 1.23, CALC).
+- **Stability:** with the stay, every deployed state tips only above 12.7 m/s wind (CALC).
+- **Solar lead:** runs through the display-hinge centre knuckle (60 mm twist zone) to the power board, ≈ 860 mm.
+- Record: `V1-VIRTUAL-INTEGRATION.md` §5, §10.
+
 ## B1 concept
 
 - **Leaf:** a rigid solar leaf covers the lid back. It is hinged at the lid's top edge and swings from 0° (stowed flat on the lid back) to about 190° (upright above the lid).

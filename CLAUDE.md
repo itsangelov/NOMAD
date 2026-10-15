@@ -36,7 +36,21 @@ Do not silently change: overall architecture, the solar concept, display orienta
     - Architecture: 4S1P 21700 → NVDC buck-boost charger (BQ25798-class; USB-C PD 60 W preferred / 45 W minimum on input 1, P108 MPPT on input 2) → 12–16.8 V bus → 5.1 V ≥ 5 A buck (Pi) + 12 V buck-boost (display controller); on-pack 3–5S protector + 10 A MINI fuse.
     - Owner direction 2026-10-02: runtime 6 h normal / 4 h minimum (PWR-5 LOCKED).
     - Open owner decisions: cell basis (M65A preliminary meets 6 h; 50E meets 4 h); pack style / bay (tight pack fits 90 × 82 × 30; holder pack needs ≈ 93.6 × 82 × 31); display D-A / D-W; USB-C-only confirmation.
-  - Next: owner decisions in E-POWER-002 §15, then the thermal architecture (step 6) and the YAML re-baseline (step 7).
+  - **Virtual V1 integration baseline** (2026-10-06, `docs/V1-VIRTUAL-INTEGRATION.md`; proposed **D-011**). Steps 3 and 6–11 are done virtually.
+    - **Candidates:**
+      - AUO G101UAN01.0 + Beck BTC-mini-eDP (controller in the base)
+      - Perixx PERIBOARD-416 (285 × 117 × 16) and PERIPAD-501 II
+      - Sunon MF30100V1 30 mm fan
+      - 2 × Southco E6-10-216-50 (1.8 N·m, stop at 135°)
+      - holder-type 4S1P M65A pack in a 93.6 × 82 × 31 bay
+    - **Layout:** base 306 × 253 × 40, lid 31. No rear plugs: USB-C + button on the left wall, 2 × USB-A at the front right, exhaust on the right wall. GNSS in a 36 mm rear strip.
+    - **Results (CALC / EST):** 3.03 kg; NORMAL 9.0 W at the battery, 9.2 / 7.4 h; BOM ≈ €1 405.
+    - **Models:** `CAD/tools/v1_integration.py --check` (57 PASS / 7 WARN / 0 FAIL), `prototypes/V1/v1_power.py`, `prototypes/V1/v1_hardware.py`, `prototypes/V1/v1_bom.py` → `V1_BOM.csv`.
+  - **V1 visual master in Onshape** (2026-10-08, `docs/V1-VISUAL-MODEL.md`):
+    - Feature Studio `NOMAD_V1_Visual` (element `041ff69ce1d94a2b7f74d123`). Source `CAD/featurescript/NOMAD_V1_Visual.fs`; Onshape copy `NOMAD_V1_Visual.onshape.fs` via `CAD/tools/fs_compact.py`.
+    - Kernel QA: all 10 poses build; 4 open model findings.
+    - Owner step: insert the feature into a Part Studio "NOMAD V1".
+  - Next: the owner decisions in V1 integration §19 (D-011 placement / I/O, envelope + keyboard, cell, display, ambient, I/O list, budget / print access). Then gate 0 (datasheets and quotes, €0) and gate 1 (SB-261 coupon). Persistent V1 Onshape CAD only after D-011.
 - Phase: Virtual V1 (finish the virtual design before buying hardware). Prototype: **P0.1** (mechanical proof of concept).
 - Phase 0 (workspace setup) is done. The NOMAD Onshape document exists (link in `CAD/README.md`). Its only Feature Studio is `NOMAD_P01_Coupons`, used by the owner-created Part Studio `P0.1 Coupons` (P0.1 test coupons, below); it holds no NOMAD product (chassis) geometry yet.
 - Phase 1 Round A (skeleton + keyboard/trackpad/display envelopes) has been modeled and tested in the scratch context only; results are in `docs/build-log.md`.
@@ -90,7 +104,8 @@ Do not silently change: overall architecture, the solar concept, display orienta
 
 | What | Where |
 |---|---|
-| Mechanical parameter values | `CAD/parameters/nomad.yaml` (machine-readable master, D-002) |
+| Mechanical parameter values | `CAD/parameters/nomad.yaml` (machine-readable V1 master, D-002); frozen P0.1 set in `CAD/parameters/history/` |
+| V1 hardware candidates, power, integration, BOM | `prototypes/V1/v1_hardware.py`, `prototypes/V1/v1_power.py`, `CAD/tools/v1_integration.py`, `prototypes/V1/V1_BOM.csv` (report: `docs/V1-VIRTUAL-INTEGRATION.md`) |
 | Parametric CAD | Onshape (master for geometry) |
 | FeatureScript snapshots | `CAD/featurescript/` (copies of the Onshape Feature Studios; Onshape wins on conflict) |
 | Exports (STEP/STL/3MF/drawings) | `CAD/exports/`, `CAD/drawings/`, or releases: derived, never authoritative |
@@ -116,8 +131,11 @@ It **cannot** list or create documents, Part Studios, Variable Studios or Assemb
 
 ## Parameter pipeline
 
-- Edit `CAD/parameters/nomad.yaml`, then run `py CAD/tools/yaml_to_featurescript.py` to regenerate the `GENERATED PARAMS` block in `CAD/featurescript/NOMAD_P01.fs`. Never edit that block by hand.
-- Run `py CAD/tools/yaml_to_featurescript.py --check` to verify the block is current.
+- **Two parameter files (2026-10-06):**
+  - `CAD/parameters/nomad.yaml` is the **Virtual V1** master. Validate it with `py CAD/tools/yaml_to_featurescript.py --validate-v1`, which also checks that every parameter is named in `docs/mechanical-spec.md`. It is used by `CAD/tools/v1_integration.py`.
+  - `CAD/parameters/history/nomad_P0.1_2026-10-02.yaml` is the **frozen** P0.1 / Round C / Round E / Architecture A set. Never edit it.
+- The P0.1 FeatureScript blocks (`NOMAD_P01.fs`, `NOMAD_E_Prototype.fs`) and every P0.1 study script read the frozen set. `py CAD/tools/yaml_to_featurescript.py [--check]` regenerates or checks the `GENERATED PARAMS` block from it. Never edit that block by hand.
+- No V1 FeatureScript exists yet. When one is written, generate its parameter block from the V1 master.
 - Test payload: `py CAD/tools/build_test_payload.py <out>` builds `NOMAD_P01.fs` without its production features, plus `NOMAD_P01.test.fs`.
 - Python is `py` (3.14, standard library only). Bare `python` is the Microsoft Store alias.
 - Before any CAD change: inspect, understand dependencies and downstream effects, and never destroy working geometry for convenience.

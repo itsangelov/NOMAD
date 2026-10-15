@@ -818,3 +818,88 @@ No Git commit or push.
 - **Risks:** E2-R01–R13. Among them, the Active Cooler is "candidate" in the repo but "selected" in the brief; `docs/VALIDATION_STATUS.md` does not exist.
 - **Docs updated:** power, hardware, v1-requirements (PWR-2–17, §17, step 5), architecture, solar, README, CLAUDE.
 - **Not changed:** `nomad.yaml` (its battery-bay note still says no pack chosen; refresh at step 7), CAD, Onshape. Nothing purchased; no push.
+
+## 2026-10-06 — Virtual V1 integration sprint (virtual, €0; proposed D-011)
+
+- **Goal:** take Virtual V1 through dependency steps 3 and 6–11 so that it is ready for staged purchasing and physical validation. B1 (D-010) is unchanged. Nothing was bought, printed or measured. No Onshape API calls were made.
+- **Hardware (V1 candidates, `prototypes/V1/v1_hardware.py`):**
+  - AUO G101UAN01.0 (eDP 2-lane; B101UAN01.7 rejected as 4-lane) + Beck BTC-mini-eDP, moved to the base
+  - Perixx PERIBOARD-416 (285 × 117 × 16, 332 g, MFR manual)
+  - PERIPAD-501 II
+  - SparkFun DAN-F10N pHAT
+  - Sunon MF30100V1 30 mm fan (a 40 mm fan does not fit the 35 mm internal height)
+  - 2 × Southco E6-10-216-50
+  - holder-type 4S1P M65A pack
+  - custom BQ25798 + TPS25751 board, bench-validated first on TI USB-PD-CHG-EVM-01
+- **Power (`prototypes/V1/v1_power.py`, CALC):**
+  - At the battery: NORMAL 9.0 W, HIGH 19.1 W, WORST 24.4 W, off 0.07 W.
+  - Runtime 9.2 / 7.4 h (M65A); 6 h met with +12 %.
+  - Representative day 74 Wh.
+  - Solar is 48 % of that day on the annual mean.
+- **Integration (`CAD/tools/v1_integration.py`, modelled):**
+  - Base 306 × 253 × 40, lid 31.
+  - 532 envelope pairs with 0 violations; every module is serviceable downward.
+  - **Rear-port conflict removed:** no rear plugs.
+  - **Round E F1 / F2 resolved:** `PANEL_SCREW_INSET` 3.5; the sled is a panel insert.
+  - Display hinge sized: gravity ≤ 1.84 N·m; 1.8 N·m per hinge; stop at 135°.
+  - Leaf hinge SF ≈ 1.23.
+  - Mass 3.03 kg (2.52–3.54).
+  - With the stay, every deployed state tips only above 12.7 m/s.
+  - **Thermal:** NORMAL air rise 6.5 K; HAT+-limited ambient 43.5 °C; HIGH throttles above ≈ 31 °C.
+  - DFM: bosses Ø8, posts Ø6; the large parts need a ≥ 310 mm bed or a split.
+  - 57 PASS / 7 WARN / 0 FAIL.
+- **BOM (`prototypes/V1/V1_BOM.csv`):** ≈ €1 405 incl. 15 % contingency, + €179 bench-only. Five purchase gates. Conflicts with the €500–650 figure in D-010 §17 (owner).
+- **Source of truth:**
+  - `nomad.yaml` was rewritten as the V1-only master (96 parameters).
+  - The pre-sprint file is frozen as `CAD/parameters/history/nomad_P0.1_2026-10-02.yaml`.
+  - `yaml_to_featurescript.py` points the P0.1 FeatureScript blocks and studies at the frozen file, and gained `--validate-v1`.
+  - `base_v01_layout.py` and `hinge_feasibility_2d.py` import the frozen path.
+  - `docs/mechanical-spec.md` now has V1 tables generated from the YAML, plus the frozen P0.1 record.
+- **Regression:** every pre-existing check and study was run before and after.
+  - Outputs are identical, except the generator's printed source path.
+  - The pre-existing `epower_campaign_calc.py` crash under a cp1251 console was environmental: a Δ character with PYTHONIOENCODING unset. It passes with UTF-8 output; not a code change.
+- **Open:** the owner decisions (§19 of the report), gate-0 datasheets and quotes, physical gates 1–5.
+- **Tradeoffs:** bigger base (keyboard reality), fewer external ports, heavier (3.0 kg vs 2.62 kg D-010 basis), cost.
+
+
+## 2026-10-06 — Pre-purchase audit of Virtual V1 (virtual, €0)
+
+- **Record:** `docs/V1-AUDIT-2026-10-06.md`. No architecture or hardware change; B1 is untouched.
+- **Findings:**
+  - The display-hinge torque margin is 4 % and depends on estimated lid mass. Weigh before buying (new WARN).
+  - The 6 h runtime survives only 1.04 W more NORMAL load. Measure the Pi and display.
+  - The G101UAN01.0 is not defined enough for CAD or purchase (gate 0 datasheet + Beck confirmation).
+  - A vertical GPIO Dupont on the HAT+ hits the deck; the spec is now right-angle housings (new check).
+  - The BOM omits a print service, PCB assembly, pack assembly and fixed shipping. Realistic total cash ≈ €1 750 (€1 400–2 700).
+  - The gates are re-ordered: compute measurement before the display, display hinges after weighing, GNSS last.
+- **Model changes:** `CAD/tools/v1_integration.py` (2 checks; 58 PASS / 8 WARN / 0 FAIL), `prototypes/V1/v1_power.py` (prints the runtime margin in W).
+
+## 2026-10-08 — V1 visual master model in Onshape (simulated in the Onshape kernel; not physically tested)
+
+Scope: compile, regenerate and QA the V1 visual master (`docs/V1-VISUAL-MODEL.md`), then persist it in the NOMAD document. No engineering parameter changed. API cost 63 requests (517 → 580 of 2,500).
+
+**Onshape**
+- `NOMAD_V1_Visual.fs` compiled first time in `test_feature` (FeatureScript 3083).
+- A QA harness (`NOMAD_V1_Visual.qa.test.fs`, console output) showed that `try silent` had hidden a failed base-shell cavity cut (`BOOLEAN_NON_MANIFOLD_RESULT`). The shell was solid, so every internal part intersected it.
+- Fixed, then re-checked twice. Final state: 10 poses build; 287–289 bodies, all named; every cut applied (volume check); every cable bend present.
+- Pairwise overlaps went from 131 to 56: 47 intentional contacts and 9 open findings (stay pivot through the main panel; cooler envelope vs the GPIO header; power-board terminals at the 12 V module; cables through the knuckle wall).
+- Persisted as Feature Studio `NOMAD_V1_Visual` (element `041ff69ce1d94a2b7f74d123`). Read back: byte-identical to `CAD/featurescript/NOMAD_V1_Visual.onshape.fs`.
+- Owner step pending: insert it into a Part Studio "NOMAD V1".
+
+**Clearances (simulated)**
+
+| Measurement | Value (mm) |
+|---|---|
+| Lid core – base, closed / 110° / 135° | 2.00 / 1.83 / 1.41 |
+| Leaf – lid core, leaf 90 / 120 / 180 / 190 | 6.47 / 6.61 / 3.13 / 2.03 |
+| Leaf lowest point, lid 135 + leaf 40 | z −31.5, i.e. leaf / table contact (the known B1 limit) |
+
+**Generator / builder fixes** (geometry consistency; details in `docs/V1-VISUAL-MODEL.md`):
+- Shell corner fill.
+- Front corner styling chamfer 8 → 1.5: it cut about 4.6 mm into the corner fan.
+- Visible BUILD WARNING for failed booleans.
+- GNSS, control and fan routes clear of the Pi USB plugs.
+- Rear trunk lanes.
+- Lid solar-lead channels.
+- USB-C opening re-centred on its receptacle.
+- New tool `CAD/tools/fs_compact.py`.

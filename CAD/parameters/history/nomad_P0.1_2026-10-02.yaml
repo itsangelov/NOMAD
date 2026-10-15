@@ -1,0 +1,246 @@
+# NOMAD mechanical parameters: machine-readable source of truth (D-002).
+# docs/mechanical-spec.md is the human-readable spec and must agree with this file.
+# FeatureScript values are derived from this file and never edited as the master.
+#
+# SCHEMA (per parameter)
+#   AUTHORITATIVE fields: the only engineering values in this file.
+#     value    Authoritative value. null = TBD (no engineering value exists yet).
+#     status   Status of `value`: verified | derived | provisional | TBD.
+#              status TBD  <=>  value null.
+#     source   What `value` comes from, or what will drive it.
+#     unit     mm (default) | deg | none.
+#   WORKING fields: P0.1 working inputs, NOT engineering values.
+#     working  Provisional placeholder number, used only to build P0.1 envelope geometry
+#              while `value` is null. Never a decision or a verified dimension.
+#     formula  Provisional expression over other parameters (+ - * / and parentheses).
+#              Its result has exactly the same standing as `working`.
+#   INFORMATIONAL fields (never used for geometry): reference, intent, limit, note.
+#
+# RESOLUTION for geometry (CAD/tools/yaml_to_featurescript.py):
+#   value (if not null)  ->  formula  ->  working  ->  unresolved (no geometry may use it).
+#   The generator labels every emitted constant with the field it came from.
+#
+# FORMAT: restricted YAML subset (comments, two-level block mappings, inline flow maps/lists,
+#   double-quoted strings, numbers, null/true/false, bare words). The generator rejects anything else.
+#
+# ACTIVE ARCHITECTURE (D-010, accepted 2026-10-01): B1, a single solar leaf behind the display lid.
+#   - Parameters for B1 are in the groups `lid_b1` and `solar_leaf` (end of file).
+#   - The group `solar` and the class-A lid parameters in `lid` (LID_BACK_GAP, LID_REAR_SHELL_DEPTH, LID_SANDWICH_*,
+#     LID_EDGE_BAND, LID_MID_PLATE_THICKNESS, LID_RIB_*, and the LID_THICKNESS formula) belong to Architecture A
+#     (sliding/tilting cassettes, D-004 / D-009).
+#   - They are SUPERSEDED / DEFERRED FOR NOMAD V1. They are kept unchanged only so that the existing A-path study
+#     scripts and the Round E digital prototype still reproduce. Do not use them for V1 B1 geometry.
+#   - A full re-baseline of this file is V1 dependency step 7 (docs/v1-requirements.md), after the hardware envelopes
+#     and the power and thermal architecture.
+
+meta:
+  revision: P0.1
+  locked: false
+  architecture: "B1 (D-010, accepted 2026-10-01)"
+
+body:
+  BODY_WIDTH:              { value: null, status: TBD, source: "Keyboard width + walls; trackpad layout (D-003)", formula: "KEYBOARD_WIDTH + 2 * (BASE_SIDE_MARGIN + WALL_THICKNESS)" }
+  BODY_DEPTH:              { value: null, status: TBD, source: "Keyboard + trackpad + hinge + port zones", formula: "BASE_FRONT_MARGIN + TRACKPAD_DEPTH + TRACKPAD_KEYBOARD_GAP + KEYBOARD_DEPTH + BASE_REAR_ZONE_DEPTH" }
+  BODY_HEIGHT:             { value: null, status: TBD, source: "Pi + HAT stack, cooling, battery reserve", working: 40, note: "Placeholder until Pi stack and battery are enveloped" }
+  WALL_THICKNESS:          { value: null, status: TBD, source: "PETG FDM; set during P0.1", working: 2.5, note: "~6 perimeters at 0.4 mm" }
+  SERVICE_PANEL_THICKNESS: { value: null, status: TBD, source: "Bottom service panel and battery door plates (Round C base V0.1)", working: 2.5 }
+  MOUNT_PLATE_THICKNESS:   { value: null, status: TBD, source: "Keyboard tray, trackpad tray and compute sled plates (Round C)", working: 2.0 }
+  INPUT_TRAY_LIP:          { value: null, status: TBD, source: "Keyboard/trackpad tray margin beyond the module outline, front and rear (Round C)", working: 3 }
+  TRACKPAD_BAY_MARGIN:     { value: null, status: TBD, source: "Trackpad edge to the trackpad-bay bulkhead (Round C)", working: 5 }
+  BOSS_DIAMETER:           { value: null, status: TBD, source: "Shell fastener boss outer diameter; insert hole from INSERT_SIZE (TBD) (Round C)", working: 7 }
+  TRAY_POST_DIAMETER:      { value: null, status: TBD, source: "Keyboard-tray posts and panel standoffs under the keyboard tray (Round C)", working: 5 }
+  HINGE_MOUNT_WIDTH:       { value: null, status: TBD, source: "Reserved hinge-mount volume at each rear corner, across X; hinge hardware TBD (D-006, Round C)", working: 28 }
+  HINGE_MOUNT_DEPTH:       { value: null, status: TBD, source: "Reserved hinge-mount volume at each rear corner, along Y from the rear inner face (D-006, Round C)", working: 21 }
+  BASE_SIDE_MARGIN:        { value: null, status: TBD, source: "Keyboard edge to inner side wall", working: 8 }
+  BASE_FRONT_MARGIN:       { value: null, status: TBD, source: "Base front face to trackpad front edge (includes wall)", working: 15 }
+  BASE_REAR_ZONE_DEPTH:    { value: null, status: TBD, source: "Keyboard rear edge to base rear face: hinge + rear port zone", working: 30 }
+  HINGE_AXIS_OFFSET:       { value: null, status: TBD, source: "Hinge axis inset from the base rear face (negative = behind it)", working: 0, note: "D-006 provisional rear-face hinge direction; exact position TBD (mechanism prototype)" }
+  HINGE_AXIS_HEIGHT:       { value: null, status: TBD, source: "Hinge axis height above the base top surface", working: 0, note: "Exact Z TBD (mechanism prototype). With a 2.0 closed gap at inset 0, heights 0-2 give 1.41 mm min clearance, >= 4 give 2.0 (A.2b)" }
+  HINGE_BARREL_DIAMETER:   { value: null, status: TBD, source: "Representative hinge knuckle envelope on the hinge axis (Round E digital prototype); hinge hardware TBD", working: 8, note: "Visualization envelope only, not a hardware selection" }
+
+# Lid: display-hinge parameters (LID_CLOSED_GAP, LID_ANGLE_*) apply to V1. The class-A stack below (LID_THICKNESS formula,
+# LID_BACK_GAP .. LID_RIB_HEIGHT) is Architecture A: SUPERSEDED / DEFERRED FOR V1 (D-010). The B1 lid is in `lid_b1`.
+lid:
+  LID_THICKNESS:           { value: null, status: TBD, source: "Enclosed-lid layer stack, Round D.1 class A (sandwich rear shell)", formula: "DISPLAY_BEZEL_LIP + DISPLAY_THICKNESS + MIN_GAP + SOLAR_RAIL_LAYER_HEIGHT + MIN_GAP + SOLAR_CASSETTE_THICKNESS + LID_BACK_GAP + LID_REAR_SHELL_DEPTH", note: "ARCHITECTURE A (class-A lid) - SUPERSEDED / DEFERRED FOR V1 by D-010 (B1). Formula kept so the A studies and the Round E prototype reproduce; the B1 stack (core + vented gap + leaf, ~31 EST) is not yet re-baselined (V1 step 7). Was: PROVISIONAL - PENDING P0.2 PHYSICAL VALIDATION" }
+  LID_BACK_GAP:            { value: null, status: TBD, source: "Stowed cassette to rear-shell clearance; the shell may deflect <= half of it (Round D / D.1)", working: 2.0 }
+  LID_REAR_SHELL_DEPTH:    { value: null, status: TBD, source: "Class A sandwich rear shell depth: skin + core + skin, sized at the D.1 criterion (P0.2 coupon B-S30)", working: 6.6, note: "PROVISIONAL - PENDING P0.2 PHYSICAL VALIDATION" }
+  LID_SANDWICH_SKIN:       { value: null, status: TBD, source: "Class A sandwich skin thickness (D.1, P0.2 B-S30)", working: 1.2 }
+  LID_SANDWICH_WEB:        { value: null, status: TBD, source: "Class A sandwich web thickness (D.1, P0.2 B-S30)", working: 2.0 }
+  LID_SANDWICH_WEB_SPACING: { value: null, status: TBD, source: "Class A sandwich web pitch (D.1; P0.2 compares 30 and 20)", working: 30 }
+  LID_EDGE_BAND:           { value: null, status: TBD, source: "Lid front/rear edge bands beside the cassette bay: rear-shell seat and screws (B.2 / D)", formula: "(BODY_DEPTH - SOLAR_CASSETTE_HEIGHT) / 2 - MIN_GAP - WALL_THICKNESS" }
+  LID_MID_PLATE_THICKNESS: { value: null, status: TBD, source: "Class B (modular rail module) mid-plate, Round D.1; Round E visualization variant only", working: 2.0 }
+  LID_RIB_SKIN:            { value: null, status: TBD, source: "Class C (ribbed rear shell) skin, Round D.1; Round E visualization variant only", working: 2.5 }
+  LID_RIB_HEIGHT:          { value: null, status: TBD, source: "Class C (ribbed rear shell) external rib height at 30 mm pitch, Round D.1; Round E visualization variant only", working: 8.5 }
+  LID_CLOSED_GAP:          { value: null, status: TBD, source: "Geometric closed-lid standoff between base top surface and lid display face (e.g. bumpers). Not the same as MIN_GAP, which is the clearance requirement", working: 2.0, note: "D-006: P0.1 working value chosen to give ~1.0 mm modeled margin over MIN_GAP (A.2b)" }
+  LID_ANGLE_NOMINAL:       { value: null, unit: deg, status: TBD, source: "Nominal open pose for checks", working: 105 }
+  LID_ANGLE_MAX:           { value: null, unit: deg, status: TBD, source: "Maximum open pose for checks", working: 135 }
+
+display:
+  DISPLAY_DIAGONAL:        { value: 256.5, unit: mm, status: provisional, source: "Spec target 10.1 in" }
+  DISPLAY_ACTIVE_WIDTH:    { value: 217.5, status: derived, source: "256.5 * 16/sqrt(16^2+10^2)" }
+  DISPLAY_ACTIVE_HEIGHT:   { value: 136.0, status: derived, source: "256.5 * 10/sqrt(16^2+10^2)" }
+  DISPLAY_WIDTH:           { value: null, status: TBD, source: "Module outline; SKU not locked", working: 235, note: "Active area + ~9 mm border; not from a datasheet" }
+  DISPLAY_HEIGHT:          { value: null, status: TBD, source: "Module outline; SKU not locked", working: 150, note: "Active area + ~7 mm border; not from a datasheet" }
+  DISPLAY_THICKNESS:       { value: null, status: TBD, source: "Module + controller; SKU not locked", working: 5, note: "Panel only; controller not yet placed" }
+  DISPLAY_VERTICAL_OFFSET: { value: null, status: TBD, source: "Display centre offset from lid centre, positive toward the lid free edge", working: 0, intent: "0 = centred in the lid" }
+  DISPLAY_BEZEL_LIP:       { value: null, status: TBD, source: "Front retention lip over the display border (0 = flush, clip-retained) (Round D)", working: 1 }
+  DISPLAY_CONTROLLER_THICKNESS: { value: null, status: TBD, source: "Display-controller envelope height incl. connectors; location (lid band or base) not decided (Round D)", working: 12, note: "Envelope only; no controller selected" }
+
+controls:
+  KEYBOARD_WIDTH:          { value: 280, status: provisional, source: "Spec target; SKU not locked" }
+  KEYBOARD_DEPTH:          { value: 105, status: provisional, source: "Spec target" }
+  KEYBOARD_THICKNESS:      { value: 8, status: provisional, limit: max, source: "Spec target (preferred maximum)" }
+  TRACKPAD_WIDTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~86 mm", working: 86 }
+  TRACKPAD_DEPTH:          { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~75 mm", working: 75 }
+  TRACKPAD_THICKNESS:      { value: null, status: TBD, source: "TBD until module selected (D-003)", reference: "Perixx PERIPAD-501 II candidate: ~13 mm", working: 13 }
+
+layout:
+  KEYBOARD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline", working: 0 }
+  TRACKPAD_LATERAL_OFFSET: { value: null, status: TBD, source: "D-003", intent: "0 = centred on chassis longitudinal centreline", working: 0 }
+  TRACKPAD_KEYBOARD_GAP:   { value: null, status: TBD, source: "D-003; trackpad sits below keyboard", working: 10 }
+  KEYBOARD_TOP_RECESS:     { value: null, status: TBD, source: "Keyboard top surface below the base top surface", working: 1 }
+  TRACKPAD_TOP_RECESS:     { value: null, status: TBD, source: "Trackpad top surface below the base top surface", working: 1 }
+
+computer:
+  PI_WIDTH:                { value: 85, status: provisional, source: "Raspberry Pi 5 board outline, approximate" }
+  PI_DEPTH:                { value: 56, status: provisional, source: "Raspberry Pi 5 board outline, approximate" }
+  PI_STACK_HEIGHT:         { value: null, status: TBD, source: "Pi 5 + Active Cooler + M.2 HAT+ + 2230 NVMe incl. standoffs, above the compute sled (Round C)", working: 30, note: "Conservative placeholder (inferred ~25-28, not measured); GNSS assumed NOT stacked" }
+  PI_ENVELOPE_MARGIN:      { value: null, status: TBD, source: "Pi board outline to its conservative envelope, each side: connector overhang + fit (Round C)", working: 4 }
+  PI_HAT_ZONE_HEIGHT:      { value: null, status: TBD, source: "Top part of the PI_STACK_HEIGHT envelope shown as the M.2 HAT+ / NVMe zone (Round E visualization)", working: 10, note: "Visual subdivision of the existing stack envelope only; not measured; changes no clearance" }
+  COMPUTE_POWER_WIDTH:     { value: null, status: TBD, source: "Compute-bay power conversion (Pi 5 V supply) envelope, X (Round C)", working: 50 }
+  COMPUTE_POWER_DEPTH:     { value: null, status: TBD, source: "Compute-bay power conversion envelope, Y (Round C)", working: 30 }
+  COMPUTE_POWER_HEIGHT:    { value: null, status: TBD, source: "Compute-bay power conversion envelope, Z (Round C)", working: 15 }
+  COOLING_DUCT_DEPTH:      { value: null, status: TBD, source: "Reserved intake/fan/duct volume ahead of the Pi stack, Y; thermal design not done (Round C)", working: 20 }
+  GNSS_MODULE_WIDTH:       { value: null, status: TBD, source: "GNSS module envelope, X; SparkFun Flex pHAT class ~65 x 30 (Round C)", working: 70 }
+  GNSS_MODULE_DEPTH:       { value: null, status: TBD, source: "GNSS module envelope, Y (Round C)", working: 35 }
+  GNSS_MODULE_HEIGHT:      { value: null, status: TBD, source: "GNSS module envelope, Z (Round C)", working: 12 }
+  NVME_FORMAT:             { value: "2230", unit: none, status: provisional, source: "Preferred; SSD not locked" }
+  GNSS_ANTENNA_KEEPOUT:    { value: null, status: TBD, source: "Away from major noise sources" }
+
+clearances:
+  CLEARANCE:               { value: null, status: TBD, source: "FDM test coupons", working: 0.3 }
+  MIN_GAP:                 { value: null, status: TBD, source: "", working: 1.0 }
+  MIN_WALL:                { value: null, status: TBD, source: "Minimum printed wall (PETG FDM)", working: 2.0, note: "5 perimeters at 0.4 mm; checked, not a design input" }
+  CABLE_CLEARANCE:         { value: null, status: TBD, source: "Per cable, from bend radius" }
+  CABLE_CORRIDOR_WIDTH:    { value: null, status: TBD, source: "Reserved internal cable-corridor cross-section width (Round C); per-cable sizing via CABLE_CLEARANCE", working: 15 }
+  CABLE_CORRIDOR_HEIGHT:   { value: null, status: TBD, source: "Reserved internal cable-corridor cross-section height (Round C)", working: 10 }
+  OVERHANG_LIMIT:          { value: null, unit: deg, status: TBD, source: "Print-dependent" }
+
+fasteners:
+  FASTENER_SIZE:           { value: ["M3", "M2.5"], unit: none, status: provisional, source: "Standard family" }
+  INSERT_SIZE:             { value: null, status: TBD, source: "Heat-set inserts; depends on supplier" }
+
+# Solar: ARCHITECTURE A (sliding/tilting cassettes, D-004 / D-009) - SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).
+# Kept unchanged as the A-path record (A studies and the Round E E2 lid read these values). The V1 solar leaf is in `solar_leaf`.
+solar:
+  SOLAR_CASSETTE_WIDTH:     { value: null, status: TBD, source: "Bounded by lid width (two side by side)", formula: "(BODY_WIDTH - 2 * WALL_THICKNESS - MIN_GAP) / 2" }
+  SOLAR_CASSETTE_HEIGHT:    { value: null, status: TBD, source: "Bounded by lid height", working: 200 }
+  SOLAR_CASSETTE_THICKNESS: { value: null, status: TBD, source: "Panel + frame; panel not selected", working: 8 }
+  SOLAR_ROTATION_LIMIT:     { value: { min: 60, max: 75 }, unit: deg, status: provisional, source: "D-004 target range, +/- about the rotation axis" }
+  SOLAR_ROTATION_AXIS:      { value: slide_direction, unit: none, status: provisional, source: "D-004: approximately along the slide/deployment direction; exact axis geometry subject to P0.1 validation" }
+  SOLAR_DEPLOY_CLEARANCE:   { value: null, status: TBD, source: "Cassette inboard edge to lid side wall when fully deployed; room for the tilt-joint cable zone (B.1 fix, was 5)", formula: "SOLAR_CABLE_DIAMETER + 2 * MIN_GAP" }
+  SOLAR_SLIDE_TRAVEL:       { value: null, status: TBD, source: "D-004: lateral outward deployment from the lid", formula: "SOLAR_CASSETTE_WIDTH + WALL_THICKNESS + SOLAR_DEPLOY_CLEARANCE" }
+  SOLAR_RAIL_ENGAGEMENT:    { value: null, status: TBD, source: "Carriage length retained in the rail at full deployment", working: 40 }
+  SOLAR_CARRIAGE_WIDTH:     { value: null, status: TBD, source: "Carriage cross-section across the lid depth (Y): retained under the bracket slot by WALL_THICKNESS lips each side (B.1 fix, was 12)", formula: "SOLAR_RAIL_SLOT_WIDTH + 2 * WALL_THICKNESS" }
+  SOLAR_CARRIAGE_HEIGHT:    { value: null, status: TBD, source: "Carriage cross-section through the lid thickness (Z); the rail envelope adds WALL_THICKNESS each side", working: 8 }
+  SOLAR_HUB_LINK_LENGTH:    { value: null, status: TBD, source: "Carriage outboard end to cassette inboard edge, so the carriage stays MIN_GAP inside the lid wall at full deployment", formula: "WALL_THICKNESS + SOLAR_DEPLOY_CLEARANCE + MIN_GAP" }
+  SOLAR_HUB_AXIS_OFFSET_Y:  { value: null, status: TBD, source: "Hub axis from the cassette's free-edge-side (front) edge, RIGHT cassette; the left hub mirrors about the cassette centre line (B.1 V1 + fixes: pin beside the cable, rails staggered around the corridor)", formula: "SOLAR_CASSETTE_HEIGHT / 2 + SOLAR_RAIL_WIDTH / 2 + SOLAR_CABLE_CORRIDOR / 2 - SOLAR_HUB_CABLE_OFFSET" }
+  SOLAR_HUB_AXIS_OFFSET_Z:  { value: null, status: TBD, source: "Hub axis from the cassette's rail-side face, through the thickness; negative = into the rail layer. F3 fix (Round E, option B, 2026-09-26): axis = rail floor + MIN_GAP + bracket wall + pin radius above the rail-layer bottom (was the B.1 rail mid-height, -7.5, which put the hub bracket 1.0 mm into the rail floor)", formula: "WALL_THICKNESS + MIN_GAP + SOLAR_BRACKET_WALL + SOLAR_HUB_PIN_DIAMETER / 2 - (SOLAR_RAIL_LAYER_HEIGHT + MIN_GAP)" }
+  SOLAR_RAIL_SLOT_WIDTH:    { value: null, status: TBD, source: "Rail top slot passing the hub bracket (B.1 fix)", formula: "SOLAR_BRACKET_WIDTH + 2 * CLEARANCE" }
+  SOLAR_RAIL_WIDTH:         { value: null, status: TBD, source: "Rail C-channel envelope across the lid depth (B.1 V1 + fixes)", formula: "SOLAR_CARRIAGE_WIDTH + 2 * WALL_THICKNESS" }
+  SOLAR_RAIL_LAYER_HEIGHT:  { value: null, status: TBD, source: "Rail C-channel envelope through the lid thickness = solar rail layer (B.1, Round D)", formula: "SOLAR_CARRIAGE_HEIGHT + 2 * WALL_THICKNESS" }
+  SOLAR_BRACKET_WIDTH:      { value: null, status: TBD, source: "Hub bracket enclosing pin + cable side by side (B.1 fix)", formula: "SOLAR_HUB_PIN_DIAMETER + MIN_GAP + SOLAR_CABLE_DIAMETER + 2 * WALL_THICKNESS" }
+  SOLAR_BRACKET_LENGTH:     { value: null, status: TBD, source: "Hub bracket length along the tilt axis (B.1 envelope)", working: 10 }
+  SOLAR_BRACKET_WALL:       { value: null, status: TBD, source: "Hub bracket wall around the pin bore (structural: carries the deployed cassette moment); explicit for the F3 vertical budget (Round E, option B)", formula: "WALL_THICKNESS" }
+  SOLAR_HUB_CABLE_OFFSET:   { value: null, status: TBD, source: "Carriage/rail centre offset from the pin toward the cable (B.1 fix)", formula: "(MIN_GAP + SOLAR_CABLE_DIAMETER) / 2" }
+  SOLAR_CABLE_DIAMETER:     { value: null, status: TBD, source: "Protected solar-lead envelope diameter (B.1); not a cable selection", working: 6 }
+  SOLAR_CABLE_BEND_RADIUS:  { value: null, status: TBD, source: "Solar-lead service-loop bend-radius envelope (B.1); not a cable selection", working: 20 }
+  SOLAR_CABLE_CORRIDOR:     { value: null, status: TBD, source: "Cable corridor between the staggered rails (B.1 fix)", formula: "SOLAR_CABLE_DIAMETER + 2 * MIN_GAP" }
+  SOLAR_INDEX_STEP:         { value: null, unit: deg, status: TBD, source: "D-004: discrete indexed positions with a positive lock", working: 15 }
+  SOLAR_HUB_PIN_DIAMETER:   { value: null, status: TBD, source: "D-004: dedicated hub/pin carries the rotational load (metal pin)", working: 5 }
+  # --- solar tilt index lock + hub-pin anti-rotation (D-009, Round E, approved 2026-09-28; PENDING PHYSICAL VALIDATION).
+  #     Design basis: prototypes/P0.1/round_e_solar_index_lock_{investigation,manufacturing_check}.md and
+  #     round_e_solar_hub_pin_anti_rotation_check.md; implementation: round_e_solar_index_lock_implementation.md.
+  SOLAR_INDEX_RANGE:        { value: null, unit: deg, status: TBD, source: "Operating tilt served by the index lock, +/- (max of SOLAR_ROTATION_LIMIT; D-009)", working: 75 }
+  SOLAR_INDEX_POSITIONS:    { value: null, unit: none, status: TBD, source: "Index positions -RANGE..+RANGE in SOLAR_INDEX_STEP steps (11 x 15 deg, D-009)", formula: "2 * SOLAR_INDEX_RANGE / SOLAR_INDEX_STEP + 1" }
+  SOLAR_INDEX_RADIUS:       { value: null, status: TBD, source: "Index hole-circle radius; packaging window about 9.5-10.5 (index-lock investigation s.2)", working: 10 }
+  SOLAR_INDEX_PIN_ANGLE:    { value: null, unit: deg, status: TBD, source: "Index pin position in the cassette frame, from the cable side (+Y right cassette) toward the panel side; centres the 11-hole arc in the window", working: 57.5 }
+  SOLAR_INDEX_PIN_DIAMETER: { value: null, status: TBD, source: "Hardened dowel ISO 8734 1.5 m6 (manufacturing check, option D)", working: 1.5 }
+  SOLAR_INDEX_PIN_LENGTH:   { value: null, status: TBD, source: "Index dowel length (ISO 8734 1.5 x 16)", working: 16 }
+  SOLAR_INDEX_HOLE_DIAMETER: { value: null, status: TBD, source: "Index hole / counter-sleeve bore / guide bore: 1.60 +0.04/0, drilled and reamed (manufacturing check)", working: 1.6 }
+  SOLAR_INDEX_PLATE_THICKNESS: { value: null, status: TBD, source: "Index plate, 301 1/2-hard (ASTM A666) or 17-4PH stainless; not annealed 304/316", working: 1.5 }
+  SOLAR_INDEX_PLATE_OUTER_RADIUS: { value: null, status: TBD, source: "Index plate outline radius: must stay inside the rotating tray groove at every tilt (manufacturing check s.1)", working: 11.75 }
+  SOLAR_INDEX_GROOVE_CLEARANCE: { value: null, status: TBD, source: "Axial running clearance, each side of the index plate in the cassette groove", working: 0.5 }
+  SOLAR_INDEX_GROOVE_RADIAL_CLEARANCE: { value: null, status: TBD, source: "Radial running clearance of the index plate outline in the tray groove", working: 0.25 }
+  SOLAR_INDEX_ENGAGEMENT:   { value: null, status: TBD, source: "Index pin tip depth in the counter-hole sleeve (double-shear support; manufacturing check: 3)", working: 3 }
+  SOLAR_INDEX_PIN_STROKE:   { value: null, status: TBD, source: "Thumb-slider stroke: retracted tip MIN_GAP clear of the index plate", formula: "SOLAR_INDEX_ENGAGEMENT + SOLAR_INDEX_GROOVE_CLEARANCE + SOLAR_INDEX_PLATE_THICKNESS + MIN_GAP" }
+  SOLAR_INDEX_SLEEVE_OD:    { value: null, status: TBD, source: "Stainless counter-hole sleeve, OD 2.50 h7 pressed in the tray; spreads the pin load on PETG (implementation report s.6)", working: 2.5 }
+  SOLAR_INDEX_SLEEVE_LENGTH: { value: null, status: TBD, source: "Counter-hole sleeve length: pin engagement + MIN_GAP grit reserve", formula: "SOLAR_INDEX_ENGAGEMENT + MIN_GAP" }
+  SOLAR_INDEX_GUIDE_LENGTH: { value: null, status: TBD, source: "Printed guide bore for the index pin, outboard of the groove (investigation: 6)", working: 6 }
+  SOLAR_INDEX_CARRIER_LENGTH: { value: null, status: TBD, source: "Printed slider carrier gripping the pin's outer end, along X", working: 4 }
+  SOLAR_INDEX_CARRIER_WIDTH: { value: null, status: TBD, source: "Slider carrier square section", working: 3.6 }
+  SOLAR_INDEX_SPRING_OD:    { value: null, status: TBD, source: "Stainless (302/17-7) compression spring envelope; engagement preload only, never structural", working: 3.4 }
+  SOLAR_INDEX_SPRING_POCKET_WIDTH: { value: null, status: TBD, source: "Square spring / carrier channel in the tray", working: 3.8 }
+  SOLAR_INDEX_SPRING_INSTALLED_LENGTH: { value: null, status: TBD, source: "Spring length with the pin engaged (retracted = this - SOLAR_INDEX_PIN_STROKE)", working: 12 }
+  SOLAR_INDEX_SPRING_PRELOAD: { value: null, unit: none, status: TBD, source: "Spring force with the pin engaged, N (seating only; about 1.5 N retracted)", working: 0.6 }
+  SOLAR_INDEX_COVER_END:    { value: null, status: TBD, source: "Printed channel cover: spring-seat block length", working: 3 }
+  SOLAR_TILT_STOP_ANGLE:    { value: null, unit: deg, status: TBD, source: "Required structural hard stops at about +/-80 deg (owner, 2026-09-28). NOT PACKAGED: no stop fits the F3 hub band with SF 2; open decision (implementation report s.8)" }
+  SOLAR_HUB_PIN_KEY_ACROSS_FLATS: { value: null, status: TBD, source: "Double-D key on both hub-pin ends (index plate and anti-rotation plate), flats facing +-Y (anti-rotation check, owner decision)", working: 3.0 }
+  SOLAR_HUB_PIN_LENGTH:     { value: null, status: TBD, source: "Hub pin: anti-rotation plate inboard face to index plate outboard face (round through the carriage, link and bracket bore)", formula: "SOLAR_RAIL_ENGAGEMENT - SOLAR_ANTIROT_PLATE_INSET + SOLAR_HUB_LINK_LENGTH + SOLAR_BRACKET_LENGTH + SOLAR_INDEX_GROOVE_CLEARANCE + SOLAR_INDEX_PLATE_THICKNESS" }
+  SOLAR_HUB_SCREW_HEAD_DIAMETER: { value: null, status: TBD, source: "M2 retention screw head envelope (ISO 4762 M2 class), both pin ends", working: 3.8 }
+  SOLAR_HUB_SCREW_HEAD_HEIGHT: { value: null, status: TBD, source: "M2 retention screw head height envelope", working: 2 }
+  SOLAR_HUB_WASHER_DIAMETER: { value: null, status: TBD, source: "M2 washer (ISO 7089 class) clamping the plate on the double-D shoulder", working: 5 }
+  SOLAR_HUB_WASHER_THICKNESS: { value: null, status: TBD, source: "M2 washer thickness", working: 0.3 }
+  SOLAR_HUB_ACCESS_DIAMETER: { value: null, status: TBD, source: "Carriage access bore for the inboard M2 screw / washer", formula: "SOLAR_HUB_WASHER_DIAMETER + 2 * SOLAR_INDEX_GROOVE_RADIAL_CLEARANCE" }
+  SOLAR_ANTIROT_PLATE_INSET: { value: null, status: TBD, source: "Anti-rotation plate position inside the carriage, from its inboard face (anti-rotation check)", working: 10 }
+  SOLAR_ANTIROT_PLATE_THICKNESS: { value: null, status: TBD, source: "Anti-rotation plate: same stock / process as the index plate", formula: "SOLAR_INDEX_PLATE_THICKNESS" }
+  SOLAR_LOCK_SLOT_CLEARANCE: { value: null, status: TBD, source: "Printed slot clearance around captured plates, carrier and tab (per side)", working: 0.1 }
+  SOLAR_ANTIROT_LIGAMENT:   { value: null, status: TBD, source: "Anti-rotation plate ligament around the double-D key", working: 1.3 }
+  SOLAR_ANTIROT_SKIN:       { value: null, status: TBD, source: "Carriage floor skin under the anti-rotation slot", working: 0.5 }
+  SOLAR_ANTIROT_CABLE_WALL: { value: null, status: TBD, source: "PETG wall between the anti-rotation slot and the solar-cable envelope (>= 0.5 required)", working: 0.6 }
+  SOLAR_ANTIROT_DOWEL_DIAMETER: { value: null, status: TBD, source: "Anti-rotation dowel ISO 2338 m6 A1/A2 (or ISO 8734)", working: 3 }
+  SOLAR_ANTIROT_DOWEL_LENGTH: { value: null, status: TBD, source: "Anti-rotation dowel length (recessed MIN_GAP from the carriage inboard face)", working: 24 }
+  SOLAR_ANTIROT_DOWEL_OFFSET_Y: { value: null, status: TBD, source: "Dowel offset from the pin axis, away from the cable", working: 5 }
+  SOLAR_ANTIROT_DOWEL_OFFSET_Z: { value: null, status: TBD, source: "Dowel offset from the pin axis, Z (negative = toward the rail floor)", working: -2.5 }
+  SOLAR_ANTIROT_PUSHOUT_DIAMETER: { value: null, status: TBD, source: "Service push-out hole behind the anti-rotation dowel, to the carriage outboard face", working: 2 }
+
+io:
+  PORT_PANEL_WIDTH:        { value: null, status: TBD, source: "Each replaceable rear port-panel aperture, X; connector set not locked (Round C)", working: 90 }
+  PORT_PANEL_HEIGHT:       { value: null, status: TBD, source: "Port-panel aperture height, Z; bounded by the lid sweep behind the base (D-006, Round C)", working: 15 }
+  PORT_PANEL_BOTTOM:       { value: null, status: TBD, source: "Connector zone bottom above the base underside; the panel notch itself is open to the underside (Round C)", working: 4 }
+  PORT_PANEL_INSET:        { value: null, status: TBD, source: "Port-panel aperture inner edge from the centreline, X (Round C)", working: 20 }
+  PORT_KEEPOUT_DEPTH:      { value: null, status: TBD, source: "Minimum internal connector depth behind a port panel (Round C)", working: 25 }
+  PLUG_KEEPOUT_LENGTH:     { value: null, status: TBD, source: "External plug + cable-bend keep-out behind the rear face (Round C)", working: 45 }
+
+battery:
+  BATTERY_BAY_WIDTH:       { value: null, status: TBD, source: "Reserve only; sized from measured consumption", working: 90, note: "Round C reserved volume only; no pack, cell format or voltage chosen" }
+  BATTERY_BAY_DEPTH:       { value: null, status: TBD, source: "Reserve only", working: 82 }
+  BATTERY_BAY_HEIGHT:      { value: null, status: TBD, source: "Reserve only", working: 30 }
+  POWER_ELEC_WIDTH:        { value: null, status: TBD, source: "Power-electronics envelope (BMS/charger/solar input/DC-DC), X; modules not selected (Round C)", working: 90 }
+  POWER_ELEC_DEPTH:        { value: null, status: TBD, source: "Power-electronics envelope, Y (Round C)", working: 45 }
+  POWER_ELEC_HEIGHT:       { value: null, status: TBD, source: "Power-electronics envelope, Z (Round C)", working: 20 }
+
+# ======================================================================================================
+# ARCHITECTURE B1 (D-010, accepted 2026-10-01): the ACTIVE V1 lid/solar architecture.
+# Only values that are established are given as `value`:
+#   - architecture-level owner targets: status provisional
+#   - everything else: TBD with a working input taken from the B1 studies (D-010 Phase 2, prototypes/B1_SB261)
+# Nothing here is physically validated. The B1 study frame is the closed-lid frame of CAD/tools/d010_phase2_study.py.
+# No production CAD reads these parameters yet; they are emitted for the integrated Virtual V1 CAD (V1 step 9).
+lid_b1:
+  LID_CORE_THICKNESS:      { value: null, status: TBD, source: "B1 lid core: bezel lip + display + gap + controller zone + thin back shell (D-010 Phase 2: 1 + 5 + 1 + 8 + 4, EST); display and controller not selected", working: 19 }
+  SOLAR_LEAF_AIR_GAP:      { value: null, status: TBD, source: "Vented air gap between the lid back and the panel back, with low-e foil on the lid back (D-010 Phase 2 s.13 recommends >= 6 as a mechanical requirement; EST thermal model, not tested)", limit: min, working: 6 }
+
+solar_leaf:
+  SOLAR_LEAF_ANGLE_MAX:    { value: 190, unit: deg, status: provisional, source: "D-010 (owner, 2026-10-01): approximately 0-190 deg usable solar-leaf motion. Scratch kernel: >= 2.03 mm leaf-to-lid at 190, first contact at 201 (prototypes/B1_SB261)" }
+  SOLAR_LEAF_CABLE_BEND_RADIUS: { value: 12, status: provisional, limit: min, source: "D-010 (owner, 2026-10-01): R12 minimum cable bend-radius concept for static bends (3 x d of the assumed 4 mm cable). Cable not selected", note: "D-010 Phase 2 assumed 6 x d for repeated flex; the moving sections are axial twist zones (<= 3.5 deg/mm). Scratch kernel: all 5 bends R 12.00" }
+  SOLAR_LEAF_HINGE_AXIS_INSET: { value: null, status: TBD, source: "Leaf hinge axis from the lid top edge, closed-lid frame (SB-261 scratch rail, prototypes/B1_SB261; kernel-checked, not tested)", working: 4.0 }
+  SOLAR_LEAF_HINGE_AXIS_HEIGHT: { value: null, status: TBD, source: "Leaf hinge axis above the lid-back face (SB-261 scratch rail: axis z 63.5, lid back z 61)", working: 2.5 }
+  SOLAR_LEAF_HINGE_SPACING: { value: null, status: TBD, source: "Distance between the two leaf hinge centres (SB-261 scratch rail: x = +/-115)", reference: "Hinge candidate TorqMaster SB-188-SB-261-6, 33.8 mm long, barrel 7.05 (IGES)", working: 230 }
+  SOLAR_LEAF_WIDTH:        { value: null, status: TBD, source: "Leaf outline X: panel 273 + 2 x 8 frame (D-010 Phase 2); follows the panel selection", working: 289 }
+  SOLAR_LEAF_DEPTH:        { value: null, status: TBD, source: "Leaf outline Y = lid depth (D-010 Phase 2); the SB-261 scratch rail starts the leaf frame at y 9", formula: "BODY_DEPTH" }
+  SOLAR_LEAF_THICKNESS:    { value: null, status: TBD, source: "Leaf frame: 4 mm panel in a rebate under a 2 mm lip (D-010 Phase 2, EST)", working: 6 }
+  SOLAR_PANEL_WIDTH:       { value: null, status: TBD, source: "Solar panel outline X; panel not selected", reference: "Voltaic P108 candidate: 273 (VENDOR)", working: 273 }
+  SOLAR_PANEL_DEPTH:       { value: null, status: TBD, source: "Solar panel outline Y; panel not selected", reference: "Voltaic P108 candidate: 223 (VENDOR)", working: 223 }
+  SOLAR_PANEL_THICKNESS:   { value: null, status: TBD, source: "Solar panel thickness; panel not selected", reference: "Voltaic P108 candidate: 4, ETFE on 2 mm FR4 (VENDOR)", working: 4 }
+  SOLAR_STAY_REACH:        { value: null, status: TBD, source: "Rear outrigger stay reach behind the base (D-010 Phase 2 s.11: >= 90 recommended, 105 modelled; mandatory for B1; design details TBD)", working: 105 }

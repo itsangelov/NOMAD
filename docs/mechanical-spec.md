@@ -1,34 +1,195 @@
 # Mechanical Specification — NOMAD V1
 
-Revision: P0.1 (draft). No values below are locked.
+Revision: **Virtual V1 (2026-10-06)**. No value below is locked or physically verified.
 
-> **Source of truth (D-002):** `CAD/parameters/nomad.yaml` holds the authoritative machine-readable parameter values. This document is the human-readable specification and must agree with it. If they differ, the YAML is correct and this document must be updated.
+> **Source of truth (D-002):** `CAD/parameters/nomad.yaml` holds the authoritative machine-readable values. This document is the human-readable specification and must agree with it. If they differ, the YAML is correct. `py CAD/tools/yaml_to_featurescript.py --validate-v1` checks that every YAML parameter is named here.
 
-> **Active architecture: B1 (D-010, accepted 2026-10-01).**
-> - **B1:** one solar leaf behind the display lid, on two friction hinges. The B1 parameters are in [Lid (B1)](#lid-b1--active-v1-architecture-d-010) and [Solar leaf (B1)](#solar-leaf-b1--active-v1-architecture-d-010).
-> - **Architecture A, SUPERSEDED / DEFERRED FOR NOMAD V1:** the class-A lid rows and the [Solar (Architecture A)](#solar-architecture-a--superseded--deferred-for-nomad-v1) sections describe the sliding/tilting cassettes (D-004 / D-009). They are kept as the A-path record. They are not the V1 design.
-> - **V1 requirements by subsystem:** `docs/v1-requirements.md`.
+> **Architecture: B1 (D-010).** The Virtual V1 integration (layout, checks, masses, thermal) is `CAD/tools/v1_integration.py`, reported in [`docs/V1-VIRTUAL-INTEGRATION.md`](V1-VIRTUAL-INTEGRATION.md). The V1 integration baseline is proposed as D-011.
+
+> **History:** the P0.1 / Round C / Round E / Architecture A parameter set is frozen in `CAD/parameters/history/nomad_P0.1_2026-10-02.yaml` and reproduced unchanged under [Historical P0.1 record](#historical-p01-record-frozen-2026-10-02) below. It is not the V1 design.
 
 ## Parameter status legend
 
 | Status | Meaning |
 |---|---|
-| **verified** | Measured on the physical part, or taken from a manufacturer datasheet for a locked SKU |
-| **derived** | Calculated from other values (the calculation is shown) |
-| **provisional** | A working value from a candidate part or the spec target. Expect it to change. |
-| **TBD** | No value yet. It needs a decision, a part selection or a measurement. |
+| **verified** | Measured on the physical part, or from a manufacturer datasheet for a locked SKU (none yet) |
+| **derived** | Calculated from other values |
+| **provisional** | Chosen for V1, or taken from candidate-part documentation. Not physically verified. Expect change. |
+| **TBD** | No authoritative value. A working input (number or formula) may still drive the V1 envelope model. |
 
-## Authoritative value vs P0.1 working input
+All dimensions in mm unless noted. "Working" = the number the V1 envelope model uses while the value is TBD (formula results follow their inputs).
 
-- **Value / Status** is the authoritative engineering value. For every TBD parameter it stays empty.
-- **P0.1 working input** is a provisional placeholder, or a formula over other parameters, used **only** to generate P0.1 envelope geometry. It is not an engineering decision, not a verified dimension, and it does not change the parameter's TBD status.
-- Geometry uses the value if one exists, otherwise the working input. Every generated constant is labelled with its source.
+## V1 master parameters
 
-All dimensions are in mm unless noted.
 
-## Master parameters
+### body
 
-### Body
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| BODY_WIDTH | — | mm | TBD | = KEYBOARD_WIDTH + 2 * (BASE_SIDE_MARGIN + WALL_THICKNESS) → 306 | Derived: keyboard width + side margins + walls (D-003) |
+| BODY_DEPTH | — | mm | TBD | = BASE_FRONT_MARGIN + TRACKPAD_DEPTH + TRACKPAD_KEYBOARD_GAP + KEYBOARD_DEPTH + BASE_REAR_ZONE_DEPTH → 253 | Derived: front margin + trackpad + gap + keyboard + rear zone (D-003) |
+| BODY_HEIGHT | 40 | mm | provisional | — | V1 integration: palm bays hold the holder battery pack (31) and the Pi stack envelope (30) under a 2.5 deck over a 2.5 panel; under-keyboard zone 18.5 (v1_integration.py) |
+| WALL_THICKNESS | 2.5 | mm | provisional | — | PETG FDM, ~6 perimeters at 0.4 mm; confirm with the P0.2 coupons |
+| SERVICE_PANEL_THICKNESS | 2.5 | mm | provisional | — | Main service panel and battery door |
+| MOUNT_PLATE_THICKNESS | 2 | mm | provisional | — | Keyboard tray, trackpad tray, compute sled |
+| INPUT_TRAY_LIP | 3 | mm | provisional | — | Tray margin beyond the keyboard / trackpad outline, front and rear |
+| TRACKPAD_BAY_MARGIN | 5 | mm | provisional | — | Trackpad edge to the trackpad-bay bulkhead |
+| BOSS_DIAMETER | 8 | mm | provisional | — | Shell boss OD around a 4.0 hole for the Ruthex RX-M3x5.7 insert: 2.0 wall (V1 DFM review; was 7 working = 1.5 wall) |
+| PANEL_SCREW_INSET | 3.5 | mm | provisional | — | Service-panel / door screw axis from the wall inner face: ISO 7380 M3 head r 2.85 clears the wall by >= 0.5 and leaves >= 1.2 panel beyond the 3.4 hole (fixes Round E F1, where the axis was 1.95 from the panel edge) |
+| TRAY_POST_DIAMETER | 6 | mm | provisional | — | Tray posts with M2.5 inserts (OD 3.55): >= 1.2 wall (V1 DFM review; was 5 working) |
+| HINGE_MOUNT_WIDTH | 44 | mm | provisional | — | Display-hinge corner block across X: Southco E6-10 medium 38 long + 2 x 3 (catalogue) |
+| HINGE_MOUNT_DEPTH | 24 | mm | provisional | — | Display-hinge corner block along Y from the rear inner face: E6 base leaf ~20 (INFERRED) + 4 for M4 inserts |
+| BASE_SIDE_MARGIN | 8 | mm | provisional | — | Keyboard edge to inner side wall |
+| BASE_FRONT_MARGIN | 15 | mm | provisional | — | Base front face to trackpad front edge (includes wall) |
+| BASE_REAR_ZONE_DEPTH | 36 | mm | provisional | — | Keyboard rear edge to base rear face: hinge corner blocks + GNSS sky strip (GNSS pHAT 30 deep + walls); was 30 working (V1 integration) |
+| HINGE_AXIS_OFFSET | — | mm | TBD | 0 | Display hinge axis inset from the base rear face (negative = behind it); note: D-006 provisional rear-face direction; exact position at the mechanism prototype |
+| HINGE_AXIS_HEIGHT | — | mm | TBD | 0 | Display hinge axis height above the base top surface; note: D-006; exact Z at the mechanism prototype |
+| HINGE_BARREL_DIAMETER | 10 | mm | provisional | — | Southco E6-10 medium barrel (catalogue drawing, INFERRED) |
+
+### lid
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| LID_THICKNESS | — | mm | TBD | = LID_CORE_THICKNESS + SOLAR_LEAF_AIR_GAP + SOLAR_LEAF_THICKNESS → 31 | B1 lid stack: core + vented air gap + leaf |
+| LID_CLOSED_GAP | — | mm | TBD | 2 | Closed-lid standoff between base top and lid display face (bumpers); note: D-006 working value |
+| LID_ANGLE_NOMINAL | — | deg | TBD | 110 | Nominal open pose for checks (SYS-7: 105-110; D-010 states use 110) |
+| LID_ANGLE_MAX | 135 | deg | provisional | — | Mechanical hard stop in the display-hinge corner blocks (V1 Phase 8); hinge torque sized to 135 |
+| LID_HINGE_TORQUE | 1.8 | none | provisional | — | N.m per hinge, Southco E6-10-216-50 symmetric (catalogue); 2 hinges; selected by v1_integration.py hinge check |
+
+### lid_b1
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| LID_CORE_THICKNESS | 19 | mm | provisional | — | B1 lid core kept at the D-010 / SB-261 baseline (the SB-261 lid hinge rail needs it): lip 1 + panel 5.35 + gap 1 + cable/rib zone 9.15 + back shell 2.5; controller moved to the base |
+| SOLAR_LEAF_AIR_GAP | 6 | mm | provisional | — | Vented air gap with low-e foil (D-010 Phase 2 s.13, EST thermal model) (limit: min) |
+
+### solar_leaf
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| SOLAR_LEAF_ANGLE_MAX | 190 | deg | provisional | — | D-010 (owner, 2026-10-01). Scratch kernel: >= 2.03 mm leaf-to-lid at 190, first contact 201 (prototypes/B1_SB261) |
+| SOLAR_LEAF_CABLE_BEND_RADIUS | 12 | mm | provisional | — | D-010 (owner): R12 static bends (3 x d of a 4 mm 2 x 0.5 mm2 lead); moving sections are axial twist zones (limit: min) |
+| SOLAR_LEAF_HINGE_AXIS_INSET | — | mm | TBD | 4 | Leaf hinge axis from the lid free edge (SB-261 scratch rail; kernel-checked, not tested) |
+| SOLAR_LEAF_HINGE_AXIS_HEIGHT | — | mm | TBD | 2.5 | Leaf hinge axis above the lid-back face (SB-261 scratch rail: axis z 63.5, lid back z 61) |
+| SOLAR_LEAF_HINGE_SPACING | — | mm | TBD | 230 | Leaf hinge centres (SB-261 scratch rail x = +/-115); reference: TorqMaster SB-188-SB-261-6, 33.8 long, barrel 7.05 (IGES) |
+| SOLAR_LEAF_WIDTH | — | mm | TBD | = SOLAR_PANEL_WIDTH + 16 → 290 | Leaf outline X: panel + 2 x 8 frame |
+| SOLAR_LEAF_DEPTH | — | mm | TBD | = SOLAR_PANEL_DEPTH + 16 → 239 | Leaf outline Y: panel + 2 x 8 frame (V1: the lid grew to 253 deep; the leaf follows the panel, not the lid, which keeps the leaf mass and wind area at the D-010 basis) |
+| SOLAR_LEAF_THICKNESS | 6 | mm | provisional | — | Leaf frame: 4 mm panel in a rebate under a 2 mm lip (D-010 Phase 2) |
+| SOLAR_PANEL_WIDTH | 274 | mm | provisional | — | Voltaic P108 candidate, 27.4 cm (MFR page; confirm on P108_dwg.pdf) |
+| SOLAR_PANEL_DEPTH | 223 | mm | provisional | — | Voltaic P108 candidate (MFR) |
+| SOLAR_PANEL_THICKNESS | 4 | mm | provisional | — | Voltaic P108 candidate, ETFE on 2 mm FR4 (MFR) |
+| SOLAR_STAY_REACH | — | mm | TBD | 105 | Rear outrigger stay reach behind the base (D-010 Phase 2 s.11: >= 90; mandatory) |
+| STAY_PIVOT_INSET_X | — | mm | TBD | 28 | Stay pivot from the base side face, in the rear corner block (D-010: x +/-125 on a 301 base) |
+| STAY_PIVOT_INSET_Y | — | mm | TBD | 13 | Stay pivot from the base rear face (D-010: y 222 on a 235 base = 13; V1 corner block) |
+
+### display
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| DISPLAY_DIAGONAL | 256.5 | mm | provisional | — | 10.1 in (spec target) |
+| DISPLAY_ACTIVE_WIDTH | 216.81 | mm | provisional | — | AUO 10.1 WUXGA family active area (3P) |
+| DISPLAY_ACTIVE_HEIGHT | 135.5 | mm | provisional | — | AUO 10.1 WUXGA family active area (3P) |
+| DISPLAY_WIDTH | 229.9 | mm | provisional | — | AUO G101UAN01.0 candidate: max of two 3P outlines (228.22 / 229.9); AUO datasheet to confirm |
+| DISPLAY_HEIGHT | 150.5 | mm | provisional | — | AUO G101UAN01.0 candidate: max of two 3P outlines (148.32 / 150.5) |
+| DISPLAY_THICKNESS | 5.35 | mm | provisional | — | AUO G101UAN01.0 candidate: max of two 3P values (5.35 / 4.15) |
+| DISPLAY_VERTICAL_OFFSET | — | mm | TBD | 0 | Display centre offset from the lid centre, + toward the lid free edge; intent: 0 = centred; v1_integration checks >= the SB-261 display-free band |
+| DISPLAY_BEZEL_LIP | — | mm | TBD | 1 | Front retention lip over the display border |
+| DISPLAY_FREE_BAND | 42.5 | mm | provisional | — | Display-free band at the lid free edge for the SB-261 leaf hinge rail (prototypes/B1_SB261: display starts at y 42.5) |
+| DISPLAY_CONTROLLER_WIDTH | 80 | mm | provisional | — | Beck BTC-mini-eDP candidate (MFR) |
+| DISPLAY_CONTROLLER_DEPTH | 70 | mm | provisional | — | Beck BTC-mini-eDP candidate (MFR) |
+| DISPLAY_CONTROLLER_THICKNESS | 9.8 | mm | provisional | — | Beck BTC-mini-eDP total height (MFR); located in the BASE under the keyboard (V1) |
+
+### controls
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| KEYBOARD_WIDTH | 285 | mm | provisional | — | Perixx PERIBOARD-416 candidate (MFR manual 285 x 117 x 16) |
+| KEYBOARD_DEPTH | 117 | mm | provisional | — | Perixx PERIBOARD-416 candidate (MFR manual) |
+| KEYBOARD_THICKNESS | 16 | mm | provisional | — | Perixx PERIBOARD-416 candidate (MFR manual). The <= 8 target is not met by any wired candidate (E-POWER-001 C4) |
+| TRACKPAD_WIDTH | 86 | mm | provisional | — | Perixx PERIPAD-501 II candidate (MFR manual) |
+| TRACKPAD_DEPTH | 75 | mm | provisional | — | Perixx PERIPAD-501 II candidate (MFR manual) |
+| TRACKPAD_THICKNESS | 13 | mm | provisional | — | Perixx PERIPAD-501 II candidate (MFR manual) |
+
+### layout
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| KEYBOARD_LATERAL_OFFSET | 0 | mm | provisional | — | D-003: centred on the chassis centreline |
+| TRACKPAD_LATERAL_OFFSET | 0 | mm | provisional | — | D-003: centred on the chassis centreline |
+| TRACKPAD_KEYBOARD_GAP | — | mm | TBD | 10 | D-003; trackpad below the keyboard |
+| KEYBOARD_TOP_RECESS | — | mm | TBD | 1 | Keyboard top below the base top surface |
+| TRACKPAD_TOP_RECESS | — | mm | TBD | 1 | Trackpad top below the base top surface |
+
+### computer
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| PI_WIDTH | 85 | mm | provisional | — | Raspberry Pi 5 board outline (MFR drawing, approximate) |
+| PI_DEPTH | 56 | mm | provisional | — | Raspberry Pi 5 board outline (MFR drawing, approximate) |
+| PI_STACK_HEIGHT | — | mm | TBD | 30 | Sled top to stack top: Pi 5 + Active Cooler + 16 mm header + M.2 HAT+ + 2230 SSD; note: EST 25-27 (v1_integration.py stack sum); measure at gate 3 |
+| PI_ENVELOPE_MARGIN | — | mm | TBD | 3 | Board outline to envelope, each side: port overhang + fit |
+| COMPUTE_POWER_WIDTH | — | mm | TBD | 50 | 5.1 V rail zone (Pololu D36V50F5 25.4 x 25.4 x 9.5 + leads) |
+| COMPUTE_POWER_DEPTH | — | mm | TBD | 30 | 5.1 V rail zone |
+| COMPUTE_POWER_HEIGHT | — | mm | TBD | 15 | 5.1 V rail zone |
+| GNSS_MODULE_WIDTH | — | mm | TBD | 70 | SparkFun GNSS Flex pHAT envelope X (pHAT 65 + margin) |
+| GNSS_MODULE_DEPTH | — | mm | TBD | 33 | GNSS pHAT envelope Y (30 + margin) |
+| GNSS_MODULE_HEIGHT | — | mm | TBD | 16 | GNSS pHAT envelope Z incl. standoffs and the 8 mm patch |
+| GNSS_ANTENNA_KEEPOUT | — | mm | TBD | 10 | No metal or cable above / around the patch (u-blox: 70 x 70 ground plane optimal) |
+| NVME_FORMAT | 2230 | none | provisional | — | Raspberry Pi SSD 512 GB candidate |
+
+### cooling
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| COOLING_FAN_SIZE | 30 | mm | provisional | — | Sunon MF30100V1-1000U-A99 candidate, 30 x 30 x 10 (MFR); a 40 mm fan does not fit the 35 internal height wall-mounted |
+| COOLING_FAN_THICKNESS | 10 | mm | provisional | — | Sunon MF30100V1 (MFR) |
+| VENT_INTAKE_AREA | — | none | TBD | 1500 | mm2 open area, rear-wall + underside intake grilles (v1_integration thermal check) |
+
+### clearances
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| CLEARANCE | — | mm | TBD | 0.3 | FDM fit clearance (P0.2 coupons) |
+| MIN_GAP | — | mm | TBD | 1 | Minimum clearance between envelopes |
+| MIN_WALL | — | mm | TBD | 2 | Minimum printed wall (PETG FDM) |
+| CABLE_CLEARANCE | — | mm | TBD | — | Per cable, from bend radius (harness table, docs/V1-VIRTUAL-INTEGRATION.md s.11) |
+| CABLE_CORRIDOR_WIDTH | — | mm | TBD | 15 | Reserved cable-corridor cross-section width |
+| CABLE_CORRIDOR_HEIGHT | — | mm | TBD | 10 | Reserved cable-corridor cross-section height |
+| OVERHANG_LIMIT | 45 | deg | provisional | — | Common FDM practice for PETG without supports; confirm on the printer |
+
+### fasteners
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| FASTENER_SIZE | M2.5, M3, M4 | none | provisional | — | Standard family; M4 only for the display hinges (Southco 4.5 holes) and the stay pivots |
+| INSERT_SIZE | RX-M3x5.7 in 4.0 x 7.0, M2.5 x 4 OD 3.55, M4 (SKU TBD) | none | provisional | — | prototypes/B1_SB261, P0.2-HW (prototypes/P0.1/P0.2_insert_interface.md) |
+
+### io
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| REAR_PORTS | none | none | provisional | — | V1: no external plugs on the rear face (resolves the lid-sweep conflict, Phase 8). Ports on the side and front walls |
+| SIDE_PORT_ZONE_BOTTOM | — | mm | TBD | 5 | Lowest connector edge above the base underside |
+| PLUG_KEEPOUT_LENGTH | — | mm | TBD | 45 | External plug + cable-bend keep-out outside a wall |
+
+### battery
+
+| Parameter | Value | Unit | Status | Working (model) | Source / notes |
+|---|---|---|---|---|---|
+| BATTERY_BAY_WIDTH | 93.6 | mm | provisional | — | Holder-type 4S1P 21700 pack (E-POWER-002 s.11.1: 91.6 x 80.0 x 28.9 + 1 each side) |
+| BATTERY_BAY_DEPTH | 82 | mm | provisional | — | Holder-type 4S1P pack (E-POWER-002 s.11.1) |
+| BATTERY_BAY_HEIGHT | 31 | mm | provisional | — | Holder-type 4S1P pack (E-POWER-002 s.11.1) |
+| POWER_ELEC_WIDTH | — | mm | TBD | 90 | Power board + 12 V regulator + fuse access zone, X |
+| POWER_ELEC_DEPTH | — | mm | TBD | 45 | Power zone, Y |
+| POWER_ELEC_HEIGHT | — | mm | TBD | 16 | Power zone, Z: tallest part 12 (E-POWER-002 s.11.2) + PCB + standoff; was 20 working |
+
+## Historical P0.1 record (frozen 2026-10-02)
+
+> **History, not the V1 design.** Everything below is the mechanical specification as it stood at commit `f9166d7`, before the Virtual V1 sprint. It matches `CAD/parameters/history/nomad_P0.1_2026-10-02.yaml`, which the P0.1 FeatureScript files and study scripts read. Headings are demoted one level; the text is otherwise unchanged.
+
+### Master parameters
+
+#### Body
 
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
@@ -51,7 +212,7 @@ All dimensions are in mm unless noted.
 | HINGE_AXIS_HEIGHT | TBD | TBD | 0 | Hinge axis height above the base top surface. Exact Z is TBD (mechanism prototype). With a 2.0 closed gap at inset 0, heights 0–2 give 1.41 mm minimum clearance and heights ≥ 4 give 2.0 (A.2b) |
 | HINGE_BARREL_DIAMETER | TBD | TBD | 8 | Representative hinge knuckle envelope on the hinge axis (Round E digital prototype). Visualization only; hinge hardware TBD |
 
-### Lid
+#### Lid
 
 `LID_CLOSED_GAP` and `LID_ANGLE_*` (display hinge) apply to V1.
 
@@ -73,7 +234,7 @@ The class-A stack rows are **Architecture A, SUPERSEDED / DEFERRED FOR NOMAD V1*
 | LID_ANGLE_NOMINAL | TBD | TBD | 105° | Nominal open pose for checks |
 | LID_ANGLE_MAX | TBD | TBD | 135° | Maximum open pose for checks |
 
-### Display
+#### Display
 
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
@@ -87,7 +248,7 @@ The class-A stack rows are **Architecture A, SUPERSEDED / DEFERRED FOR NOMAD V1*
 | DISPLAY_BEZEL_LIP | TBD | TBD | 1 | Front retention lip over the display border; 0 = flush, clip-retained (Round D) |
 | DISPLAY_CONTROLLER_THICKNESS | TBD | TBD | 12 | Display-controller envelope height incl. connectors; location (lid band or base) not decided (Round D). Envelope only |
 
-### Controls
+#### Controls
 
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
@@ -98,7 +259,7 @@ The class-A stack rows are **Architecture A, SUPERSEDED / DEFERRED FOR NOMAD V1*
 | TRACKPAD_DEPTH | TBD | TBD | 75 | Same; reference ~75 |
 | TRACKPAD_THICKNESS | TBD | TBD | 13 | Same; reference ~13 |
 
-### Layout (D-003)
+#### Layout (D-003)
 
 The keyboard and trackpad are centred on the chassis longitudinal centreline, with the trackpad below the keyboard. Their positions are parameters, so they can move without restructuring the chassis.
 
@@ -110,7 +271,7 @@ The keyboard and trackpad are centred on the chassis longitudinal centreline, wi
 | KEYBOARD_TOP_RECESS | TBD | TBD | 1 | Keyboard top surface below the base top surface |
 | TRACKPAD_TOP_RECESS | TBD | TBD | 1 | Trackpad top surface below the base top surface |
 
-### Computer, storage and GNSS
+#### Computer, storage and GNSS
 
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
@@ -129,7 +290,7 @@ The keyboard and trackpad are centred on the chassis longitudinal centreline, wi
 | NVME_FORMAT | 2230 | provisional | — | Preferred; the SSD is not locked |
 | GNSS_ANTENNA_KEEPOUT | TBD | TBD | — | Must be away from major noise sources |
 
-### Clearances and fasteners
+#### Clearances and fasteners
 
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
@@ -143,7 +304,7 @@ The keyboard and trackpad are centred on the chassis longitudinal centreline, wi
 | INSERT_SIZE | TBD | TBD | — | Heat-set inserts; depends on the insert supplier |
 | OVERHANG_LIMIT | TBD | TBD | — | Print-dependent |
 
-### Lid (B1) — active V1 architecture (D-010)
+#### Lid (B1) — active V1 architecture (D-010)
 
 The B1 lid has three layers:
 1. a thin **core** (display, controller zone, back shell);
@@ -157,7 +318,7 @@ The axis of the solar leaf hinge sits at the lid's top edge. The stack is about 
 | LID_CORE_THICKNESS | TBD | TBD | 19 | B1 lid core: bezel lip + display + gap + controller zone + thin back shell (1 + 5 + 1 + 8 + 4, EST). Display and controller not selected |
 | SOLAR_LEAF_AIR_GAP | TBD (min) | TBD | 6 | Vented gap between the lid back and the panel back, with low-e foil. Phase 2 §13 recommends ≥ 6 as a requirement; EST thermal model, not tested |
 
-### Solar leaf (B1) — active V1 architecture (D-010)
+#### Solar leaf (B1) — active V1 architecture (D-010)
 
 - **Leaf:** one leaf behind the display lid, hinged at the lid top edge.
 - **Hinges:** two structural friction hinges. TorqMaster **SB-188-SB-261-6** is the current selected hinge **candidate**, subject to physical validation.
@@ -187,7 +348,7 @@ Nothing here is physically validated.
 | SOLAR_PANEL_THICKNESS | TBD | TBD | 4 | Same; P108: 4, ETFE on 2 mm FR4 (VENDOR) |
 | SOLAR_STAY_REACH | TBD | TBD | 105 | Rear outrigger stay reach behind the base (Phase 2 §11: ≥ 90 recommended, 105 modelled). Mandatory for B1; design details TBD |
 
-### Solar (Architecture A) — SUPERSEDED / DEFERRED FOR NOMAD V1
+#### Solar (Architecture A) — SUPERSEDED / DEFERRED FOR NOMAD V1
 
 > **SUPERSEDED / DEFERRED FOR NOMAD V1 (D-010, 2026-10-01).** These rows describe Architecture A: two sliding/tilting cassettes (D-004 / D-009). B1 was selected as the active V1 architecture. The rows and the YAML values are kept unchanged as the A-path engineering record (the A studies and the Round E E2 lid read them). They do not describe the V1 design.
 
@@ -221,7 +382,7 @@ Working inputs follow the Round B.1 **V1 + minimal fixes** geometry (the only so
 | SOLAR_INDEX_STEP | TBD (deg) | TBD | 15° | D-004: discrete indexed positions with a positive lock |
 | SOLAR_HUB_PIN_DIAMETER | TBD | TBD | 5 | D-004: dedicated metal hub/pin carries the rotational load |
 
-#### Solar tilt index lock and hub-pin anti-rotation (D-009, Round E; Architecture A — SUPERSEDED / DEFERRED FOR V1)
+##### Solar tilt index lock and hub-pin anti-rotation (D-009, Round E; Architecture A — SUPERSEDED / DEFERRED FOR V1)
 
 Architecture approved 2026-09-28 (design basis: `prototypes/P0.1/round_e_solar_index_lock_investigation.md`, `…_manufacturing_check.md`, `round_e_solar_hub_pin_anti_rotation_check.md`; implementation record: `round_e_solar_index_lock_implementation.md`).
 
@@ -285,7 +446,7 @@ Architecture approved 2026-09-28 (design basis: `prototypes/P0.1/round_e_solar_i
 
 Solar kinematics of Architecture A (D-004, superseded for V1): each cassette slides laterally out of the lid, then tilts independently about an axis approximately along its slide direction. The rail carries deployment and structural loads, and the hub/pin carries rotational load. Printed gears position and actuate only. Rotation is locked at discrete indexed positions, with no motors, no continuous rotation and no slip ring.
 
-### I/O (Round C)
+#### I/O (Round C)
 
 The external connector set is **not** locked. Ports sit on replaceable port-panel plates in notches in the rear wall (open to the underside, so a panel slides in from below).
 
@@ -298,7 +459,7 @@ The external connector set is **not** locked. Ports sit on replaceable port-pane
 | PORT_KEEPOUT_DEPTH | TBD | TBD | 25 | Minimum internal connector depth behind a panel |
 | PLUG_KEEPOUT_LENGTH | TBD | TBD | 45 | External plug + cable-bend keep-out behind the rear face |
 
-### Battery and power
+#### Battery and power
 
 | Parameter | Value | Status | P0.1 working input | Source / notes |
 |---|---|---|---|---|
@@ -309,7 +470,7 @@ The external connector set is **not** locked. Ports sit on replaceable port-pane
 | POWER_ELEC_DEPTH | TBD | TBD | 45 | Same, Y |
 | POWER_ELEC_HEIGHT | TBD | TBD | 20 | Same, Z |
 
-## Base V0.1 architecture (Round C, proposed D-007)
+### Base V0.1 architecture (Round C, proposed D-007)
 
 Engineering envelope model only; layout and results in `prototypes/P0.1/base_v01_architecture.md` (model `CAD/tools/base_v01_layout.py`, FeatureScript `nomadBuildBaseV01`). Summary:
 
@@ -317,7 +478,7 @@ Engineering envelope model only; layout and results in `prototypes/P0.1/base_v01
 - **Bays:** right palm-rest bay = compute (Pi stack on a replaceable sled, cooling duct in front, exhaust in the right wall); left palm-rest bay = battery reserve behind its own door; under the keyboard = power electronics (left), GNSS (centre-left), compute power conversion (right) and the cable trunk; rear zone = hinge-mount reserves at both corners, two port-panel notches and the display-cable riser on the centreline.
 - **Service:** every electronics reserve comes out straight down through the main panel; the battery through its door; keyboard and trackpad lift out upward. No reserve sits behind permanent geometry.
 
-## Mandatory reserved volumes (P0.1)
+### Mandatory reserved volumes (P0.1)
 
 - Display: panel, controller, cable exit, bezel, mounting, hinge interface
 - Pi 5 + M.2 HAT+ + NVMe

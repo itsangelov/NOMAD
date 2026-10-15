@@ -1,0 +1,30 @@
+id,cls,gate,group,description,manufacturer,model,qty,unit_eur,ext_eur,price_basis,source,status,availability
+PI5,BUY,3,electronics,Single-board computer,Raspberry Pi Ltd,"Raspberry Pi 5, 8 GB",1,184.9,184.9,PR1,PR1,SELECTED,in stock (BerryBase)
+COOLER,BUY,3,electronics,Pi 5 Active Cooler,Raspberry Pi Ltd,Raspberry Pi Active Cooler,1,5.9,5.9,PR1,PR1,CANDIDATE,in stock
+M2HAT,BUY,3,electronics,M.2 HAT+ (Standard),Raspberry Pi Ltd,Raspberry Pi M.2 HAT+,1,12.5,12.5,PR1,PR1,CANDIDATE,in stock
+SSD,BUY,3,electronics,"NVMe SSD 512 GB, M.2 2230",Raspberry Pi Ltd,Raspberry Pi SSD 512GB,1,50.31,50.31,"US$45.00 x 0.86 x 1.3 (import, ASSUMED)",RPSSD,CANDIDATE,list price; EU stock not checked
+DISPLAY,BUY,2,electronics,10.1 in 1920x1200 eDP panel (industrial),AUO,G101UAN01.0,1,122.98,122.98,"US$110.00 x 0.86 x 1.3 (import, ASSUMED)",G101,CANDIDATE,"394 pcs at one distributor, MOQ 1 (3P)"
+DCTRL,BUY,2,electronics,HDMI -> eDP display controller,Beck Elektronik,BTC-mini-eDP (STD 12 V),1,120.0,120.0,EST planning figure; Beck price on request (quote required),BECK,CANDIDATE,"UNKNOWN - quote required (Nuremberg, DE)"
+EDP_CABLE,SOURCE_LATER,2,electronics,"eDP micro-coax cable, 30-pin, ~380 mm, through the display hinge",(panel/controller-specific),"SPEC: 30-pin I-PEX-class both ends, 2-lane, 380 mm +-20",1,20.0,20.0,EST,EST,SPEC,Beck or panel distributor
+HDMI_CABLE,SOURCE_LATER,2,electronics,"micro-HDMI to HDMI flat cable, internal, ~200 mm",(generic FPV-type kit),"SPEC: micro-HDMI (Type D) right-angle to HDMI (Type A), FPC ribbon, 200 mm",1,12.0,12.0,EST,EST,PROVISIONAL,common
+KEYBOARD,BUY,2,electronics,"Wired mini scissor keyboard, 78 keys (US) / 79 (EU)",Perixx,PERIBOARD-416,1,35.0,35.0,EST,EST,CANDIDATE,Perixx stores (not checked)
+TRACKPAD,BUY,2,electronics,USB touchpad,Perixx,PERIPAD-501 II,1,30.0,30.0,EST,EST,CANDIDATE,UNKNOWN: not listed on the Perixx stores (E-POWER-001 C5)
+GNSS,BUY,3,electronics,"GNSS Flex pHAT with DAN-F10N (L1/L5, internal patch)",SparkFun,GPS-29491,1,83.79,83.79,"US$74.95 x 0.86 x 1.3 (import, ASSUMED)",SFE-GNSS,CANDIDATE,in stock
+FAN,BUY,3,electronics,"Axial fan 30 x 30 x 10 mm, 5 V (enclosure exhaust)",Sunon,MF30100V1-1000U-A99,1,9.0,9.0,"EST (RS 2025392, price not read)","EST (RS 2025392, price not read)",CANDIDATE,RS / Future (stock not checked)
+LID_HINGE,BUY,2,mechanical,"Constant-torque hinge, medium, symmetric",Southco,E6-10-216-50 (1.8 N·m),2,39.38,78.76,SOUTHCO,SOUTHCO,CANDIDATE,RS Online
+LEAF_HINGE,BUY,1,mechanical,Friction hinge (B1 solar leaf),TorqMaster,SB-188-SB-261-6,2,15.0,30.0,EST (TorqMaster quote required),EST (TorqMaster quote required),CANDIDATE,TorqMaster
+STAY,FABRICATE,1,mechanical,Rear outrigger stay arms,NOMAD,"SPEC: 2x stainless 1.4301 flat 3 x 16 x 130, M4 shoulder pivots, detent",1,12.0,12.0,EST,EST,SPEC,
+PANEL,BUY,4,electronics,"Solar panel 9.92 W, 18 V, ETFE on FR4",Voltaic Systems,P108,1,50.31,50.31,"US$45.00 x 0.86 x 1.3 (import, ASSUMED)",P108,CANDIDATE,out of stock (expected back 2026-10-12)
+CELL,BUY,4,electronics,Li-ion 21700 cell,Molicel,INR-21700-M65A,4,9.75,39.0,NKON,NKON,CANDIDATE,NKON (NL)
+PACK,FABRICATE,4,electronics,4S1P battery pack assembly,NOMAD / pack builder,"SPEC: 4S1P 21700, holder-type, nickel strip, on-pack protector BMS, NTC, 10 A MINI fuse, Micro-Fit 3.0 lead",1,25.0,25.0,"EST (holder, nickel, BMS PCB + parts, fuse + holder, connector)","EST (holder, nickel, BMS PCB + parts, fuse + holder, connector)",SPEC,build or professional pack assembler
+PWR_PCB,FABRICATE,5,electronics,Power board: USB-C PD sink + NVDC buck-boost charger + MPPT input + protection,NOMAD (custom),SPEC: TI BQ25798RQMR + TPS25751DREFR + USB4105-GF-A + solar input ideal-diode/TVS + I2C header,1,60.0,60.0,EST: ICs US$5.20 + 2.99 + 0.80 (DIGIKEY) + passives/FETs ~US$25 + 5-pc PCB fab ~EUR 25,EST: ICs US$5.20 + 2.99 + 0.80 (DIGIKEY) + passives/FETs ~US$25 + 5-pc PCB fab ~EUR 25,SPEC,
+EVM,BUY,4,validation (bench only),Charger + PD evaluation module (bench validation),Texas Instruments,USB-PD-CHG-EVM-01,1,166.58,166.58,"US$149.00 x 0.86 x 1.3 (import, ASSUMED)",TI-EVM,CANDIDATE,distributors
+BUCK5,BUY,4,electronics,5 V 5.5 A step-down regulator (Pi rail),Pololu,D36V50F5 (#4091),1,44.66,44.66,"US$39.95 x 0.86 x 1.3 (import, ASSUMED)",POLOLU,CANDIDATE,Pololu
+BB12,BUY,4,electronics,12 V buck-boost regulator (display controller rail),Pololu,S18V20F12 (#2577),1,33.48,33.48,"US$29.95 x 0.86 x 1.3 (import, ASSUMED)",POLOLU,CANDIDATE,Pololu
+BUTTON,SOURCE_LATER,5,electronics,"Momentary panel push-button, 12 mm, sealed","(generic, IP67 class)","SPEC: 12 mm panel, momentary NO, IP67, 50 mA",1,5.0,5.0,EST,EST,PROVISIONAL,common
+USB_EXT,SOURCE_LATER,5,electronics,"USB 3.0 A panel-mount extension, 0.3 m",(generic),"SPEC: USB 3.0 A male to panel-mount A female, 0.3 m",2,7.0,14.0,EST,EST,PROVISIONAL,common
+INSERTS,SOURCE_LATER,1,mechanical,"Heat-set inserts, screws, M4 hinge inserts, feet",Ruthex + generic,"SPEC: RX-M3x5.7, M2.5x4 OD3.55, M4 inserts, M2.5/M3/M4 screws, 4 rubber feet 4 mm",1,30.0,30.0,EST,EST,PROVISIONAL,
+WIRING,SOURCE_LATER,5,mechanical,"Wire, connectors, sleeving, thermal pads, low-e foil tape",(generic),"SPEC: silicone 18/22 AWG, 2 x 0.5 mm2 solar lead, JST-PH/XH, Micro-Fit 3.0, PET sleeve, foil tape",1,35.0,35.0,EST,EST,PROVISIONAL,
+PETG,SOURCE_LATER,1,mechanical,"PETG filament (base, lid core, trays)",(any reputable),"SPEC: PETG 1.75 mm, 1 kg",2,25.0,50.0,EST,EST,PROVISIONAL,
+ASA,SOURCE_LATER,1,mechanical,"ASA filament (sun-exposed: leaf frame, lid back shell)",(any reputable),"SPEC: ASA 1.75 mm, 1 kg",1,28.0,28.0,EST,EST,PROVISIONAL,
+PSU27,BUY,3,validation (bench only),Official 27 W USB-C PSU (bench bring-up only),Raspberry Pi Ltd,27W USB-C PSU,1,12.4,12.4,PR1,PR1,CANDIDATE,in stock

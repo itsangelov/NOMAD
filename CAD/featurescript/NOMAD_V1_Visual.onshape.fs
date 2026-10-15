@@ -1,0 +1,1570 @@
+FeatureScript 3083;
+import(path:"onshape/std/common.fs",version:"3083.0");
+const V1={"W":306,"D":253,"H":40,"ZF":42,"CORE":19,"HAY":253,"HAZ":40,"LDD":253,"LW2":153,"LIDMAX":135,"LEAFMAX":190,"LIDNOM":110,"SOLAR_ROUTE":6};
+const V1_EXPLODE={"panel":[0,0,-70],"door":[0,0,-60],"battery":[0,0,-135],"pi":[0,0,-110],"power":[0,0,-95],"fan":[0,0,-95],"kb":[0,0,80],"tp":[0,0,55]};
+const V1_LIDCUTS=[
+["B",-109.405,57.75,41,109.405,195.25,43.05],
+["B",-114.41,52.04,43,114.41,200.96,48.65],
+["B",-10,188.66,48.35,10,254,51.75],
+["B",-10,241,41,10,254,51.75],
+["B",-147.8,249.7,44.7,-109.2,254,59.3],
+["B",109.2,249.7,44.7,147.8,254,59.3],
+["C",-12.5,253,40,12.5,253,40,6.5],
+["C",-148,253,40,-109,253,40,5.5],
+["C",109,253,40,148,253,40,5.5],
+["DZ",41,62,-153,0,1.5],
+["DZ",41,62,153,0,1.5],
+["DZ",41,62,-153,253,5],
+["DZ",41,62,153,253,5]
+];
+const V1_PARTS=[
+["shell","BASE | shell (walls, deck, bulkheads, hinge corner blocks, bosses) PETG 2.5 [355 g EST]","base","","shell","ENGINEERED",[
+["+",[
+["B",-153,0,0,153,253,40]
+]],
+["-",[
+["B",-150.5,2.5,-1,150.5,250.5,37.5],
+["B",-142.8,99.7,36.5,142.8,217.3,41],
+["B",-43.3,14.7,36.5,43.3,90.3,41]
+]],
+["+",[
+["DZ",0,40,-150.5,250.5,3.536],
+["DZ",0,40,150.5,250.5,3.536]
+]],
+["-",[
+["DX",-154,154,0,40,3],
+["DY",-1,254,-153,40,3],
+["DY",-1,254,153,40,3],
+["DZ",-1,41,-153,0,1.5],
+["DZ",-1,41,153,0,1.5],
+["DZ",-1,41,-153,253,5],
+["DZ",-1,41,153,253,5],
+["DX",-154,154,0,0,1.5],
+["DX",-154,154,253,0,1.5]
+]],
+["+",[
+["B",-50.5,2.5,2.5,-48,97,37.5],
+["B",48,2.5,2.5,50.5,97,37.5],
+["B",-150.5,86.5,2.5,-50.5,89,37.5],
+["B",-150.5,226.5,21,-106.5,250.5,37.5],
+["B",106.5,226.5,21,150.5,250.5,37.5],
+["C",-50.5,25,2.5,-50.5,25,17.5,4],
+["C",-50.5,70,2.5,-50.5,70,17.5,4],
+["C",30,6,2.5,30,6,38,4],
+["C",110,6,2.5,110,6,38,4],
+["C",-95,247,2.5,-95,247,38,4],
+["C",30,247,2.5,30,247,38,4],
+["C",95,247,2.5,95,247,38,4],
+["C",-147,170,2.5,-147,170,21,4],
+["C",-147,210,2.5,-147,210,21,4],
+["C",147,160,2.5,147,160,21,4],
+["C",147,205,2.5,147,205,21,4],
+["C",147,100,2.5,147,100,21,4]
+]],
+["-",[
+["B",-154,108.5,6.85,-149.9,117.5,10.35],
+["C",-154,152,12.5,-149.9,152,12.5,6.2],
+["B",64,-1,10,77.5,3.1,16.5],
+["B",82,-1,10,95.5,3.1,16.5],
+["B",47.8,40,5,50.7,90,22.5],
+["B",47.8,20,8,50.7,34,21],
+["B",-12,249.9,24,12,254,38],
+["B",-150,86,3.5,-129,89.5,18.5],
+["B",149.9,5.5,6.5,154,29.5,9.5],
+["B",149.9,5.5,12,154,29.5,15],
+["B",149.9,5.5,17.5,154,29.5,20.5],
+["B",149.9,5.5,23,154,29.5,26],
+["B",149.9,5.5,28.5,154,29.5,31.5],
+["B",-55,249.9,6,-49,254,18],
+["B",-43.5,249.9,6,-37.5,254,18],
+["B",-32,249.9,6,-26,254,18],
+["B",-20.5,249.9,6,-14.5,254,18],
+["B",-9,249.9,6,-3,254,18],
+["B",2.5,249.9,6,8.5,254,18],
+["B",14,249.9,6,20,254,18],
+["B",25.5,249.9,6,31.5,254,18],
+["B",37,249.9,6,43,254,18],
+["B",48.5,249.9,6,54.5,254,18],
+["C",-12.5,253,40,12.5,253,40,6.5],
+["C",-148,253,40,-109,253,40,5.5],
+["B",-147.8,249.7,21.7,-109.2,254,38.5],
+["C",109,253,40,148,253,40,5.5],
+["B",109.2,249.7,21.7,147.8,254,38.5]
+]]
+]],
+["kbtray","BASE | keyboard tray 2.0 (lifts out upward with its device)","base","kb","tray","ENGINEERED",[
+["+",[
+["B",-150.2,97,21,150.2,220,23]
+]]
+]],
+["tptray","BASE | trackpad tray 2.0 (lifts out upward with its device)","base","tp","tray","ENGINEERED",[
+["+",[
+["B",-47.7,12,24,47.7,93,26]
+]]
+]],
+["panelMain","SERVICE | main panel, rear (under the keyboard): power board, Beck, 5 V, GNSS; intake slots","base","panel","panel","ENGINEERED",[
+["+",[
+["B",-150.5,97,0,150.5,250.5,2.5]
+]],
+["-",[
+["B",60,165,-1,65,205,3.5],
+["B",69,165,-1,74,205,3.5],
+["B",78,165,-1,83,205,3.5],
+["B",87,165,-1,92,205,3.5],
+["B",96,165,-1,101,205,3.5],
+["B",105,165,-1,110,205,3.5],
+["B",114,165,-1,119,205,3.5],
+["B",123,165,-1,128,205,3.5],
+["B",132,165,-1,137,205,3.5],
+["DZ",-1,3.5,-150.5,250.5,3.536],
+["DZ",-1,3.5,150.5,250.5,3.536]
+]]
+]],
+["panelFront","SERVICE | front panel (trackpad + compute bays) with compute-sled pocket","base","panel","panel","ENGINEERED",[
+["+",[
+["B",-48,2.5,0,150.5,97,2.5]
+]],
+["-",[
+["B",58.3,33.8,-0.2,149.7,96.2,2.7]
+]]
+]],
+["door","SERVICE | battery door (2 x M3 captive into the bulkhead + 2 edge hooks) - battery comes out downward","base","door","door","ENGINEERED",[
+["+",[
+["B",-150.5,2.5,0,-49,97,2.5]
+]]
+]],
+["panelScrews","FASTENERS | M3 ISO 7380 panel screws at PANEL_SCREW_INSET 3.5 (F1 fix; representative set, CONCEPT)","base","panel","fastener","SELECTED",[
+["+",[
+["C",30,6,-1.65,30,6,0.02,2.85],
+["C",110,6,-1.65,110,6,0.02,2.85],
+["C",-95,247,-1.65,-95,247,0.02,2.85],
+["C",30,247,-1.65,30,247,0.02,2.85],
+["C",95,247,-1.65,95,247,0.02,2.85],
+["C",-147,170,-1.65,-147,170,0.02,2.85],
+["C",-147,210,-1.65,-147,210,0.02,2.85],
+["C",147,160,-1.65,147,160,0.02,2.85],
+["C",147,205,-1.65,147,205,0.02,2.85],
+["C",147,100,-1.65,147,100,0.02,2.85]
+]]
+]],
+["doorScrews","FASTENERS | battery door 2 x M3 captive screws into the bulkhead (+ 2 edge hooks, CONCEPT)","base","door","fastener","SELECTED",[
+["+",[
+["C",-50.5,25,-1.65,-50.5,25,0.02,2.85],
+["C",-50.5,70,-1.65,-50.5,70,0.02,2.85]
+]]
+]],
+["feet","BASE | rubber feet x4, 4 mm (ASSUMED)","base","","rubber","SELECTED",[
+["+",[
+["C",-145,8,-4,-145,8,0.01,6],
+["C",-145,245,-4,-145,245,0.01,6],
+["C",145,8,-4,145,8,0.01,6],
+["C",145,245,-4,145,245,0.01,6]
+]]
+]],
+["keyboard","KEYBOARD | Perixx PERIBOARD-416, 285 x 117 x 16 per MFR manual (product page: 21 mm, 361 g - MEASURE) [332 g MFR]","base","kb","keyboard","SELECTED",[
+["+",[
+["B",-142.5,100,23,142.5,217,36.5],
+["B",-138.5,103,36.4,-120.571,119.5,39],
+["B",-118.571,103,36.4,-100.643,119.5,39],
+["B",-98.643,103,36.4,-80.714,119.5,39],
+["B",-78.714,103,36.4,-60.786,119.5,39],
+["B",60.786,103,36.4,78.714,119.5,39],
+["B",80.714,103,36.4,98.643,119.5,39],
+["B",100.643,103,36.4,118.571,119.5,39],
+["B",120.571,103,36.4,138.5,119.5,39],
+["B",-138.5,121.5,36.4,-120.571,138,39],
+["B",-118.571,121.5,36.4,-100.643,138,39],
+["B",-98.643,121.5,36.4,-80.714,138,39],
+["B",-78.714,121.5,36.4,-60.786,138,39],
+["B",-58.786,121.5,36.4,-40.857,138,39],
+["B",-38.857,121.5,36.4,-20.929,138,39],
+["B",-18.929,121.5,36.4,-1,138,39],
+["B",1,121.5,36.4,18.929,138,39],
+["B",20.929,121.5,36.4,38.857,138,39],
+["B",40.857,121.5,36.4,58.786,138,39],
+["B",60.786,121.5,36.4,78.714,138,39],
+["B",80.714,121.5,36.4,98.643,138,39],
+["B",100.643,121.5,36.4,118.571,138,39],
+["B",120.571,121.5,36.4,138.5,138,39],
+["B",-138.5,140,36.4,-120.571,156.5,39],
+["B",-118.571,140,36.4,-100.643,156.5,39],
+["B",-98.643,140,36.4,-80.714,156.5,39],
+["B",-78.714,140,36.4,-60.786,156.5,39],
+["B",-58.786,140,36.4,-40.857,156.5,39],
+["B",-38.857,140,36.4,-20.929,156.5,39],
+["B",-18.929,140,36.4,-1,156.5,39],
+["B",1,140,36.4,18.929,156.5,39],
+["B",20.929,140,36.4,38.857,156.5,39],
+["B",40.857,140,36.4,58.786,156.5,39],
+["B",60.786,140,36.4,78.714,156.5,39],
+["B",80.714,140,36.4,98.643,156.5,39],
+["B",100.643,140,36.4,118.571,156.5,39],
+["B",120.571,140,36.4,138.5,156.5,39],
+["B",-138.5,158.5,36.4,-120.571,175,39],
+["B",-118.571,158.5,36.4,-100.643,175,39],
+["B",-98.643,158.5,36.4,-80.714,175,39],
+["B",-78.714,158.5,36.4,-60.786,175,39],
+["B",-58.786,158.5,36.4,-40.857,175,39],
+["B",-38.857,158.5,36.4,-20.929,175,39],
+["B",-18.929,158.5,36.4,-1,175,39],
+["B",1,158.5,36.4,18.929,175,39],
+["B",20.929,158.5,36.4,38.857,175,39],
+["B",40.857,158.5,36.4,58.786,175,39],
+["B",60.786,158.5,36.4,78.714,175,39],
+["B",80.714,158.5,36.4,98.643,175,39],
+["B",100.643,158.5,36.4,118.571,175,39],
+["B",120.571,158.5,36.4,138.5,175,39],
+["B",-138.5,177,36.4,-120.571,193.5,39],
+["B",-118.571,177,36.4,-100.643,193.5,39],
+["B",-98.643,177,36.4,-80.714,193.5,39],
+["B",-78.714,177,36.4,-60.786,193.5,39],
+["B",-58.786,177,36.4,-40.857,193.5,39],
+["B",-38.857,177,36.4,-20.929,193.5,39],
+["B",-18.929,177,36.4,-1,193.5,39],
+["B",1,177,36.4,18.929,193.5,39],
+["B",20.929,177,36.4,38.857,193.5,39],
+["B",40.857,177,36.4,58.786,193.5,39],
+["B",60.786,177,36.4,78.714,193.5,39],
+["B",80.714,177,36.4,98.643,193.5,39],
+["B",100.643,177,36.4,118.571,193.5,39],
+["B",120.571,177,36.4,138.5,193.5,39],
+["B",-138.5,196,36.4,-120.571,205,39],
+["B",-118.571,196,36.4,-100.643,205,39],
+["B",-98.643,196,36.4,-80.714,205,39],
+["B",-78.714,196,36.4,-60.786,205,39],
+["B",-58.786,196,36.4,-40.857,205,39],
+["B",-38.857,196,36.4,-20.929,205,39],
+["B",-18.929,196,36.4,-1,205,39],
+["B",1,196,36.4,18.929,205,39],
+["B",20.929,196,36.4,38.857,205,39],
+["B",40.857,196,36.4,58.786,205,39],
+["B",60.786,196,36.4,78.714,205,39],
+["B",80.714,196,36.4,98.643,205,39],
+["B",100.643,196,36.4,118.571,205,39],
+["B",120.571,196,36.4,138.5,205,39]
+]]
+]],
+["kbPlug","KEYBOARD | USB-C right-angle plug at the rear edge (x ~ +80 EST from photo) [PLACEHOLDER position]","base","kb","connector","PLACEHOLDER",[
+["+",[
+["B",74,217,28,86,226,34]
+]]
+]],
+["trackpad","TRACKPAD | Perixx PERIPAD-501 II, 86 x 75 x 13 (MFR manual), 2 buttons [60 g 3P]","base","tp","keyboard","SELECTED",[
+["+",[
+["B",-43,15,26,43,90,38.4],
+["B",-37,33,38.3,37,86,39],
+["B",-37,18,38.3,-1,30,38.8],
+["B",1,18,38.3,37,30,38.8]
+]]
+]],
+["tpCoil","TRACKPAD | excess 1.6 m USB lead, coiled + clipped (or shortened) [PLACEHOLDER]","base","tp","cableUsb","PLACEHOLDER",[
+["+",[
+["C",-22,50,6,-22,50,13,14]
+]]
+]],
+["sled","COMPUTE | sled plate 2.5 (insert in the front panel pocket; F2 fix) - Pi stack comes out downward","base","pi","tray","ENGINEERED",[
+["+",[
+["B",58.5,34,0,149.5,96,2.5]
+]]
+]],
+["piStandoffs","COMPUTE | M2.5 standoffs 3 + 16 (Pi / HAT+)","base","pi","metal","SELECTED",[
+["+",[
+["C",143,89.5,2.4,143,89.5,5.55,2.5],
+["C",85,89.5,2.4,85,89.5,5.55,2.5],
+["C",143,40.5,2.4,143,40.5,5.55,2.5],
+["C",85,40.5,2.4,85,40.5,5.55,2.5],
+["C",143,89.5,7.05,143,89.5,23.15,2.5],
+["C",85,89.5,7.05,85,89.5,23.15,2.5],
+["C",143,40.5,7.05,143,40.5,23.15,2.5],
+["C",85,40.5,7.05,85,40.5,23.15,2.5]
+]]
+]],
+["pi5","COMPUTE | Raspberry Pi 5 8 GB (ports per RPi drawing, approximate) [46 g EST]","base","pi","pcb","SELECTED",[
+["+",[
+["B",61.5,37,5.5,146.5,93,7.1],
+["B",58.5,39.25,7,79.5,55.25,20.6],
+["B",58.5,59.4,7,76,72.6,22.7],
+["B",58.5,77.4,7,76,90.6,22.7],
+["B",130.8,85.5,7,139.8,94,10.5],
+["B",117.2,85.5,7,124.2,94,10.5],
+["B",103.8,85.5,7,110.8,94,10.5],
+["B",88.5,37.9,7,139.4,43.1,23.1]
+]]
+]],
+["cooler","COMPUTE | Raspberry Pi Active Cooler 63.5 x 42.5 x 13.7 (MFR-DWG, interpreted) - blower exhausts sideways","base","pi","cooler","SELECTED",[
+["+",[
+["B",81.5,39.75,7.15,145,82.25,20.8],
+["C",121.5,61,20.7,121.5,61,20.85,14]
+]]
+]],
+["m2hat","STORAGE | Raspberry Pi M.2 HAT+ 65 x 56.5 (0-50 C AMBIENT limit) + PCIe FPC","base","pi","pcb","SELECTED",[
+["+",[
+["B",81,37,23.1,146,93.5,24.7],
+["B",146,53,7.1,147.1,69,23.2]
+]]
+]],
+["ssd","STORAGE | Raspberry Pi SSD 512 GB M.2 2230 (replace: remove sled downward, then one M.2 screw)","base","pi","ssd","SELECTED",[
+["+",[
+["B",99,54,24.7,129,76,26.85]
+]]
+]],
+["gpioPlug","COMPUTE | GPIO harness housings, RIGHT-ANGLE 2.54 (vertical Dupont hits the deck: audit) [PLACEHOLDER]","base","pi","connector","PLACEHOLDER",[
+["+",[
+["B",93.5,39,24.7,113.5,46.5,32.7]
+]]
+]],
+["piUsbPlugs","COMPUTE | USB-A plugs in the Pi (USB2: keyboard + trackpad; USB3: 2 external extensions)","base","pi","connector","SELECTED",[
+["+",[
+["B",37.5,78,8.1,59.5,90,14.1],
+["B",37.5,78,15.7,59.5,90,21.7],
+["B",37.5,60,8.1,59.5,72,14.1],
+["B",37.5,60,15.7,59.5,72,21.7]
+]]
+]],
+["piPowerPlug","POWER | 5.1 V into the Pi: right-angle USB-C power-only plug","base","pi","connector","SELECTED",[
+["+",[
+["B",130.8,94,6.6,139.8,104,13.1]
+]]
+]],
+["piHdmiPlug","DISPLAY | micro-HDMI plug (Pi HDMI0 -> Beck)","base","pi","connector","SELECTED",[
+["+",[
+["B",116.7,94,6.6,124.7,105,12.1]
+]]
+]],
+["cell0","BATTERY | Molicel INR-21700-M65A cell 1 of 4 (4S1P, 23.0 Wh, 74.5 g MFR prelim.)","base","battery","cell","SELECTED",[
+["+",[
+["C",-133.2,9.395,15.475,-133.2,79.605,15.475,10.775]
+]]
+]],
+["cell1","BATTERY | Molicel INR-21700-M65A cell 2 of 4 (4S1P, 23.0 Wh, 74.5 g MFR prelim.)","base","battery","cell","SELECTED",[
+["+",[
+["C",-111.4,9.395,15.475,-111.4,79.605,15.475,10.775]
+]]
+]],
+["cell2","BATTERY | Molicel INR-21700-M65A cell 3 of 4 (4S1P, 23.0 Wh, 74.5 g MFR prelim.)","base","battery","cell","SELECTED",[
+["+",[
+["C",-89.6,9.395,15.475,-89.6,79.605,15.475,10.775]
+]]
+]],
+["cell3","BATTERY | Molicel INR-21700-M65A cell 4 of 4 (4S1P, 23.0 Wh, 74.5 g MFR prelim.)","base","battery","cell","SELECTED",[
+["+",[
+["C",-67.8,9.395,15.475,-67.8,79.605,15.475,10.775]
+]]
+]],
+["holder","BATTERY | 4S1P cell holder + base (custom pack SPEC; spot-welded by a competent assembler) [PLACEHOLDER]","base","battery","holder","PLACEHOLDER",[
+["+",[
+["B",-146.3,4.5,3.5,-54.7,8,28],
+["B",-146.3,81,3.5,-54.7,84.5,28],
+["B",-146.3,4.5,3.5,-54.7,84.5,4.7]
+]]
+]],
+["nickel","BATTERY | nickel strips (series links)","base","battery","metal","PLACEHOLDER",[
+["+",[
+["B",-144.3,4.2,7.475,-56.7,4.55,23.475],
+["B",-144.3,84.45,7.475,-56.7,84.8,23.475]
+]]
+]],
+["bms","BATTERY | on-pack BMS (BQ77915-class 4S protector, NTC, 50 mA balance) + 10 A MINI fuse + Micro-Fit lead [PLACEHOLDER]","base","battery","pcb","PLACEHOLDER",[
+["+",[
+["B",-140.3,12.5,30.8,-60.7,76.5,32.4],
+["B",-136.3,66.5,32.3,-125.3,76.5,32.5]
+]]
+]],
+["packConn","BATTERY | Molex Micro-Fit 3.0 keyed latching pack connector (P+ P- NTC) - disconnect at the door","base","battery","connector","SELECTED",[
+["+",[
+["B",-146,84.9,9,-134,89.5,17]
+]]
+]],
+["powerPcb","POWER | power board per TI TIDA-050047 (TPS25751 PD + BQ25798 4S NVDC/MPPT + TPS56339 5 V) - NO LAYOUT EXISTS [PLACEHOLDER envelope 80 x 40]","base","power","pcbPh","PLACEHOLDER",[
+["+",[
+["B",-149.5,98.5,5.5,-69.5,138.5,7.1],
+["B",-119.5,108.5,7,-115.5,112.5,8],
+["B",-109.5,108.5,7,-105.5,112.5,8],
+["B",-101.5,104.5,7,-93.5,112.5,12.1]
+]]
+]],
+["usbcIn","POWER | USB-C PD charge input receptacle (GCT USB4105-class) at the left wall","base","power","metal","SELECTED",[
+["+",[
+["B",-151.1,108.9,6.9,-143.1,117.1,10.3]
+]]
+]],
+["solarIn","POWER | solar input 2-pin keyed connector + ideal diode / TVS (P108 -> VAC2) [PLACEHOLDER]","base","power","connector","PLACEHOLDER",[
+["+",[
+["B",-141.5,132.5,7,-129.5,138,13.1]
+]]
+]],
+["reg12","POWER | Pololu S18V20F12 12 V buck-boost (Beck rail) 43 x 21 x 10 MFR","base","power","pcbMod","SELECTED",[
+["+",[
+["B",-114.5,115.5,7,-71.5,136.5,15.6]
+]]
+]],
+["reg5","POWER | Pololu D36V50F5 5 V 5.5 A buck (Pi rail) 25.4 x 25.4 x 9.5 MFR","base","power","pcbMod","SELECTED",[
+["+",[
+["B",109.5,121,5,134.9,146.4,14.5]
+]]
+]],
+["beck","DISPLAY | Beck BTC-mini-eDP HDMI->eDP controller 80 x 70 x 9.8 MFR (HBR support + price: OWNER e-mail)","base","power","pcbCtrl","SELECTED",[
+["+",[
+["B",-40,131,5,40,201,6.6],
+["B",39.5,151,6.5,44,166,12],
+["B",-7,197,6.5,7,201.5,8.5],
+["B",-40.5,141,6.5,-34,149,13],
+["B",-15,156,6.5,0,171,7.8]
+]]
+]],
+["gnss","GNSS | SparkFun GNSS Flex pHAT DAN-F10N (GPS-29491): pHAT 65 x 30 + module (layout EST)","base","power","pcbGnss","SELECTED",[
+["+",[
+["B",-79.5,218,7.5,-14.5,248,9.1],
+["B",-64,218,9,-30,248,10.7]
+]]
+]],
+["gnssPatch","GNSS | DAN-F10N L1/L5 patch 20 x 20 x 8 (MFR) under the non-metallic rear-deck sky window","base","power","patch","SELECTED",[
+["+",[
+["B",-57,227.5,10.6,-37,247.5,18.7]
+]]
+]],
+["gnssStand","GNSS | M2.5 standoffs (supplied)","base","power","metal","SELECTED",[
+["+",[
+["C",-76.5,221,2.4,-76.5,221,7.55,2],
+["C",-76.5,245,2.4,-76.5,245,7.55,2],
+["C",-17.5,221,2.4,-17.5,221,7.55,2],
+["C",-17.5,245,2.4,-17.5,245,7.55,2]
+]]
+]],
+["fan","COOLING | Sunon MF30100V1-1000U-A99 30 x 30 x 10, 5 V 0.6 W, 5.5 CFM MFR - exhaust through the right wall","base","fan","fan","SELECTED",[
+["+",[
+["B",140.5,2.5,3.5,150.5,32.5,33.5]
+]],
+["-",[
+["C",139.5,17.5,18.5,151.5,17.5,18.5,14]
+]],
+["+",[
+["C",141.5,17.5,18.5,149.5,17.5,18.5,6.5],
+["B",143.5,16.5,4.2,147.5,18.5,32.8],
+["B",143.5,3.2,17.5,147.5,31.8,19.5]
+]]
+]],
+["southcoB0","DISPLAY HINGE | Southco E6-10-216-50 1.8 N.m, base leaf + barrel L (mounting CONCEPTUAL; axis D-006 provisional; torque variant: weigh lid first)","base","","southco","SELECTED",[
+["+",[
+["B",-147.5,250,22,-109.5,253,38.2],
+["C",-147.5,253,40,-109.5,253,40,5]
+]]
+]],
+["southcoS0","FASTENERS | M4 countersunk, Southco base leaf L (from behind, lid open)","base","","fastener","SELECTED",[
+["+",[
+["C",-142.5,252.4,27,-142.5,253.05,27,3.6],
+["C",-114.5,252.4,27,-114.5,253.05,27,3.6]
+]]
+]],
+["southcoL0","DISPLAY HINGE | Southco E6-10-216-50 lid leaf L","lid","","southco","SELECTED",[
+["+",[
+["B",-147.5,250,45,-109.5,253,59]
+]]
+]],
+["southcoB1","DISPLAY HINGE | Southco E6-10-216-50 1.8 N.m, base leaf + barrel R (mounting CONCEPTUAL; axis D-006 provisional; torque variant: weigh lid first)","base","","southco","SELECTED",[
+["+",[
+["B",109.5,250,22,147.5,253,38.2],
+["C",109.5,253,40,147.5,253,40,5]
+]]
+]],
+["southcoS1","FASTENERS | M4 countersunk, Southco base leaf R (from behind, lid open)","base","","fastener","SELECTED",[
+["+",[
+["C",114.5,252.4,27,114.5,253.05,27,3.6],
+["C",142.5,252.4,27,142.5,253.05,27,3.6]
+]]
+]],
+["southcoL1","DISPLAY HINGE | Southco E6-10-216-50 lid leaf R","lid","","southco","SELECTED",[
+["+",[
+["B",109.5,250,45,147.5,253,59]
+]]
+]],
+["knuckle","CABLES | display-hinge cable knuckle 20 mm (eDP + solar lead, 60 mm axial twist zone) [CONCEPT]","base","","knuckle","ENGINEERED",[
+["+",[
+["C",-12,253,40,12,253,40,6]
+]],
+["-",[
+["C",-13,253,40,13,253,40,4]
+]]
+]],
+["foil","LID | low-e foil on the lid back in the 6 mm vented air gap (D-010)","lid","","foil","ENGINEERED",[
+["+",[
+["B",-135,22,61,135,231.5,61.15]
+]]
+]],
+["edpConn","DISPLAY | eDP connector IPEX 20455-030E-12 (MFR); position on the panel back from drawing p.24 [PLACEHOLDER position]","lid","","connector","PLACEHOLDER",[
+["+",[
+["B",-7,190.66,48.3,7,195.66,49.95]
+]]
+]],
+["display","DISPLAY | AUO G101UAN01.0 10.1 in 1920x1200 eDP 2-lane, 228.22 x 148.32 x 5.35, 140 g (MFR spec rev 1.5)","lid","","display","SELECTED",[
+["+",[
+["B",-114.11,52.34,43,114.11,200.66,48.35]
+]]
+]],
+["displayAA","DISPLAY | active area 216.81 x 135.50 (MFR)","lid","","screen","SELECTED",[
+["+",[
+["B",-108.405,58.75,42.98,108.405,194.25,43.3]
+]]
+]],
+["stay_stowed","B1 STAY | 2 x stainless 1.4301 3 x 16, reach 105 (stowed) - MANDATORY for leaf deployment","stayS","","stay","ENGINEERED",[
+["+",[
+["B",-133,123,-3.5,-117,240,-0.5],
+["B",117,123,-3.5,133,240,-0.5]
+]]
+]],
+["stayPiv_stowed","B1 STAY | M4 shoulder-screw pivots in the rear corner blocks","stayS","","fastener","SELECTED",[
+["+",[
+["C",-125,240,-4,-125,240,6,2],
+["C",125,240,-4,125,240,6,2]
+]]
+]],
+["stay_deployed","B1 STAY | 2 x stainless 1.4301 3 x 16, reach 105 (deployed) - MANDATORY for leaf deployment","stayD","","stay","ENGINEERED",[
+["+",[
+["B",-133,228,-3.5,-117,345,-0.5],
+["B",117,228,-3.5,133,345,-0.5]
+]]
+]],
+["stayPiv_deployed","B1 STAY | M4 shoulder-screw pivots in the rear corner blocks","stayD","","fastener","SELECTED",[
+["+",[
+["C",-125,240,-4,-125,240,6,2],
+["C",125,240,-4,125,240,6,2]
+]]
+]],
+["stayPads","B1 STAY | foot pads","stayD","","rubber","ENGINEERED",[
+["+",[
+["C",-125,337,-4,-125,337,-3.4,8],
+["C",125,337,-4,125,337,-3.4,8]
+]]
+]],
+["k_KEEPOUT_PI_USB_PLUGS","CLEARANCE | KEEPOUT_PI_USB_PLUGS (v1_integration keep-out / corridor)","keep","","keep","ENGINEERED",[
+["+",[
+["B",33,40,5.5,58.5,90,22]
+]]
+]],
+["k_KEEPOUT_PI_REAR_PLUGS","CLEARANCE | KEEPOUT_PI_REAR_PLUGS (v1_integration keep-out / corridor)","keep","","keep","ENGINEERED",[
+["+",[
+["B",89.5,96,5.5,141.5,118,13.5]
+]]
+]],
+["k_KEEPOUT_GNSS_SKY","CLEARANCE | KEEPOUT_GNSS_SKY (v1_integration keep-out / corridor)","keep","","keep","ENGINEERED",[
+["+",[
+["B",-74,221,19.5,-34,250.5,37.5]
+]]
+]],
+["k_KEEPOUT_FAN_INLET","CLEARANCE | KEEPOUT_FAN_INLET (v1_integration keep-out / corridor)","keep","","keep","ENGINEERED",[
+["+",[
+["B",134.5,2.5,3.5,140.5,32.5,33.5]
+]]
+]],
+["k_C_DISPLAY_RISER","CLEARANCE | C_DISPLAY_RISER (v1_integration keep-out / corridor)","keep","","corridor","ENGINEERED",[
+["+",[
+["B",-7.5,203,3.5,7.5,250.5,13.5]
+]]
+]],
+["k_C_REAR_TRUNK","CLEARANCE | C_REAR_TRUNK (v1_integration keep-out / corridor)","keep","","corridor","ENGINEERED",[
+["+",[
+["B",-105.5,188,16.3,105.5,203,19.8]
+]]
+]],
+["k_C_PI_TO_UNDERKB","CLEARANCE | C_PI_TO_UNDERKB (v1_integration keep-out / corridor)","keep","","corridor","ENGINEERED",[
+["+",[
+["B",58.5,96,3.5,88.5,137,13.5]
+]]
+]],
+["k_C_BATTERY","CLEARANCE | C_BATTERY (v1_integration keep-out / corridor)","keep","","corridor","ENGINEERED",[
+["+",[
+["B",-149.5,89,3.5,-129.5,98,11.5]
+]]
+]],
+["k_plugUsbC","CLEARANCE | external USB-C charge plug + cable bend (45 mm)","keep","","keep","ENGINEERED",[
+["+",[
+["B",-198,107,4.6,-153,119,12.6]
+]]
+]],
+["k_plugUsbA","CLEARANCE | external USB-A plugs (front right, 45 mm)","keep","","keep","ENGINEERED",[
+["+",[
+["B",62,-45,8.5,97.5,0,18]
+]]
+]],
+["k_exhaust","CLEARANCE | fan exhaust plume (keep free, 40 mm)","keep","","air","ENGINEERED",[
+["+",[
+["B",153,2.5,3.5,193,32.5,33.5]
+]]
+]],
+["k_kb21","CONFLICT | keyboard 21 mm thick per Perixx product page (manual: 16) - 5 mm proud of the deck or 5 mm into the under-keyboard zone","keep","","conflict","CONFLICT",[
+["+",[
+["B",-142.5,100,18,142.5,217,39]
+]]
+]],
+["k_table","REFERENCE | table plane z = -4 (feet)","table","","table","ENGINEERED",[
+["+",[
+["B",-450,-200,-6,450,560,-4]
+]]
+]],
+["air0","COOLING | airflow (rear/underside intake -> under keyboard -> Pi bay -> right-wall exhaust)","air","","air","ENGINEERED",[
+["+",[
+["C",0,283,12,0,251,12,1.6],
+["C",0,251,12,0,243,12,4]
+]]
+]],
+["air1","COOLING | airflow (rear/underside intake -> under keyboard -> Pi bay -> right-wall exhaust)","air","","air","ENGINEERED",[
+["+",[
+["C",40,190,12,85.351,126.508,13.814,1.6],
+["C",85.351,126.508,13.814,90,120,14,4]
+]]
+]],
+["air2","COOLING | airflow (rear/underside intake -> under keyboard -> Pi bay -> right-wall exhaust)","air","","air","ENGINEERED",[
+["+",[
+["C",110,100,30,110,53,30,1.6],
+["C",110,53,30,110,45,30,4]
+]]
+]],
+["air3","COOLING | airflow (rear/underside intake -> under keyboard -> Pi bay -> right-wall exhaust)","air","","air","ENGINEERED",[
+["+",[
+["C",140,17,18,175,17,18,1.6],
+["C",175,17,18,183,17,18,4]
+]]
+]],
+["air4","COOLING | airflow (rear/underside intake -> under keyboard -> Pi bay -> right-wall exhaust)","air","","air","ENGINEERED",[
+["+",[
+["C",-30,283,12,-30,251,12,1.6],
+["C",-30,251,12,-30,243,12,4]
+]]
+]],
+["usbSockets","IO | 2 x USB-A 3.0 panel-mount sockets (front right) [PLACEHOLDER generic]","base","power","connector","PLACEHOLDER",[
+["+",[
+["B",64.5,2.5,9,77,22.5,17.5],
+["B",82.5,2.5,9,95,22.5,17.5]
+]]
+]],
+["button","IO | power button 12 mm sealed momentary (Pi J2 + charger QON) [PLACEHOLDER generic]","base","power","connector","PLACEHOLDER",[
+["+",[
+["C",-151.7,152,12.5,-126.5,152,12.5,5.8]
+]]
+]]
+];
+const V1_ROUTES=[
+["CABLE | battery lead 2 x 16 AWG + NTC (pack -> power board BAT)",4.5,10,"cablePower","ENGINEERED",[
+["base",-139,86.5,13],
+["base",-139,96,10],
+["base",-139,104.5,9.1]
+]],
+["CABLE | SYS bus 2 x 18 AWG (power board -> 5 V buck)",3.5,8,"cablePower","ENGINEERED",[
+["base",-69.5,118.5,9.1],
+["base",-55,118.5,18],
+["base",-55,190.5,18],
+["base",42,190.5,18],
+["base",50,190.5,10.5],
+["base",100,190.5,10.5],
+["base",120,150,12],
+["base",122,147,12]
+]],
+["CABLE | 5.1 V -> Pi USB-C power-only lead 2 x 18 AWG",3.5,15,"cablePower","ENGINEERED",[
+["base",122,121,12],
+["base",135.3,111,12],
+["base",135.3,104.5,9.6]
+]],
+["CABLE | 12 V -> Beck 2 x 22 AWG",2.5,6,"cablePower","ENGINEERED",[
+["base",-89.5,128.5,16.1],
+["base",-55,150,14],
+["base",-41,145,10]
+]],
+["CABLE | HDMI0 micro-HDMI -> HDMI FPC (Pi -> Beck)",4,10,"cableSig","SELECTED",[
+["base",120.7,105,9.1],
+["base",120.7,112,10],
+["base",50,112,10],
+["base",48,158,9.5],
+["base",44,158,9.5]
+]],
+["CABLE | eDP 30-pin micro-coax (Beck -> knuckle twist zone -> panel)",3,5,"cableEdp","PLACEHOLDER",[
+["base",0,201.5,7.5],
+["base",0,230,10],
+["base",0,247,30],
+["base",0,251,37],
+["lid",0,249,49.95],
+["lid",0,204.66,49.95],
+["lid",0,193.16,49.95]
+]],
+["CABLE | solar lead 2 x 0.5 mm2 d4: SB-261 lid run -> knuckle (axial twist) -> power board VAC2 (R12 concept)",4,12,"cableSolar","ENGINEERED",[
+["lid",141,193.5,53],
+["lid",141,244,53],
+["lid",6,244,53],
+["lid",6,250,45],
+["base",6,251,37],
+["base",6,245,30],
+["base",6,236,18],
+["base",6,200.5,18],
+["base",-100,200.5,18],
+["base",-100,140.5,12],
+["base",-135.5,135.5,10.1]
+]],
+["CABLE | keyboard USB-C -> A short lead -> Pi USB2 (upper)",4,15,"cableUsb","ENGINEERED",[
+["base",80,226,31],
+["base",80,226,18],
+["base",54,219,18],
+["base",54,99,18],
+["base",28,99,18],
+["base",28,84,18.7],
+["base",37.5,84,18.7]
+]],
+["CABLE | trackpad USB lead -> Pi USB2 (lower)",3.5,15,"cableUsb","SELECTED",[
+["base",0,90,31],
+["base",0,95,31],
+["base",0,95,11],
+["base",24,95,11],
+["base",24,84,11.1],
+["base",37.5,84,11.1]
+]],
+["CABLE | USB 3.0 extension 1 (Pi USB3 -> front-right socket)",5,20,"cableUsb","SELECTED",[
+["base",37.5,66,11.1],
+["base",20,66,11.1],
+["base",20,27,11],
+["base",71,27,11],
+["base",71,22.5,13]
+]],
+["CABLE | USB 3.0 extension 2 (Pi USB3 -> front-right socket)",5,20,"cableUsb","SELECTED",[
+["base",37.5,66,18.7],
+["base",14,66,18.7],
+["base",14,31,18],
+["base",89,31,18],
+["base",89,22.5,13]
+]],
+["CABLE | GNSS 6-wire UART/PPS (Pi GPIO -> pHAT)",3,8,"cableSig","ENGINEERED",[
+["base",103.5,46.5,29.1],
+["base",103.5,46.5,35],
+["base",56,46.5,35],
+["base",56,94,35],
+["base",56,94,14],
+["base",56,207,14],
+["base",-40,207,14],
+["base",-40,219.5,10.5]
+]],
+["CABLE | control harness: charger I2C + J2 button + fan PWM (power board -> Pi GPIO)",3,8,"cableSig","ENGINEERED",[
+["base",-99.5,137.5,9.1],
+["base",-94,144,12],
+["base",-94,196,18],
+["base",36,196,18],
+["base",52.5,196,14],
+["base",52.5,94,14],
+["base",52.5,94,31.5],
+["base",52.5,42,31.5],
+["base",95,42,31.5]
+]],
+["CABLE | enclosure fan 2 x 26 AWG (5.1 V via FET)",2,8,"cableSig","ENGINEERED",[
+["base",111.5,121,12],
+["base",111.5,112,15],
+["base",141.5,112,15],
+["base",141.5,95.5,15],
+["base",141.5,95.5,32],
+["base",141.5,32,32]
+]],
+["CABLE | power button + charge LED (left wall -> power board)",2,8,"cableSig","ENGINEERED",[
+["base",-125.5,152,12.5],
+["base",-110,152,12.5],
+["base",-110,136.5,9.1]
+]]
+];
+const AY=4.0;
+const AZ=63.5;
+const RB=3.524;
+const RS=2.381;
+const REACH=12.7;
+const HOLE=7.95;
+const HOLER=1.753;
+const SHAFTH=16.891;
+const BANDS=[[-15.487,-8.347,false],[-8.220,-1.080,true],[1.080,8.220,true],[8.347,15.487,false]];
+const CRINGS=[[-1.080,-0.699],[0.699,1.080]];
+const CRR=3.111;
+const HCX=[-115.0,115.0];
+const ZF=42.0;
+const ZB=61.0;
+const ZP0=67.0;
+const ZP1=71.0;
+const ZT=73.0;
+const W2=153;
+const DD=253;
+const LDY=235.0;
+const PE=9.0;
+const LF=9.0;
+const CH=9.0;
+const LCH=3.0;
+const RG=4.024;
+const RP=15.0;
+const ZPF=56.9;
+const PKX=8.15;
+const ZPS=59.0;
+const PKS=9.2;
+const HD=5.7;
+const HK=1.65;
+const INSR=2.3;
+const INSL=5.7;
+const INSS=4.0;
+const FSL=5.0;
+const FHD=5.0;
+const FHK=2.0;
+const FINSR=2.0;
+const LREC=1.0;
+const LSL8=8.0;
+const FZ0=AZ-RB;
+const FZ1=AZ-RS;
+const BLK=7.847;
+const BLKY=17.5;
+const SLV=[12.0,76.0,3.75,2.75];
+const CABR=2.0;
+const BENDR=12.0;
+const LEAFCAB=[[0,40,64],[0,4,64],[12,4,63.5]];
+const LIDCAB=[[76,4,63.5],[88,4,63.5],[88,30,64],[88,54,53],[141,54,53],[141,193.5,53]];
+function V(x is number,y is number,z is number)returns Vector
+{
+return vector(x,y,z)*millimeter;
+}
+function VA(p is array)returns Vector
+{
+return vector(p[0],p[1],p[2])*millimeter;
+}
+function bx(context is Context,id is Id,x0 is number,y0 is number,z0 is number,x1 is number,y1 is number,z1 is number)
+{
+fCuboid(context,id,{"corner1":V(x0,y0,z0),"corner2":V(x1,y1,z1)});
+}
+function cx(context is Context,id is Id,x0 is number,x1 is number,y is number,z is number,r is number)
+{
+fCylinder(context,id,{"bottomCenter":V(x0,y,z),"topCenter":V(x1,y,z),"radius":r*millimeter});
+}
+function cz(context is Context,id is Id,x is number,y is number,z0 is number,z1 is number,r is number)
+{
+fCylinder(context,id,{"bottomCenter":V(x,y,z0),"topCenter":V(x,y,z1),"radius":r*millimeter});
+}
+function bq(id is Id)returns Query
+{
+return qCreatedBy(id,EntityType.BODY);
+}
+function sub(context is Context,id is Id,tools is Query,targets is Query)
+{
+opBoolean(context,id,{"tools":tools,"targets":targets,"operationType":BooleanOperationType.SUBTRACTION});
+}
+function diamond(context is Context,id is Id,x0 is number,x1 is number,yc is number,zc is number,h is number)
+{
+const a=h/sqrt(2);
+bx(context,id+"b",x0,-a,-a,x1,a,a);
+opTransform(context,id+"t",{"bodies":bq(id+"b"),
+"transform":transform(V(0,yc,zc))*rotationAround(line(V(0,0,0),vector(1,0,0)),45*degree)});
+}
+function band(context is Context,id is Id,c is number,b is array)
+{
+const x0=c+b[0];
+const x1=c+b[1];
+cx(context,id+"w",x0,x1,AY,AZ,RB);
+bx(context,id+"f",x0,AY,FZ0,x1,AY+REACH,FZ1);
+cz(context,id+"h",(x0+x1)/2,AY+HOLE,FZ0-0.2,FZ1+0.2,HOLER);
+sub(context,id+"s",bq(id+"h"),bq(id+"f"));
+opBoolean(context,id+"u",{"tools":qUnion([bq(id+"w"),bq(id+"f")]),"operationType":BooleanOperationType.UNION});
+}
+function tube(context is Context,id is Id,pts is array,R is number,rc is number)
+{
+const n=size(pts);
+var s0=VA(pts[0]);
+var k=0;
+for(var i=1;i<n-1;i+=1)
+{
+const P=VA(pts[i]);
+const u1=normalize(P-VA(pts[i-1]));
+const u2=normalize(VA(pts[i+1])-P);
+const th=angleBetween(u1,u2);
+const t=R*tan(th/2)*millimeter;
+const T1=P-u1*t;
+const T2=P+u2*t;
+if(norm(T1-s0)>0.001*millimeter)
+{
+fCylinder(context,id+("s"~k),{"bottomCenter":s0,"topCenter":T1,"radius":rc*millimeter});
+}
+const C=P+normalize(u2-u1)*(R/cos(th/2))*millimeter;
+const a=normalize(cross(u1,u2));
+const sk=newSketchOnPlane(context,id+("k"~k),{"sketchPlane":plane(T1,u1)});
+skCircle(sk,"c",{"center":vector(0,0)*millimeter,"radius":rc*millimeter});
+skSolve(sk);
+opRevolve(context,id+("r"~k),{"entities":qSketchRegion(id+("k"~k)),"axis":line(C,a),"angleForward":th});
+if(evDistance(context,{"side0":bq(id+("r"~k)),"side1":T2}).distance>0.01*millimeter)
+{
+opDeleteBodies(context,id+("x"~k),{"entities":bq(id+("r"~k))});
+opRevolve(context,id+("q"~k),{"entities":qSketchRegion(id+("k"~k)),"axis":line(C,-a),"angleForward":th});
+}
+opDeleteBodies(context,id+("d"~k),{"entities":bq(id+("k"~k))});
+k+=1;
+s0=T2;
+}
+const PL=VA(pts[n-1]);
+if(norm(PL-s0)>0.001*millimeter)
+{
+fCylinder(context,id+("s"~k),{"bottomCenter":s0,"topCenter":PL,"radius":rc*millimeter});
+}
+}
+function lidCore(context is Context,id is Id)
+{
+bx(context,id+"core",-W2,0,ZF,W2,DD,ZB);
+var tools=[];
+diamond(context,id+"ch",-W2-1,W2+1,0,ZB,CH);
+tools=append(tools,bq(id+"ch"));
+for(var i=0;i<2;i+=1)
+{
+const c=HCX[i];
+cx(context,id+("g"~i),c-SHAFTH-2,c+SHAFTH+2,AY,AZ,RG);
+tools=append(tools,bq(id+("g"~i)));
+for(var k in[0,3])
+{
+const b=BANDS[k];
+bx(context,id+("st"~(i*4+k)),c+b[0]-0.3,AY,FZ0,c+b[1]+0.3,AY+REACH+0.5,ZB+1);
+tools=append(tools,bq(id+("st"~(i*4+k))));
+}
+cx(context,id+("pk"~i),c-PKX,c+PKX,AY,AZ,RP);
+bx(context,id+("pf"~i),c-PKX-1,AY-RP-1,ZPF-20,c+PKX+1,AY+RP+1,ZPF);
+sub(context,id+("pb"~i),bq(id+("pf"~i)),bq(id+("pk"~i)));
+tools=append(tools,bq(id+("pk"~i)));
+cx(context,id+("ps"~i),c-PKS,c+PKS,AY,AZ,RP);
+bx(context,id+("pg"~i),c-PKS-1,AY-RP-1,ZPS-20,c+PKS+1,AY+RP+1,ZPS);
+sub(context,id+("ph"~i),bq(id+("pg"~i)),bq(id+("ps"~i)));
+tools=append(tools,bq(id+("ps"~i)));
+}
+cx(context,id+"gc",-3,89,AY,AZ,RG);
+tools=append(tools,bq(id+"gc"));
+bx(context,id+"rc",-3,0,59.5,13,18,ZB+1);
+tools=append(tools,bq(id+"rc"));
+sub(context,id+"cut",qUnion(tools),bq(id+"core"));
+}
+function leafStr(context is Context,id is Id)
+{
+bx(context,id+"pan",-136.5,PE,ZP0,136.5,PE+223,ZP1);
+bx(context,id+"beam",-136.5,LF,ZB,136.5,LF+9,ZP0);
+var tools=[];
+for(var i=0;i<2;i+=1)
+{
+const c=HCX[i];
+bx(context,id+("na"~i),c-16.487,LF-1,ZB-1,c-7.347,LF+10,FZ1+HK+1.0);
+bx(context,id+("nb"~i),c+7.347,LF-1,ZB-1,c+16.487,LF+10,FZ1+HK+1.0);
+bx(context,id+("nc"~i),c-8.4,LF-1,ZB-1,c+8.4,LF+10,FZ1);
+tools=concatenateArrays([tools,[bq(id+("na"~i)),bq(id+("nb"~i)),bq(id+("nc"~i))]]);
+}
+bx(context,id+"nle",-3,LF-1,ZB-1,8,LF+10,ZP0+1);
+bx(context,id+"nlx",74,LF-1,ZB-1,92,LF+10,ZP0+1);
+tools=concatenateArrays([tools,[bq(id+"nle"),bq(id+"nlx")]]);
+sub(context,id+"bcut",qUnion(tools),bq(id+"beam"));
+for(var i=0;i<2;i+=1)
+{
+const c=HCX[i];
+bx(context,id+("blk"~i),c-BLK,AY,FZ1,c+BLK,BLKY,ZP0);
+cx(context,id+("bc"~i),c-BLK-0.1,c+BLK+0.1,AY,AZ,RB);
+cx(context,id+("br"~i),c-2.0,c+2.0,AY,AZ,RG+0.5);
+sub(context,id+("bs"~i),qUnion([bq(id+("bc"~i)),bq(id+("br"~i))]),bq(id+("blk"~i)));
+}
+bx(context,id+"swr",136.5,LF,ZB,144.5,LDY,ZT);
+bx(context,id+"swl",-144.5,LF,ZB,-136.5,LDY,ZT);
+diamond(context,id+"swc",-146,146,LF,ZT,LCH);
+sub(context,id+"sws",bq(id+"swc"),qUnion([bq(id+"swr"),bq(id+"swl")]));
+bx(context,id+"rw",-144.5,232,ZB,144.5,LDY,ZT);
+}
+function buildAll(context is Context,id is Id,withAcc is boolean)returns map
+{
+const idL=id+"L";
+const idF=id+"F";
+lidCore(context,idL+"c");
+var shafts=[];
+var fixBands=[];
+for(var i=0;i<2;i+=1)
+{
+const c=HCX[i];
+cx(context,idL+"h"+("sh"~i),c-SHAFTH,c+SHAFTH,AY,AZ,RS);
+shafts=append(shafts,bq(idL+"h"+("sh"~i)));
+for(var j=0;j<2;j+=1)
+{
+cx(context,idL+"h"+("cr"~(i*2+j)),c+CRINGS[j][0],c+CRINGS[j][1],AY,AZ,CRR);
+}
+for(var k in[0,3])
+{
+band(context,idL+"h"+("b"~(i*4+k)),c,BANDS[k]);
+fixBands=append(fixBands,bq(idL+"h"+("b"~(i*4+k))));
+}
+}
+var lidHeads=[];
+var lidIns=[];
+for(var i=0;i<2;i+=1)
+{
+for(var k in[0,3])
+{
+const xm=HCX[i]+(BANDS[k][0]+BANDS[k][1])/2;
+const tg=""~(i*4+k);
+cz(context,idL+"w"+("hd"~tg),xm,AY+HOLE,FZ1,FZ1+HK,HD/2);
+cz(context,idL+"w"+("sk"~tg),xm,AY+HOLE,FZ1-LSL8,FZ1,1.5);
+cz(context,idL+"w"+("in"~tg),xm,AY+HOLE,FZ0-LREC-INSL,FZ0-LREC,INSR);
+lidHeads=append(lidHeads,bq(idL+"w"+("hd"~tg)));
+lidIns=append(lidIns,bq(idL+"w"+("in"~tg)));
+}
+}
+cx(context,idL+"s"+"tube",SLV[0],SLV[1],AY,AZ,SLV[2]);
+cx(context,idL+"s"+"bore",SLV[0]-0.1,SLV[1]+0.1,AY,AZ,SLV[3]);
+sub(context,idL+"s"+"cut",bq(idL+"s"+"bore"),bq(idL+"s"+"tube"));
+cx(context,idL+"s"+"cab",SLV[0],SLV[1],AY,AZ,CABR);
+tube(context,idL+"k",LIDCAB,BENDR,CABR);
+leafStr(context,idF+"s");
+for(var i=0;i<2;i+=1)
+{
+for(var k in[1,2])
+{
+band(context,idF+"b"+("b"~(i*4+k)),HCX[i],BANDS[k]);
+}
+}
+var leafHeads=[];
+var leafIns=[];
+for(var i=0;i<2;i+=1)
+{
+for(var k in[1,2])
+{
+const xm=HCX[i]+(BANDS[k][0]+BANDS[k][1])/2;
+const tg=""~(i*4+k);
+cz(context,idF+"w"+("hd"~tg),xm,AY+HOLE,FZ0-FHK,FZ0,FHD/2);
+cz(context,idF+"w"+("sk"~tg),xm,AY+HOLE,FZ0,FZ0+FSL,1.25);
+cz(context,idF+"w"+("in"~tg),xm,AY+HOLE,FZ1,FZ1+INSS,FINSR);
+leafHeads=append(leafHeads,bq(idF+"w"+("hd"~tg)));
+leafIns=append(leafIns,bq(idF+"w"+("in"~tg)));
+}
+}
+tube(context,idF+"k",LEAFCAB,BENDR,CABR);
+var q={
+"Lc":bq(idL+"c"),"Lw":bq(idL+"w"),"Lh":bq(idL+"h"),"Ls":bq(idL+"s"),
+"Lk":bq(idL+"k"),"Lall":bq(idL),
+"Fs":bq(idF+"s"),"Fw":bq(idF+"w"),"Fb":bq(idF+"b"),"Fk":bq(idF+"k"),"Fall":bq(idF),
+"pan":bq(idF+"s"+"pan"),"beam":bq(idF+"s"+"beam"),
+"blk":qUnion([bq(idF+"s"+"blk0"),bq(idF+"s"+"blk1")]),
+"lidHead":qUnion(lidHeads),"leafHead":qUnion(leafHeads),"leafIns":qUnion(leafIns),"lidIns":qUnion(lidIns),
+"shaft":qUnion(shafts),"fixBand":qUnion(fixBands),"Frot":bq(idF)};
+if(withAcc)
+{
+var accL=[];
+var accF=[];
+for(var i=0;i<2;i+=1)
+{
+for(var k=0;k<4;k+=1)
+{
+const xm=HCX[i]+(BANDS[k][0]+BANDS[k][1])/2;
+const tg=""~(i*4+k);
+if(BANDS[k][2])
+{
+cz(context,id+"A"+("f"~tg),xm,AY+HOLE,FZ0-FHK-60,FZ0-FHK,3.0);
+accF=append(accF,bq(id+"A"+("f"~tg)));
+}
+else
+{
+cz(context,id+"A"+("l"~tg),xm,AY+HOLE,FZ1+HK,FZ1+HK+60,3.5);
+accL=append(accL,bq(id+"A"+("l"~tg)));
+}
+}
+}
+q.accL=qUnion(accL);
+q.accF=qUnion(accF);
+q.Frot=qUnion([bq(idF),qUnion(accF)]);
+}
+return q;
+}
+function leafAxis()returns Line
+{
+return line(V(0,AY,AZ),vector(1,0,0));
+}
+function rotLeaf(context is Context,id is Id,q is map,dpsi is number)
+{
+opTransform(context,id,{"bodies":q.Frot,"transform":rotationAround(leafAxis(),dpsi*degree)});
+}
+function dmm(context is Context,a is Query,b is Query)returns number
+{
+return evDistance(context,{"side0":a,"side1":b}).distance/millimeter;
+}
+function f2(x is number)returns string
+{
+var v=round(x*100);
+var sg="";
+if(v<0)
+{
+sg="-";
+v= -v;
+}
+const ip=floor(v/100);
+const dp=v-ip*100;
+var ds=""~dp;
+if(dp<10)
+{
+ds="0"~dp;
+}
+return sg~ip~"."~ds;
+}
+const V1_LID_BOUNDS={(degree):[0,110,135]}as AngleBoundSpec;
+const V1_LEAF_BOUNDS={(degree):[0,90,190]}as AngleBoundSpec;
+const V1_X=vector(1,0,0);
+export enum V1Pose
+{
+annotation{"Name":"1 Closed (transport)"}
+POSE_CLOSED,
+annotation{"Name":"2 Open, working (lid 110, leaf stowed)"}
+POSE_OPEN,
+annotation{"Name":"3 Solar leaf 90 (lid 110, stay out)"}
+POSE_LEAF90,
+annotation{"Name":"4 Solar leaf 120 (lid 110, stay out)"}
+POSE_LEAF120,
+annotation{"Name":"5 Solar leaf 180 (lid 110, stay out)"}
+POSE_LEAF180,
+annotation{"Name":"6 Solar leaf 190 max (lid 110, stay out)"}
+POSE_LEAF190,
+annotation{"Name":"7 Lid at the 135 hard stop, leaf stowed"}
+POSE_LIDMAX,
+annotation{"Name":"8 KNOWN LIMIT: lid 135 + leaf 40 (leaf edge reaches the table)"}
+POSE_TABLELIMIT,
+annotation{"Name":"9 Service view (exploded, lid 110)"}
+POSE_SERVICE,
+annotation{"Name":"Custom"}
+POSE_CUSTOM
+}
+function v1Pose(definition is map)returns map
+{
+if(definition.pose==V1Pose.POSE_CLOSED)
+{
+return{"phi":0,"psi":0,"stay":false,"explode":false,"label":"CLOSED"};
+}
+if(definition.pose==V1Pose.POSE_OPEN)
+{
+return{"phi":110,"psi":0,"stay":false,"explode":false,"label":"OPEN lid 110"};
+}
+if(definition.pose==V1Pose.POSE_LEAF90)
+{
+return{"phi":110,"psi":90,"stay":true,"explode":false,"label":"lid 110 / leaf 90"};
+}
+if(definition.pose==V1Pose.POSE_LEAF120)
+{
+return{"phi":110,"psi":120,"stay":true,"explode":false,"label":"lid 110 / leaf 120"};
+}
+if(definition.pose==V1Pose.POSE_LEAF180)
+{
+return{"phi":110,"psi":180,"stay":true,"explode":false,"label":"lid 110 / leaf 180"};
+}
+if(definition.pose==V1Pose.POSE_LEAF190)
+{
+return{"phi":110,"psi":190,"stay":true,"explode":false,"label":"lid 110 / leaf 190"};
+}
+if(definition.pose==V1Pose.POSE_LIDMAX)
+{
+return{"phi":135,"psi":0,"stay":false,"explode":false,"label":"lid 135 (stop)"};
+}
+if(definition.pose==V1Pose.POSE_TABLELIMIT)
+{
+return{"phi":135,"psi":40,"stay":true,"explode":false,"label":"KNOWN LIMIT lid 135 / leaf 40"};
+}
+if(definition.pose==V1Pose.POSE_SERVICE)
+{
+return{"phi":110,"psi":0,"stay":false,"explode":true,"label":"SERVICE (exploded)"};
+}
+return{"phi":definition.lidAngle/degree,"psi":definition.leafAngle/degree,"stay":definition.stay,
+"explode":definition.explodeCustom,"label":"CUSTOM"};
+}
+function v1V(x is number,y is number,z is number)returns Vector
+{
+return vector(x,y,z)*millimeter;
+}
+function v1Rgba(colorKey is string)returns array
+{
+const c={
+"shell":[0.58,0.60,0.62,1],"panel":[0.40,0.42,0.45,1],"door":[0.48,0.44,0.38,1],
+"tray":[0.30,0.33,0.38,1],"rubber":[0.08,0.08,0.08,1],"fastener":[0.78,0.80,0.84,1],
+"keyboard":[0.10,0.10,0.11,1],"connector":[0.92,0.92,0.92,1],"metal":[0.80,0.82,0.86,1],
+"pcb":[0.10,0.45,0.20,1],"pcbPh":[0.75,0.30,0.25,0.85],"pcbMod":[0.10,0.25,0.55,1],
+"pcbCtrl":[0.15,0.40,0.30,1],"pcbGnss":[0.80,0.15,0.15,1],"patch":[0.85,0.75,0.55,1],
+"cooler":[0.25,0.27,0.30,1],"ssd":[0.05,0.05,0.06,1],"cell":[0.15,0.35,0.75,1],
+"holder":[0.20,0.20,0.22,0.9],"fan":[0.12,0.12,0.13,1],"southco":[0.12,0.12,0.12,1],
+"knuckle":[0.70,0.72,0.75,0.6],"foil":[0.88,0.89,0.92,1],"display":[0.20,0.20,0.22,1],
+"screen":[0.02,0.02,0.05,1],"stay":[0.75,0.77,0.80,1],"keep":[0.95,0.85,0.10,0.25],
+"corridor":[0.20,0.80,0.90,0.20],"air":[0.30,0.60,1.00,0.55],"conflict":[0.90,0.10,0.85,0.30],
+"table":[0.60,0.50,0.40,0.20],"cablePower":[0.80,0.10,0.10,1],"cableSolar":[1.00,0.55,0.00,1],
+"cableEdp":[0.55,0.60,0.70,1],"cableUsb":[0.35,0.35,0.38,1],"cableSig":[0.95,0.85,0.10,1],
+"lidCore":[0.30,0.31,0.34,1],"leafFrame":[0.86,0.86,0.84,1],"pv":[0.04,0.09,0.28,1],
+"hinge":[0.35,0.36,0.40,1]
+};
+return c[colorKey];
+}
+function v1StatusRgba(statusTag is string)returns array
+{
+if(statusTag=="ENGINEERED")
+{
+return[0.25,0.65,0.35,1];
+}
+if(statusTag=="SELECTED")
+{
+return[0.95,0.65,0.10,1];
+}
+if(statusTag=="PLACEHOLDER")
+{
+return[0.90,0.20,0.20,1];
+}
+return[0.85,0.10,0.85,0.35];
+}
+function v1Name(context is Context,q is Query,name is string,colorKey is string,statusTag is string,opts is map)
+{
+setProperty(context,{"entities":q,"propertyType":PropertyType.NAME,"value":"V1 | "~name~" ["~statusTag~"]"});
+var rgba=v1Rgba(colorKey);
+if(opts.status&&colorKey!="keep"&&colorKey!="corridor"&&colorKey!="air"&&colorKey!="table")
+{
+rgba=v1StatusRgba(statusTag);
+}
+var alpha=rgba[3];
+if(opts.xray&&(colorKey=="shell"||colorKey=="panel"||colorKey=="door"||colorKey=="lidCore"||
+colorKey=="keyboard"||colorKey=="tray"))
+{
+alpha=0.22;
+}
+setProperty(context,{"entities":q,"propertyType":PropertyType.APPEARANCE,"value":color(rgba[0],rgba[1],rgba[2],alpha)});
+}
+function v1Prim(context is Context,id is Id,p is array)returns Query
+{
+const ptype=p[0];
+if(ptype=="B")
+{
+fCuboid(context,id+"b",{"corner1":v1V(p[1],p[2],p[3]),"corner2":v1V(p[4],p[5],p[6])});
+}
+else if(ptype=="C")
+{
+fCylinder(context,id+"b",{"bottomCenter":v1V(p[1],p[2],p[3]),"topCenter":v1V(p[4],p[5],p[6]),
+"radius":p[7]*millimeter});
+}
+else
+{
+const halfDiag=p[5]/sqrt(2);
+var rotAxis=vector(1,0,0);
+var rotOrigin=v1V(0,p[3],p[4]);
+if(ptype=="DX")
+{
+fCuboid(context,id+"b",{"corner1":v1V(p[1],-halfDiag,-halfDiag),"corner2":v1V(p[2],halfDiag,halfDiag)});
+}
+else if(ptype=="DY")
+{
+fCuboid(context,id+"b",{"corner1":v1V(-halfDiag,p[1],-halfDiag),"corner2":v1V(halfDiag,p[2],halfDiag)});
+rotAxis=vector(0,1,0);
+rotOrigin=v1V(p[3],0,p[4]);
+}
+else
+{
+fCuboid(context,id+"b",{"corner1":v1V(-halfDiag,-halfDiag,p[1]),"corner2":v1V(halfDiag,halfDiag,p[2])});
+rotAxis=vector(0,0,1);
+rotOrigin=v1V(p[3],p[4],0);
+}
+opTransform(context,id+"t",{"bodies":qCreatedBy(id+"b",EntityType.BODY),
+"transform":transform(rotOrigin)*rotationAround(line(v1V(0,0,0),rotAxis),45*degree)});
+}
+return qCreatedBy(id,EntityType.BODY);
+}
+function v1BuildPart(context is Context,id is Id,p is array)returns map
+{
+const partStages=p[6];
+var plusQ=[];
+var fails=[];
+for(var si=0;si<size(partStages);si+=1)
+{
+const stage=partStages[si];
+var stageQ=[];
+for(var qi=0;qi<size(stage[1]);qi+=1)
+{
+stageQ=append(stageQ,v1Prim(context,id+("s"~si~"q"~qi),stage[1][qi]));
+}
+if(stage[0]=="+")
+{
+plusQ=concatenateArrays([plusQ,stageQ]);
+}
+else
+{
+try silent
+{
+opBoolean(context,id+("u"~si),{"tools":qUnion(stageQ),"targets":qUnion(plusQ),
+"operationType":BooleanOperationType.SUBTRACTION});
+}
+catch
+{
+fails=append(fails,p[0]~" cut "~si);
+}
+try silent
+{
+opDeleteBodies(context,id+("d"~si),{"entities":qUnion(stageQ)});
+}
+}
+}
+if(size(plusQ)>1)
+{
+try silent
+{
+opBoolean(context,id+"join",{"tools":qCreatedBy(id,EntityType.BODY),"operationType":BooleanOperationType.UNION});
+}
+catch
+{
+fails=append(fails,p[0]~" union");
+}
+}
+return{"q":qCreatedBy(id,EntityType.BODY),"fail":fails};
+}
+function v1FrameT(frame is string,ps is map)returns Transform
+{
+if(frame=="base")
+{
+return identityTransform();
+}
+const lidT=rotationAround(line(v1V(0,V1.HAY,V1.HAZ),V1_X),-ps.phi*degree);
+if(frame=="lid")
+{
+return lidT;
+}
+return lidT*rotationAround(line(v1V(0,AY,AZ),V1_X),ps.psi*degree);
+}
+function v1Cable(context is Context,id is Id,pts is array,cableDia is number,bendR is number)returns Query
+{
+const n=size(pts);
+const r=cableDia/2*millimeter;
+var tl=makeArray(n,0*millimeter);
+var info=makeArray(n,undefined);
+for(var i=1;i<n-1;i+=1)
+{
+const seg1=pts[i]-pts[i-1];
+const seg2=pts[i+1]-pts[i];
+const l1=norm(seg1);
+const l2=norm(seg2);
+if(l1<1e-6*millimeter||l2<1e-6*millimeter)
+{
+continue;
+}
+const u1=seg1/l1;
+const u2=seg2/l2;
+const c=max(-1,min(1,dot(u1,u2)));
+const th=acos(c);
+if(th<0.5*degree)
+{
+continue;
+}
+const tmax=min(l1*(i==1?1:0.5),l2*(i==n-2?1:0.5));
+var t=bendR*millimeter*tan(th/2);
+var re=bendR*millimeter;
+if(t>tmax)
+{
+t=tmax;
+re=t/tan(th/2);
+}
+tl[i]=t;
+info[i]={"u1":u1,"u2":u2,"th":th,"re":re,"t":t};
+}
+for(var i=0;i<n-1;i+=1)
+{
+const u=normalize(pts[i+1]-pts[i]);
+const a=pts[i]+u*tl[i];
+const b=pts[i+1]-u*tl[i+1];
+if(norm(b-a)>0.05*millimeter)
+{
+fCylinder(context,id+("s"~i),{"bottomCenter":a,"topCenter":b,"radius":r});
+}
+}
+for(var i=1;i<n-1;i+=1)
+{
+if(info[i]==undefined)
+{
+continue;
+}
+const f=info[i];
+const t1=pts[i]-f.u1*f.t;
+const nrm=normalize(f.u2-f.u1*dot(f.u1,f.u2));
+const ctr=t1+nrm*f.re;
+const ax=normalize(cross(f.u1,f.u2));
+const sk=newSketchOnPlane(context,id+("ak"~i),{"sketchPlane":plane(t1,f.u1)});
+skCircle(sk,"c",{"center":vector(0,0)*millimeter,"radius":r});
+skSolve(sk);
+try silent
+{
+opRevolve(context,id+("a"~i),{"entities":qSketchRegion(id+("ak"~i)),"axis":line(ctr,ax),"angleForward":f.th});
+}
+opDeleteBodies(context,id+("ad"~i),{"entities":qCreatedBy(id+("ak"~i))});
+}
+return qCreatedBy(id,EntityType.BODY);
+}
+annotation{"Feature Type Name":"NOMAD V1 Visual",
+"Feature Type Description":"NOMAD Virtual V1 visual master model: base, lid, display, B1 solar leaf with SB-261 hinges, internals, cables, ports, keep-outs, poses. Inspection model, not production CAD."}
+export const nomadV1Visual=defineFeature(function(context is Context,id is Id,definition is map)
+precondition
+{
+annotation{"Name":"Pose"}
+definition.pose is V1Pose;
+if(definition.pose==V1Pose.POSE_CUSTOM)
+{
+annotation{"Name":"Lid angle (0 closed .. 135 hard stop)"}
+isAngle(definition.lidAngle,V1_LID_BOUNDS);
+annotation{"Name":"Solar leaf angle (0 stowed .. 190)"}
+isAngle(definition.leafAngle,V1_LEAF_BOUNDS);
+annotation{"Name":"Rear stay deployed"}
+definition.stay is boolean;
+annotation{"Name":"Exploded service view"}
+definition.explodeCustom is boolean;
+}
+annotation{"Name":"Show cables / harness"}
+definition.showCables is boolean;
+annotation{"Name":"Show clearance / keep-out bodies and conflicts"}
+definition.showKeepouts is boolean;
+annotation{"Name":"Show airflow arrows"}
+definition.showAirflow is boolean;
+annotation{"Name":"Show table plane (z = -4)"}
+definition.showTable is boolean;
+annotation{"Name":"X-ray (transparent shells, lid and keyboard)"}
+definition.xray is boolean;
+annotation{"Name":"Colour by validation status (green engineered / amber selected / red placeholder)"}
+definition.statusColors is boolean;
+annotation{"Name":"Report clearances at this pose"}
+definition.check is boolean;
+}
+{
+const ps=v1Pose(definition);
+const opts={"xray":definition.xray,"status":definition.statusColors};
+var lidQ=[];
+var explodeQ={};
+var partQ={};
+var fails=[];
+for(var i=0;i<size(V1_PARTS);i+=1)
+{
+const p=V1_PARTS[i];
+const grp=p[2];
+if((grp=="keep"&& !definition.showKeepouts)||(grp=="air"&& !definition.showAirflow)||
+(grp=="table"&& !definition.showTable)||(grp=="stayS"&&ps.stay)||(grp=="stayD"&& !ps.stay)||
+(ps.explode&&(grp=="keep"||grp=="air")))
+{
+continue;
+}
+const built=v1BuildPart(context,id+("p"~i),p);
+const pq=built.q;
+fails=concatenateArrays([fails,built.fail]);
+partQ[p[0]]=pq;
+v1Name(context,pq,p[1],p[4],p[5],opts);
+if(grp=="lid")
+{
+lidQ=append(lidQ,pq);
+}
+if(ps.explode&&p[3]!="")
+{
+var lst=explodeQ[p[3]];
+if(lst==undefined)
+{
+lst=[];
+}
+explodeQ[p[3]]=append(lst,pq);
+}
+}
+const shellQ=qCreatedBy(id+"p0",EntityType.BODY);
+const q=buildAll(context,id+"B1",false);
+var cuts=[];
+for(var i=0;i<size(V1_LIDCUTS);i+=1)
+{
+cuts=append(cuts,v1Prim(context,id+"lc"+("c"~i),V1_LIDCUTS[i]));
+}
+const solarRoute=V1_ROUTES[V1.SOLAR_ROUTE];
+var chPts=[];
+for(var j=0;j<size(solarRoute[5]);j+=1)
+{
+const wp=solarRoute[5][j];
+chPts=append(chPts,v1V(wp[1],wp[2],wp[3]));
+if(wp[0]!="lid")
+{
+break;
+}
+}
+const chA=v1Cable(context,id+"chA",chPts,solarRoute[1]+1,solarRoute[2]);
+tube(context,id+"chB",LIDCAB,BENDR,CABR+0.5);
+const chQ=qUnion([chA,qCreatedBy(id+"chB",EntityType.BODY)]);
+if(partQ["foil"]!=undefined)
+{
+try silent
+{
+opBoolean(context,id+"chf",{"tools":chQ,"targets":partQ["foil"],"keepTools":true,
+"operationType":BooleanOperationType.SUBTRACTION});
+}
+catch
+{
+fails=append(fails,"foil channel");
+}
+}
+cuts=append(cuts,chQ);
+try silent
+{
+opBoolean(context,id+"lcs",{"tools":qUnion(cuts),"targets":q.Lc,"operationType":BooleanOperationType.SUBTRACTION});
+}
+catch
+{
+fails=append(fails,"lid core cuts");
+}
+v1Name(context,q.Lc,"LID | B1 lid core 19 (ASA) with display window + pocket, SB-261 hinge rail, Southco pockets","lidCore","ENGINEERED",opts);
+v1Name(context,q.Lh,"B1 HINGE | TorqMaster SB-188-SB-261-6 x2: shafts, C-rings, FIXED bands (lid) - IGES geometry, kernel-checked, NOT physically validated","hinge","SELECTED",opts);
+v1Name(context,q.Lw,"FASTENERS | lid-side M3x8 ISO 7380 + RX-M3x5.7 inserts (SB-261 fixed bands)","fastener","SELECTED",opts);
+v1Name(context,q.Ls,"B1 CABLE | solar cable sleeve OD 7.5 / ID 5.5 on the leaf axis (axial twist zone)","knuckle","ENGINEERED",opts);
+v1Name(context,q.Lk,"B1 CABLE | solar lead, lid side, R12 bends (SB-261 study)","cableSolar","ENGINEERED",opts);
+v1Name(context,q.Fs,"B1 LEAF | leaf frame (ASA, open back, 2 printed halves) + hinge blocks","leafFrame","ENGINEERED",opts);
+v1Name(context,q.pan,"SOLAR | Voltaic P108 9.92 Wp ETFE/FR4 panel 273 x 223 x 4 as validated (MFR 274: CONFLICT note) [328 g MFR]","pv","SELECTED",opts);
+v1Name(context,q.Fb,"B1 HINGE | SB-261-6 ROTATING bands (leaf)","hinge","SELECTED",opts);
+v1Name(context,q.Fw,"FASTENERS | leaf-side M2.5x5 ISO 7380 + DIN 433 washers + M2.5 x 4 OD 3.55 inserts","fastener","SELECTED",opts);
+v1Name(context,q.Fk,"B1 CABLE | solar lead, leaf side, R12 (detachable leaf connector)","cableSolar","ENGINEERED",opts);
+if(ps.explode)
+{
+const explodeKeys=keys(explodeQ);
+for(var ei=0;ei<size(explodeKeys);ei+=1)
+{
+const off=V1_EXPLODE[explodeKeys[ei]];
+opTransform(context,id+("x"~ei),{"bodies":qUnion(explodeQ[explodeKeys[ei]]),
+"transform":transform(v1V(off[0],off[1],off[2]))});
+}
+}
+if(abs(ps.psi)>1e-9)
+{
+rotLeaf(context,id+"psi",q,ps.psi);
+}
+if(abs(ps.phi)>1e-9)
+{
+opTransform(context,id+"phi",{"bodies":qUnion([q.Lall,q.Fall,qUnion(lidQ)]),
+"transform":rotationAround(line(v1V(0,V1.HAY,V1.HAZ),V1_X),-ps.phi*degree)});
+}
+if(definition.showCables&& !ps.explode)
+{
+for(var i=0;i<size(V1_ROUTES);i+=1)
+{
+const route=V1_ROUTES[i];
+var routePts=[];
+for(var j=0;j<size(route[5]);j+=1)
+{
+const wp=route[5][j];
+routePts=append(routePts,v1FrameT(wp[0],ps)*v1V(wp[1],wp[2],wp[3]));
+}
+const cableQ=v1Cable(context,id+("cab"~i),routePts,route[1],route[2]);
+v1Name(context,cableQ,route[0],route[3],route[4],opts);
+}
+}
+var msg="NOMAD V1 VISUAL | pose "~ps.label~" (lid "~ps.phi~", leaf "~ps.psi~", stay "~(ps.stay?"out":"stowed")~")";
+if(definition.check)
+{
+const leafBox=evBox3d(context,{"topology":q.Fall,"tight":true});
+const leafMinZ=leafBox.minCorner[2]/millimeter;
+msg=msg~" | leaf lowest z "~f2(leafMinZ)~(leafMinZ< -4?" = BELOW THE TABLE (z -4): leaf/table CONTACT":" (table z -4: clear)");
+if(!ps.explode)
+{
+msg=msg~" | lid core-base "~f2(dmm(context,q.Lc,shellQ))~" | leaf-base "~f2(dmm(context,q.Fall,shellQ));
+if(abs(ps.psi)>1e-9)
+{
+msg=msg~" | leaf-lid core "~f2(dmm(context,q.Fs,q.Lc));
+}
+}
+}
+msg=msg~" | status in part names: ENGINEERED / SELECTED / PLACEHOLDER / CONFLICT (docs/V1-VISUAL-MODEL.md)";
+if(size(fails)>0)
+{
+var failMsg="";
+for(var f in fails)
+{
+failMsg=failMsg~f~"; ";
+}
+reportFeatureWarning(context,id,"BUILD WARNING - geometry incomplete: "~failMsg~"| "~msg);
+}
+else
+{
+reportFeatureInfo(context,id,msg);
+}
+},{"pose":V1Pose.POSE_OPEN,"lidAngle":110*degree,"leafAngle":90*degree,"stay":true,"explodeCustom":false,
+"showCables":true,"showKeepouts":false,"showAirflow":false,"showTable":false,"xray":false,
+"statusColors":false,"check":true});

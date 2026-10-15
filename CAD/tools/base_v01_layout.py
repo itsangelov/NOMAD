@@ -27,7 +27,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import hinge_feasibility_2d as hm  # noqa: E402
-from yaml_to_featurescript import (YAML_PATH, _eval_formula, _num, flatten,  # noqa: E402
+from yaml_to_featurescript import (P01_YAML_PATH as YAML_PATH,  # frozen P0.1 set (V1 sprint)
+                                    _eval_formula, _num, flatten,  # noqa: E402
                                    parse_restricted_yaml, resolve)
 
 ROOT = Path(__file__).resolve().parents[2]
